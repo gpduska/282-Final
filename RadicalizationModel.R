@@ -40,4 +40,5 @@
 
 
 
+
 ## This function initializes the matrix of people
