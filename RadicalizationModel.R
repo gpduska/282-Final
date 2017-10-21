@@ -43,7 +43,7 @@
 #             iTarget1, iTarget2, iTarget3, iTarget4, iMeasure1, iMeasure2, iMeasure3, iMeasure4) 
 
 
-n.popultaion <- 100000  #size of population
+n.population <- 100000  #size of population
 
 # These change how the measurement of an identity is skewed. For example if most of the population is white, there wouldn't be an even distribution
 # of the race as an identity. 
@@ -55,13 +55,15 @@ i4Measure.shift <- f(x) = x
 # This is a measure of how power is distributed proportionally relating to different identities
 # This gets multiplied by a person's iTarget vectors.
 i1Weight <- 0.25
-i1Weight <- 0.25
-i1Weight <- 0.25
-i1Weight <- 0.25
+i2Weight <- 0.25
+i3Weight <- 0.25
+i4Weight <- 0.25
 
 
 # This function instantiates the origional matrix
-initial.population <- function(n.population, i1Measure.shift, i2Measure.shift, i3Measure.shift, i4Measure.shift){
+initial.population <- function(n.population){
+  
+  name.vector <- 1:n.population
   
   powerScore.vector <- rep(1, n.population)
   
@@ -72,15 +74,15 @@ initial.population <- function(n.population, i1Measure.shift, i2Measure.shift, i
   
   powerRank.vector <- c(1:n.population)
   
-  i1Rank.vector <- c(1:population)
-  i2Rank.vector <- c(1:population)
-  i3Rank.vector <- c(1:population)
-  i4Rank.vector <- c(1:population)
+  i1Rank.vector <- c(1:n.population)
+  i2Rank.vector <- c(1:n.population)
+  i3Rank.vector <- c(1:n.population)
+  i4Rank.vector <- c(1:n.population)
   
-  i1Target.vector <- NA
-  i2Target.vector <- NA
-  i3Target.vector <- NA
-  i4Target.vector <- NA
+  i1Target.vector <- rep(NA, n.population)
+  i2Target.vector <- rep(NA, n.population)
+  i3Target.vector <- rep(NA, n.population)
+  i4Target.vector <- rep(NA, n.population)
   
   i1Measure.vector <- sample(1:n.population, n.population, replace = FALSE)
   i2Measure.vector <- sample(1:n.population, n.population, replace = FALSE)
@@ -92,4 +94,17 @@ initial.population <- function(n.population, i1Measure.shift, i2Measure.shift, i
                   i1Measure.vector, i2Measure.vector, i3Measure.vector, i4Measure.vector), byrow=F, nrow = n.population))
 }
 
-## This function initializes the matrix of people
+# This function takes the initial population matrix which does not yet have the iTarget columns filled in and gives each person an iTarget that makes
+# sense according to thier i#Measure perameters
+init.iTargets <- (pop.matrix){
+  
+  leftGreedy1 <- function(pop.matrix)
+  
+}
+
+
+
+# Every person should have a powerScore goal. The greedy goal would be to maximize your own power. My idea is to have a neural net for each person that 
+# is figuring out how to distribute power in such a way that brings them closer to their goal. 
+
+
