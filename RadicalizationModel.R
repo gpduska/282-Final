@@ -36,9 +36,60 @@
 # performance. People applly four different power functions acorss these identity parameters. They can look like x^2, 1/x, or some sort of bell curve
 # (anything really). The overall power score is then
 
-# person <- c(overallPowerScore, identityTarget1, iTarget2, iTarget3, iTarget4, neuralNet1, neuralNet2, neuralNet3, NeuralNet4)
+# the iTargets are vectors that tell a person how to distribute power based on other peoples iMeasures. A persons neural net changes a persons iTargets
+# in order to acheive their over
+
+# person <- c(overallPowerScore, iScore1, iScore2, iScore3, iScore4, overallPowerRank, iRank1, iRank2, iRank3, iRank4,
+#             iTarget1, iTarget2, iTarget3, iTarget4, iMeasure1, iMeasure2, iMeasure3, iMeasure4) 
 
 
+n.popultaion <- 100000  #size of population
 
+# These change how the measurement of an identity is skewed. For example if most of the population is white, there wouldn't be an even distribution
+# of the race as an identity. 
+i1Measure.shift <- f(x) = x 
+i2Measure.shift <- f(x) = x 
+i3Measure.shift <- f(x) = x 
+i4Measure.shift <- f(x) = x 
+
+# This is a measure of how power is distributed proportionally relating to different identities
+# This gets multiplied by a person's iTarget vectors.
+i1Weight <- 0.25
+i1Weight <- 0.25
+i1Weight <- 0.25
+i1Weight <- 0.25
+
+
+# This function instantiates the origional matrix
+initial.population <- function(n.population, i1Measure.shift, i2Measure.shift, i3Measure.shift, i4Measure.shift){
+  
+  powerScore.vector <- rep(1, n.population)
+  
+  i1Score.vector <- rep(i1Weight, n.population)
+  i2Score.vector <- rep(i2Weight, n.population)
+  i3Score.vector <- rep(i3Weight, n.population)
+  i4Score.vector <- rep(i4Weight, n.population)
+  
+  powerRank.vector <- c(1:n.population)
+  
+  i1Rank.vector <- c(1:population)
+  i2Rank.vector <- c(1:population)
+  i3Rank.vector <- c(1:population)
+  i4Rank.vector <- c(1:population)
+  
+  i1Target.vector <- NA
+  i2Target.vector <- NA
+  i3Target.vector <- NA
+  i4Target.vector <- NA
+  
+  i1Measure.vector <- sample(1:n.population, n.population, replace = FALSE)
+  i2Measure.vector <- sample(1:n.population, n.population, replace = FALSE)
+  i3Measure.vector <- sample(1:n.population, n.population, replace = FALSE)
+  i4Measure.vector <- sample(1:n.population, n.population, replace = FALSE)
+  
+  return(matrix(c(name.vector, powerScore.vector, i1Score.vector, i2Score.vector, i2Score.vector, i4Score.vector, powerRank.vector,
+                  i1Rank.vector, i2Rank.vector, i3Rank.vector, i4Rank.vector, i1Target.vector, i2Target.vector, i3Target.vector, i4Target.vector,
+                  i1Measure.vector, i2Measure.vector, i3Measure.vector, i4Measure.vector), byrow=F, nrow = n.population))
+}
 
 ## This function initializes the matrix of people
