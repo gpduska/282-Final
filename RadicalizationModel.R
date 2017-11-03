@@ -42,69 +42,51 @@
 # person <- c(overallPowerScore, iScore1, iScore2, iScore3, iScore4, overallPowerRank, iRank1, iRank2, iRank3, iRank4,
 #             iTarget1, iTarget2, iTarget3, iTarget4, iMeasure1, iMeasure2, iMeasure3, iMeasure4) 
 
-
-n.population <- 100000  #size of population
-
-# These change how the measurement of an identity is skewed. For example if most of the population is white, there wouldn't be an even distribution
-# of the race as an identity. 
-i1Measure.shift <- f(x) = x 
-i2Measure.shift <- f(x) = x 
-i3Measure.shift <- f(x) = x 
-i4Measure.shift <- f(x) = x 
-
-# This is a measure of how power is distributed proportionally relating to different identities
-# This gets multiplied by a person's iTarget vectors.
-i1Weight <- 0.25
-i2Weight <- 0.25
-i3Weight <- 0.25
-i4Weight <- 0.25
-
-
-# This function instantiates the origional matrix
-initial.population <- function(n.population){
-  
-  name.vector <- 1:n.population
-  
-  powerScore.vector <- rep(1, n.population)
-  
-  i1Score.vector <- rep(i1Weight, n.population)
-  i2Score.vector <- rep(i2Weight, n.population)
-  i3Score.vector <- rep(i3Weight, n.population)
-  i4Score.vector <- rep(i4Weight, n.population)
-  
-  powerRank.vector <- c(1:n.population)
-  
-  i1Rank.vector <- c(1:n.population)
-  i2Rank.vector <- c(1:n.population)
-  i3Rank.vector <- c(1:n.population)
-  i4Rank.vector <- c(1:n.population)
-  
-  i1Target.vector <- rep(NA, n.population)
-  i2Target.vector <- rep(NA, n.population)
-  i3Target.vector <- rep(NA, n.population)
-  i4Target.vector <- rep(NA, n.population)
-  
-  i1Measure.vector <- sample(1:n.population, n.population, replace = FALSE)
-  i2Measure.vector <- sample(1:n.population, n.population, replace = FALSE)
-  i3Measure.vector <- sample(1:n.population, n.population, replace = FALSE)
-  i4Measure.vector <- sample(1:n.population, n.population, replace = FALSE)
-  
-  return(matrix(c(name.vector, powerScore.vector, i1Score.vector, i2Score.vector, i2Score.vector, i4Score.vector, powerRank.vector,
-                  i1Rank.vector, i2Rank.vector, i3Rank.vector, i4Rank.vector, i1Target.vector, i2Target.vector, i3Target.vector, i4Target.vector,
-                  i1Measure.vector, i2Measure.vector, i3Measure.vector, i4Measure.vector), byrow=F, nrow = n.population))
-}
-
-# This function takes the initial population matrix which does not yet have the iTarget columns filled in and gives each person an iTarget that makes
-# sense according to thier i#Measure perameters
-init.iTargets <- (pop.matrix){
-  
-  leftGreedy1 <- function(pop.matrix)
-  
-}
-
-
-
 # Every person should have a powerScore goal. The greedy goal would be to maximize your own power. My idea is to have a neural net for each person that 
 # is figuring out how to distribute power in such a way that brings them closer to their goal. 
 
+n.population <- 3000  #size of population
 
+# these groups are sort of arbitrarily defiened depending on the system that the model is describing
+n.groupA <- n.population * 0.01
+n.groupB <- n.population * 0.04
+n.groupC <- n.population * 0.17
+n.groupD <- n.population * 0.17
+n.groupE <- n.population * (1 - (0.01 + 0.04 + 0.17 + 0.17))
+
+# initial powerScore for each member of their respective group
+groupA.power.member <- 5
+groupB.power.member <- 4
+groupC.power.member <- 3
+groupD.power.member <- 2
+groupE.power.member <- 1
+
+# total amount of power within each group identity
+groupA.power.total <- groupA.power.member * n.groupA
+groupB.power.total <- groupB.power.member * n.groupB
+groupC.power.total <- groupC.power.member * n.groupC
+groupD.power.total <- groupD.power.member * n.groupD
+groupE.power.total <- groupE.power.member * n.groupE
+
+# total amount of power within the system
+system.total.power <- groupA.power.total + groupB.power.total + groupC.power.total + groupD.power.total + groupE.power.total
+
+
+# This function instantiates the origional matrix
+initial.population <- function(){
+  
+  name.vector <- 1:n.population
+  
+  group.vector <- c(rep(0.1, n.groupA), rep(0.2, n.groupB), rep(0.3, n.groupC), rep(0.4, n.groupD), rep(0.5, n.groupE))
+  
+  power.vector <- c(rep(groupA.power.member, n.groupA), rep(groupB.power.member, n.groupB), rep(groupC.power.member, n.groupC),
+                    rep(groupD.power.member, n.groupD), rep(groupE.power.member, n.groupE))
+  
+  return(matrix(c(name.vector, group.vector, power.vector), byrow=F, nrow = n.population))
+}
+population <- initial.population()
+population
+
+n.groupA + n.groupB + n.groupC + n.groupD + n.groupE
+
+population[1,3] + population[2,3]
