@@ -71,6 +71,36 @@ groupE.power.total <- groupE.power.member * n.groupE
 # total amount of power within the system
 system.total.power <- groupA.power.total + groupB.power.total + groupC.power.total + groupD.power.total + groupE.power.total
 
+# the standard deviation for the probability distributions of a person initiating contact with another person depending on their group identities
+prob.A.to.A.sd
+prob.A.to.B.sd
+prob.A.to.C.sd
+prob.A.to.D.sd
+prob.A.to.E.sd
+
+prob.B.to.A.sd
+prob.B.to.A.sd
+prob.B.to.A.sd
+prob.B.to.A.sd
+prob.B.to.A.sd
+
+prob.C.to.A.sd
+prob.C.to.A.sd
+prob.C.to.A.sd
+prob.C.to.A.sd
+prob.C.to.A.sd
+
+prob.D.to.A.sd
+prob.D.to.A.sd
+prob.D.to.A.sd
+prob.D.to.A.sd
+prob.D.to.A.sd
+
+prob.E.to.A.sd
+prob.E.to.A.sd
+prob.E.to.A.sd
+prob.E.to.A.sd
+prob.E.to.A.sd
 
 # This function instantiates the origional matrix
 initial.population <- function(){
@@ -87,6 +117,53 @@ initial.population <- function(){
 population <- initial.population()
 population
 
-n.groupA + n.groupB + n.groupC + n.groupD + n.groupE
 
-population[1,3] + population[2,3]
+# This function simulates one round of every person exhangeing power with every other person
+power.exchage <- function(population){
+  
+  # for each person in the population...
+  for(i in 1:n.population){
+    
+    # go through each other person in the population...
+    for(j in 1:npopulation[-i]){
+      
+      # depending on which group person person j is in...
+      if(population[j,2] == 0.01){
+        # decide if person i will initiate contact with person j...
+        # if the random number is greater than 0, the encounter is initiated
+        if(rnorm(1, chanc.encounter.mean, chance.encunter.sd) > 0){
+          
+          
+        }
+      } else if(population[j,2] == 0.02){
+        # decide if person i will initiate contact with person j...
+        # if the random number is greater than 0, the encounter is initiated
+        if(rnorm(1, chanc.encounter.mean, chance.encunter.sd) > 0){
+          
+          
+        }
+      } else if(population[j,2] == 0.03){
+        # decide if person i will initiate contact with person j...
+        # if the random number is greater than 0, the encounter is initiated
+        if(rnorm(1, chanc.encounter.mean, chance.encunter.sd) > 0){
+          
+          
+        }
+      } else if(population[j,2] == 0.04){
+        # decide if person i will initiate contact with person j...
+        # if the random number is greater than 0, the encounter is initiated
+        if(rnorm(1, chanc.encounter.mean, chance.encunter.sd) > 0){
+          
+          
+        }
+      } else if(population[j,2] == 0.05){
+        # decide if person i will initiate contact with person j...
+        # if the random number is greater than 0, the encounter is initiated
+        if(rnorm(1, chanc.encounter.mean, chance.encunter.sd) > 0){
+          
+          
+        }
+      }
+    }
+  }
+}
