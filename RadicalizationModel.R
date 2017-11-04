@@ -45,6 +45,8 @@
 # Every person should have a powerScore goal. The greedy goal would be to maximize your own power. My idea is to have a neural net for each person that 
 # is figuring out how to distribute power in such a way that brings them closer to their goal. 
 
+Person(name, group, powerScore, prob.of.A.encounter, prob.ask.from.A, prob.give.to.A, prob., prob.of.B.encounter, prob.of.C.encounter,)
+
 n.population <- 3000  #size of population
 
 # these groups are sort of arbitrarily defiened depending on the system that the model is describing
@@ -71,36 +73,129 @@ groupE.power.total <- groupE.power.member * n.groupE
 # total amount of power within the system
 system.total.power <- groupA.power.total + groupB.power.total + groupC.power.total + groupD.power.total + groupE.power.total
 
-# the number that a random number from a normal distribution with mean = 0 and sd = 1 has to be greater than in order for an encounter to be initiated
-prob.A.to.A.num <- 0
-prob.A.to.B.num <- 0
-prob.A.to.C.num <- 0
-prob.A.to.D.num <- 0
-prob.A.to.E.num <- 0
+# the number that a random between 0 and 1 has to be less than in order for an encounter to be initiated
+prob.A.to.A.encounter <- 0
+prob.A.to.B.encounter <- 0
+prob.A.to.C.encounter <- 0
+prob.A.to.D.encounter <- 0
+prob.A.to.E.encounter <- 0
 
-prob.B.to.A.num <- 0
-prob.B.to.B.num <- 0
-prob.B.to.C.num <- 0
-prob.B.to.D.num <- 0
-prob.B.to.E.num <- 0
+prob.B.to.A.encounter <- 0
+prob.B.to.B.encounter <- 0
+prob.B.to.C.encounter <- 0
+prob.B.to.D.encounter <- 0
+prob.B.to.E.encounter <- 0
 
-prob.C.to.A.num <- 0
-prob.C.to.B.num <- 0
-prob.C.to.C.num <- 0
-prob.C.to.D.num <- 0
-prob.C.to.E.num <- 0
+prob.C.to.A.encounter <- 0
+prob.C.to.B.encounter <- 0
+prob.C.to.C.encounter <- 0
+prob.C.to.D.encounter <- 0
+prob.C.to.E.encounter <- 0
 
-prob.D.to.A.num <- 0
-prob.D.to.B.num <- 0
-prob.D.to.C.num <- 0
-prob.D.to.D.num <- 0
-prob.D.to.E.num <- 0
+prob.D.to.A.encounter <- 0
+prob.D.to.B.encounter <- 0
+prob.D.to.C.encounter <- 0
+prob.D.to.D.encounter <- 0
+prob.D.to.E.encounter <- 0
 
-prob.E.to.A.num <- 0
-prob.E.to.B.num <- 0
-prob.E.to.C.num <- 0
-prob.E.to.D.num <- 0
-prob.E.to.E.num <- 0
+prob.E.to.A.encounter <- 0
+prob.E.to.B.encounter <- 0
+prob.E.to.C.encounter <- 0
+prob.E.to.D.encounter <- 0
+prob.E.to.E.encounter <- 0
+
+# the number that a random number between 0 and 1 has to be less than in order for an ask of power to happen
+prob.A.to.A.ask <- 0
+prob.A.to.B.ask <- 0
+prob.A.to.C.ask <- 0
+prob.A.to.D.ask <- 0
+prob.A.to.E.ask <- 0
+
+prob.B.to.A.ask <- 0
+prob.B.to.B.ask <- 0
+prob.B.to.C.ask <- 0
+prob.B.to.D.ask <- 0
+prob.B.to.E.ask <- 0
+
+prob.C.to.A.ask <- 0
+prob.C.to.B.ask <- 0
+prob.C.to.C.ask <- 0
+prob.C.to.D.ask <- 0
+prob.C.to.E.ask <- 0
+
+prob.D.to.A.ask <- 0
+prob.D.to.B.ask <- 0
+prob.D.to.C.ask <- 0
+prob.D.to.D.ask <- 0
+prob.D.to.E.ask <- 0
+
+prob.E.to.A.ask <- 0
+prob.E.to.B.ask <- 0
+prob.E.to.C.ask <- 0
+prob.E.to.D.ask <- 0
+prob.E.to.E.ask <- 0
+
+# the number that a random number between 0 and 1 has to be less than in order for an give of power to happen
+prob.A.to.A.give <- 0
+prob.A.to.B.give <- 0
+prob.A.to.C.give <- 0
+prob.A.to.D.give <- 0
+prob.A.to.E.give <- 0
+
+prob.B.to.A.give <- 0
+prob.B.to.B.give <- 0
+prob.B.to.C.give <- 0
+prob.B.to.D.give <- 0
+prob.B.to.E.give <- 0
+
+prob.C.to.A.give <- 0
+prob.C.to.B.give <- 0
+prob.C.to.C.give <- 0
+prob.C.to.D.give <- 0
+prob.C.to.E.give <- 0
+
+prob.D.to.A.give <- 0
+prob.D.to.B.give <- 0
+prob.D.to.C.give <- 0
+prob.D.to.D.give <- 0
+prob.D.to.E.give <- 0
+
+prob.E.to.A.give <- 0
+prob.E.to.B.give <- 0
+prob.E.to.C.give <- 0
+prob.E.to.D.give <- 0
+prob.E.to.E.give <- 0
+
+# the number that a random number between 0 and 1 has to be less than in order for an take of power to be attempted
+prob.A.to.A.take <- 0
+prob.A.to.B.take <- 0
+prob.A.to.C.take <- 0
+prob.A.to.D.take <- 0
+prob.A.to.E.take <- 0
+
+prob.B.to.A.take <- 0
+prob.B.to.B.take <- 0
+prob.B.to.C.take <- 0
+prob.B.to.D.take <- 0
+prob.B.to.E.take <- 0
+
+prob.C.to.A.take <- 0
+prob.C.to.B.take <- 0
+prob.C.to.C.take <- 0
+prob.C.to.D.take <- 0
+prob.C.to.E.take <- 0
+
+prob.D.to.A.take <- 0
+prob.D.to.B.take <- 0
+prob.D.to.C.take <- 0
+prob.D.to.D.take <- 0
+prob.D.to.E.take <- 0
+
+prob.E.to.A.take <- 0
+prob.E.to.B.take <- 0
+prob.E.to.C.take <- 0
+prob.E.to.D.take <- 0
+prob.E.to.E.take <- 0
 
 # This function instantiates the origional matrix
 initial.population <- function(){
@@ -134,35 +229,35 @@ power.exchage <- function(population){
         if(population[j,2] == 0.01){
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
-          if(rnorm(1, 0, 1) > prob.A.to.A.num){
+          if(runif(1, 0, 1) < prob.A.to.A.encounter){
             
             
           }
         } else if(population[j,2] == 0.02){
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
-          if(rnorm(1, 0, 1) > prob.A.to.B.num){
+          if(runif(1, 0, 1) < prob.A.to.B.encounter){
             
             
           }
         } else if(population[j,2] == 0.03){
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
-          if(rnorm(1, 0, 1) > prob.A.to.C.num){
+          if(runif(1, 0, 1) < prob.A.to.C.encounter){
             
             
           }
         } else if(population[j,2] == 0.04){
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
-          if(rnorm(1, 0, 1) > prob.A.to.D.num){
+          if(runif(1, 0, 1) < prob.A.to.D.encounter){
             
             
           }
         } else if(population[j,2] == 0.05){
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
-          if(rnorm(1, 0, 1) > prob.A.to.E.num){
+          if(runif(1, 0, 1) < prob.A.to.E.encounter){
             
             
           }
@@ -178,35 +273,35 @@ power.exchage <- function(population){
         if(population[j,2] == 0.01){
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
-          if(rnorm(1, 0, 1) > prob.B.to.A.num){
+          if(runif(1, 0, 1) < prob.B.to.A.encounter){
             
             
           }
         } else if(population[j,2] == 0.02){
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
-          if(rnorm(1, 0, 1) > prob.B.to.B.num){
+          if(runif(1, 0, 1) < prob.B.to.B.encounter){
             
             
           }
         } else if(population[j,2] == 0.03){
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
-          if(rnorm(1, 0, 1) > prob.B.to.C.num){
+          if(runif(1, 0, 1) < prob.B.to.C.encounter){
             
             
           }
         } else if(population[j,2] == 0.04){
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
-          if(rnorm(1, 0, 1) > prob.B.to.D.num){
+          if(runif(1, 0, 1) < prob.B.to.D.encounter){
             
             
           }
         } else if(population[j,2] == 0.05){
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
-          if(rnorm(1, 0, 1) > prob.B.to.E.num){
+          if(runif(1, 0, 1) < prob.B.to.E.encounter){
             
             
           }
@@ -222,35 +317,35 @@ power.exchage <- function(population){
         if(population[j,2] == 0.01){
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
-          if(rnorm(1, 0, 1) > prob.C.to.A.num){
+          if(runif(1, 0, 1) < prob.C.to.A.encounter){
             
             
           }
         } else if(population[j,2] == 0.02){
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
-          if(rnorm(1, 0, 1) > prob.C.to.B.num){
+          if(runif(1, 0, 1) < prob.C.to.B.encounter){
             
             
           }
         } else if(population[j,2] == 0.03){
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
-          if(rnorm(1, 0, 1) > prob.C.to.C.num){
+          if(runif(1, 0, 1) < prob.C.to.C.encounter){
             
             
           }
         } else if(population[j,2] == 0.04){
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
-          if(rnorm(1, 0, 1) > prob.C.to.D.num){
+          if(runif(1, 0, 1) < prob.C.to.D.encounter){
             
             
           }
         } else if(population[j,2] == 0.05){
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
-          if(rnorm(1, 0, 1) > prob.C.to.E.num){
+          if(runif(1, 0, 1) < prob.C.to.E.encounter){
             
             
           }
@@ -266,35 +361,35 @@ power.exchage <- function(population){
         if(population[j,2] == 0.01){
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
-          if(rnorm(1, 0, 1) > prob.D.to.A.num){
+          if(runif(1, 0, 1) < prob.D.to.A.encounter){
             
             
           }
         } else if(population[j,2] == 0.02){
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
-          if(rnorm(1, 0, 1) > prob.D.to.B.num){
+          if(runif(1, 0, 1) < prob.D.to.B.encounter){
             
             
           }
         } else if(population[j,2] == 0.03){
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
-          if(rnorm(1, 0, 1) > prob.D.to.C.num){
+          if(runif(1, 0, 1) < prob.D.to.C.encounter){
             
             
           }
         } else if(population[j,2] == 0.04){
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
-          if(rnorm(1, 0, 1) > prob.D.to.D.num){
+          if(runif(1, 0, 1) < prob.D.to.D.encounter){
             
             
           }
         } else if(population[j,2] == 0.05){
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
-          if(rnorm(1, 0, 1) > prob.D.to.E.num){
+          if(runif(1, 0, 1) < prob.D.to.E.encounter){
             
             
           }
@@ -310,35 +405,35 @@ power.exchage <- function(population){
         if(population[j,2] == 0.01){
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
-          if(rnorm(1, 0, 1) > prob.E.to.A.num){
+          if(runif(1, 0, 1) < prob.E.to.A.encounter){
             
             
           }
         } else if(population[j,2] == 0.02){
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
-          if(rnorm(1, 0, 1) > prob.E.to.B.num){
+          if(runif(1, 0, 1) < prob.E.to.B.encounter){
             
             
           }
         } else if(population[j,2] == 0.03){
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
-          if(rnorm(1, 0, 1) > prob.E.to.C.num){
+          if(runif(1, 0, 1) < prob.E.to.C.encounter){
             
             
           }
         } else if(population[j,2] == 0.04){
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
-          if(rnorm(1, 0, 1) > prob.E.to.D.num){
+          if(runif(1, 0, 1) < prob.E.to.D.encounter){
             
             
           }
         } else if(population[j,2] == 0.05){
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
-          if(rnorm(1, 0, 1) > prob.E.to.E.num){
+          if(runif(1, 0, 1) < prob.E.to.E.encounter){
             
             
           }
