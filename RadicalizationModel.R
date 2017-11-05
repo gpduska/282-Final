@@ -73,36 +73,36 @@ groupE.power.total <- groupE.power.member * n.groupE
 # total amount of power within the system
 system.total.power <- groupA.power.total + groupB.power.total + groupC.power.total + groupD.power.total + groupE.power.total
 
-# the number that a random between 0 and 1 has to be less than in order for an encounter to be initiated
-prob.A.to.A.encounter <- 0
-prob.A.to.B.encounter <- 0
-prob.A.to.C.encounter <- 0
-prob.A.to.D.encounter <- 0
-prob.A.to.E.encounter <- 0
+# the number that a random number between 0 and 1 has to be less than in order for an encounter to be initiated
+prob.A.to.A.encounter <- 0.1
+prob.A.to.B.encounter <- 0.1
+prob.A.to.C.encounter <- 0.1
+prob.A.to.D.encounter <- 0.1
+prob.A.to.E.encounter <- 0.1
 
-prob.B.to.A.encounter <- 0
-prob.B.to.B.encounter <- 0
-prob.B.to.C.encounter <- 0
-prob.B.to.D.encounter <- 0
-prob.B.to.E.encounter <- 0
+prob.B.to.A.encounter <- 0.1
+prob.B.to.B.encounter <- 0.1
+prob.B.to.C.encounter <- 0.1
+prob.B.to.D.encounter <- 0.1
+prob.B.to.E.encounter <- 0.1
 
-prob.C.to.A.encounter <- 0
-prob.C.to.B.encounter <- 0
-prob.C.to.C.encounter <- 0
-prob.C.to.D.encounter <- 0
-prob.C.to.E.encounter <- 0
+prob.C.to.A.encounter <- 0.1
+prob.C.to.B.encounter <- 0.1
+prob.C.to.C.encounter <- 0.1
+prob.C.to.D.encounter <- 0.1
+prob.C.to.E.encounter <- 0.1
 
-prob.D.to.A.encounter <- 0
-prob.D.to.B.encounter <- 0
-prob.D.to.C.encounter <- 0
-prob.D.to.D.encounter <- 0
-prob.D.to.E.encounter <- 0
+prob.D.to.A.encounter <- 0.1
+prob.D.to.B.encounter <- 0.1
+prob.D.to.C.encounter <- 0.1
+prob.D.to.D.encounter <- 0.1
+prob.D.to.E.encounter <- 0.1
 
-prob.E.to.A.encounter <- 0
-prob.E.to.B.encounter <- 0
-prob.E.to.C.encounter <- 0
-prob.E.to.D.encounter <- 0
-prob.E.to.E.encounter <- 0
+prob.E.to.A.encounter <- 0.1
+prob.E.to.B.encounter <- 0.1
+prob.E.to.C.encounter <- 0.1
+prob.E.to.D.encounter <- 0.1
+prob.E.to.E.encounter <- 0.1
 
 # the number that a random number between 0 and 1 has to be less than in order for an ask of power to happen
 prob.A.to.A.ask <- 0
@@ -135,67 +135,36 @@ prob.E.to.C.ask <- 0
 prob.E.to.D.ask <- 0
 prob.E.to.E.ask <- 0
 
-# the number that a random number between 0 and 1 has to be less than in order for an give of power to happen
-prob.A.to.A.give <- 0
-prob.A.to.B.give <- 0
-prob.A.to.C.give <- 0
-prob.A.to.D.give <- 0
-prob.A.to.E.give <- 0
+# the standard deviation of the normal curves that are used to decide how much a person takes from another based on group
+A.to.A.take.sd <- 1
+A.to.B.take.sd <- 1
+A.to.C.take.sd <- 1
+A.to.D.take.sd <- 1
+A.to.E.take.sd <- 1
 
-prob.B.to.A.give <- 0
-prob.B.to.B.give <- 0
-prob.B.to.C.give <- 0
-prob.B.to.D.give <- 0
-prob.B.to.E.give <- 0
+B.to.A.take.sd <- 1
+B.to.B.take.sd <- 1
+B.to.C.take.sd <- 1
+B.to.D.take.sd <- 1
+B.to.E.take.sd <- 1
 
-prob.C.to.A.give <- 0
-prob.C.to.B.give <- 0
-prob.C.to.C.give <- 0
-prob.C.to.D.give <- 0
-prob.C.to.E.give <- 0
+C.to.A.take.sd <- 1
+C.to.B.take.sd <- 1
+C.to.C.take.sd <- 1
+C.to.D.take.sd <- 1
+C.to.E.take.sd <- 1
 
-prob.D.to.A.give <- 0
-prob.D.to.B.give <- 0
-prob.D.to.C.give <- 0
-prob.D.to.D.give <- 0
-prob.D.to.E.give <- 0
+D.to.A.take.sd <- 1
+D.to.B.take.sd <- 1
+D.to.C.take.sd <- 1
+D.to.D.take.sd <- 1
+D.to.E.take.sd <- 1
 
-prob.E.to.A.give <- 0
-prob.E.to.B.give <- 0
-prob.E.to.C.give <- 0
-prob.E.to.D.give <- 0
-prob.E.to.E.give <- 0
-
-# the number that a random number between 0 and 1 has to be less than in order for an take of power to be attempted
-prob.A.to.A.take <- 0
-prob.A.to.B.take <- 0
-prob.A.to.C.take <- 0
-prob.A.to.D.take <- 0
-prob.A.to.E.take <- 0
-
-prob.B.to.A.take <- 0
-prob.B.to.B.take <- 0
-prob.B.to.C.take <- 0
-prob.B.to.D.take <- 0
-prob.B.to.E.take <- 0
-
-prob.C.to.A.take <- 0
-prob.C.to.B.take <- 0
-prob.C.to.C.take <- 0
-prob.C.to.D.take <- 0
-prob.C.to.E.take <- 0
-
-prob.D.to.A.take <- 0
-prob.D.to.B.take <- 0
-prob.D.to.C.take <- 0
-prob.D.to.D.take <- 0
-prob.D.to.E.take <- 0
-
-prob.E.to.A.take <- 0
-prob.E.to.B.take <- 0
-prob.E.to.C.take <- 0
-prob.E.to.D.take <- 0
-prob.E.to.E.take <- 0
+E.to.A.take.sd <- 1
+E.to.B.take.sd <- 1
+E.to.C.take.sd <- 1
+E.to.D.take.sd <- 1
+E.to.E.take.sd <- 1
 
 # This function instantiates the origional matrix
 initial.population <- function(){
@@ -214,231 +183,656 @@ population
 
 
 # This function simulates one round of every person exhangeing power with every other person
-power.exchage <- function(population){
+exchange.power <- function(population){
+  
+  intermediate.ask.matrix <- matrix(rep(list(c(NA)), n.population * 5), byrow=F, nrow = n.population)
+  intermediate.take.matrix <- matrix(rep(list(c(NA)), n.population), byrow=F, nrow = n.population)
   
   # for each person in the population...
   for(i in 1:n.population){
     
-    # depending on which group person i is in...
+    # check to see if person i is in group A
     if(population[i, 2] == 0.01){
       
       # go through each other person in the population...
       for(j in 1:npopulation[-i]){
         
-        # depending on which group person person j is in...
+        # check to see if person j is in group A
         if(population[j,2] == 0.01){
+          
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
           if(runif(1, 0, 1) < prob.A.to.A.encounter){
             
+            # a random number to choose between the three different types of encounters
+            chooseEncounterType <- runif(1, 0, 1)
             
+            # person i asks for power from person j
+            if(chooseEncounterType <= prob.A.to.A.ask){
+              
+              powerAsk <- rnorm(1, 0, A.to.A.ask.sd)
+              
+              intermediate.ask.matrix[j, 1] <- 
+                append(intermediate.take.matrix[j, 1], list(i, powerAsk), after = length(intermediate.take.matrix[j, 1]))
+              
+              # person i tries to take power from person j
+            } else {
+              
+              powerTake <- abs(rnorm(1, 0, A.to.A.take.sd))
+              
+              intermediate.take.matrix[j, 1] <- 
+                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+            }
           }
+          
+          # check to see if person j is in group B
         } else if(population[j,2] == 0.02){
+          
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
           if(runif(1, 0, 1) < prob.A.to.B.encounter){
             
+            # a random number to choose between the three different types of encounters
+            chooseEncounterType <- runif(1, 0, 1)
             
+            # person i asks for power from person j
+            if(chooseEncounterType <= prob.A.to.B.ask){
+            
+            
+              # person i tries to take power from person j
+            } else {
+              
+              powerTake <- abs(rnorm(1, 0, A.to.B.take.sd))
+              
+              intermediate.take.matrix[j, 1] <- 
+                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+            }
           }
+          
+          # check to see if person j is in group C
         } else if(population[j,2] == 0.03){
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
           if(runif(1, 0, 1) < prob.A.to.C.encounter){
             
+            # a random number to choose between the three different types of encounters
+            chooseEncounterType <- runif(1, 0, 1)
             
+            # person i asks for power from person j
+            if(chooseEncounterType <= prob.A.to.C.ask){
+              
+              
+              # person i tries to take power from person j
+            } else {
+              
+              powerTake <- abs(rnorm(1, 0, A.to.C.take.sd))
+              
+              intermediate.take.matrix[j, 1] <- 
+                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+            }
           }
+          
+          # check to see if person j is in group D
         } else if(population[j,2] == 0.04){
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
           if(runif(1, 0, 1) < prob.A.to.D.encounter){
             
+            # a random number to choose between the three different types of encounters
+            chooseEncounterType <- runif(1, 0, 1)
             
+            # person i asks for power from person j
+            if(chooseEncounterType <= prob.A.to.D.ask){
+              
+              
+              # person i tries to take power from person j
+            } else {
+              
+              powerTake <- abs(rnorm(1, 0, A.to.D.take.sd))
+              
+              intermediate.take.matrix[j, 1] <- 
+                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+            }
           }
+          
+          # check to see if person j is in group E
         } else if(population[j,2] == 0.05){
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
           if(runif(1, 0, 1) < prob.A.to.E.encounter){
             
+            # a random number to choose between the three different types of encounters
+            chooseEncounterType <- runif(1, 0, 1)
             
+            # person i asks for power from person j
+            if(chooseEncounterType <= prob.A.to.E.ask){
+              
+             
+              # person i tries to take power from person j
+            } else {
+              
+              powerTake <- abs(rnorm(1, A.to.E.take.mean, A.to.E.take.sd))
+              
+              intermediate.take.matrix[j, 1] <- 
+                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+            }
           }
         }
       }
       
+      #check to see if person i is in group B
     } else if(population[i, 2] == 0.02){
       
       # go through each other person in the population...
       for(j in 1:npopulation[-i]){
         
-        # depending on which group person person j is in...
+        # check to see if person j is in group A
         if(population[j,2] == 0.01){
+          
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
           if(runif(1, 0, 1) < prob.B.to.A.encounter){
             
+            # a random number to choose between the three different types of encounters
+            chooseEncounterType <- runif(1, 0, 1)
             
+            # person i asks for power from person j
+            if(chooseEncounterType <= prob.B.to.A.ask){
+              
+              
+              # person i tries to take power from person j
+            } else {
+              
+              powerTake <- abs(rnorm(1, 0, B.to.A.take.sd))
+              
+              intermediate.take.matrix[j, 1] <- 
+                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+            }
           }
+          
+          # check to see if person j is in group B
         } else if(population[j,2] == 0.02){
+          
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
           if(runif(1, 0, 1) < prob.B.to.B.encounter){
             
+            # a random number to choose between the three different types of encounters
+            chooseEncounterType <- runif(1, 0, 1)
             
+            # person i asks for power from person j
+            if(chooseEncounterType <= prob.B.to.B.ask){
+              
+              
+              # person i tries to take power from person j
+            } else {
+              
+              powerTake <- abs(rnorm(1, 0, B.to.B.take.sd))
+              
+              intermediate.take.matrix[j, 1] <- 
+                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+            }
           }
+          
+          # check to see if person j is in group C
         } else if(population[j,2] == 0.03){
+          
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
           if(runif(1, 0, 1) < prob.B.to.C.encounter){
             
+            # a random number to choose between the three different types of encounters
+            chooseEncounterType <- runif(1, 0, 1)
             
+            # person i asks for power from person j
+            if(chooseEncounterType <= prob.B.to.C.ask){
+              
+             
+              # person i tries to take power from person j
+            } else {
+              
+              powerTake <- abs(rnorm(1, 0, B.to.C.take.sd))
+              
+              intermediate.take.matrix[j, 1] <- 
+                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+            }
           }
+          
+          # check to see if person j is in group D
         } else if(population[j,2] == 0.04){
+          
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
           if(runif(1, 0, 1) < prob.B.to.D.encounter){
             
+            # a random number to choose between the three different types of encounters
+            chooseEncounterType <- runif(1, 0, 1)
             
+            # person i asks for power from person j
+            if(chooseEncounterType <= prob.B.to.D.ask){
+              
+             
+              # person i tries to take power from person j
+            } else {
+              
+              powerTake <- abs(rnorm(1, 0, B.to.D.take.sd))
+              
+              intermediate.take.matrix[j, 1] <- 
+                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+            }
           }
+          
+          # check to see if person j is in group E
         } else if(population[j,2] == 0.05){
+          
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
           if(runif(1, 0, 1) < prob.B.to.E.encounter){
             
+            # a random number to choose between the three different types of encounters
+            chooseEncounterType <- runif(1, 0, 1)
             
+            # person i asks for power from person j
+            if(chooseEncounterType <= prob.B.to.E.ask){
+              
+              
+              # person i tries to take power from person j
+            } else {
+              
+              powerTake <- abs(rnorm(1, 0, B.to.E.take.sd))
+              
+              intermediate.take.matrix[j, 1] <- 
+                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+            }
           }
         }
       }
       
+      #check to see if person i is in group C
     } else if(population[i, 2] == 0.03){
       
       # go through each other person in the population...
       for(j in 1:npopulation[-i]){
         
-        # depending on which group person person j is in...
+        # check to see if person is j in group A
         if(population[j,2] == 0.01){
+          
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
           if(runif(1, 0, 1) < prob.C.to.A.encounter){
             
+            # a random number to choose between the three different types of encounters
+            chooseEncounterType <- runif(1, 0, 1)
             
+            # person i asks for power from person j
+            if(chooseEncounterType <= prob.C.to.A.ask){
+              
+              
+              # person i tries to take power from person j
+            } else {
+              
+              powerTake <- abs(rnorm(1, 0, C.to.A.take.sd))
+              
+              intermediate.take.matrix[j, 1] <- 
+                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+            }
           }
+          
+          # check to see if person j is in group B
         } else if(population[j,2] == 0.02){
+          
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
           if(runif(1, 0, 1) < prob.C.to.B.encounter){
             
+            # a random number to choose between the three different types of encounters
+            chooseEncounterType <- runif(1, 0, 1)
             
+            # person i asks for power from person j
+            if(chooseEncounterType <= prob.C.to.B.ask){
+              
+              
+              # person i tries to take power from person j
+            } else {
+              
+              powerTake <- abs(rnorm(1, 0, C.to.B.take.sd))
+              
+              intermediate.take.matrix[j, 1] <- 
+                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+            }
           }
+          
+          # check to see if person j is in group C
         } else if(population[j,2] == 0.03){
+          
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
           if(runif(1, 0, 1) < prob.C.to.C.encounter){
             
+            # a random number to choose between the three different types of encounters
+            chooseEncounterType <- runif(1, 0, 1)
             
+            # person i asks for power from person j
+            if(chooseEncounterType <= prob.C.to.C.ask){
+              
+              
+              # person i tries to take power from person j
+            } else {
+              
+              powerTake <- abs(rnorm(1, 0, C.to.C.take.sd))
+              
+              intermediate.take.matrix[j, 1] <- 
+                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+            }
           }
+          
+          # check to see if person j is in group D
         } else if(population[j,2] == 0.04){
+          
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
           if(runif(1, 0, 1) < prob.C.to.D.encounter){
             
+            # a random number to choose between the three different types of encounters
+            chooseEncounterType <- runif(1, 0, 1)
             
+            # person i asks for power from person j
+            if(chooseEncounterType <= prob.C.to.D.ask){
+              
+             
+              # person i tries to take power from person j
+            } else {
+              
+              powerTake <- abs(rnorm(1, 0, C.to.D.take.sd))
+              
+              intermediate.take.matrix[j, 1] <- 
+                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+            }
           }
+          
+          # check to see if person j is in group E
         } else if(population[j,2] == 0.05){
+          
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
           if(runif(1, 0, 1) < prob.C.to.E.encounter){
             
+            # a random number to choose between the three different types of encounters
+            chooseEncounterType <- runif(1, 0, 1)
             
+            # person i asks for power from person j
+            if(chooseEncounterType <= prob.C.to.E.ask){
+              
+              
+              # person i tries to take power from person j
+            } else {
+              
+              powerTake <- abs(rnorm(1, 0, C.to.E.take.sd))
+              
+              intermediate.take.matrix[j, 1] <- 
+                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+            }
           }
         }
       }
       
+      #check to see if person i is in group D
     } else if(population[i, 2] == 0.04){
       
       # go through each other person in the population...
       for(j in 1:npopulation[-i]){
         
-        # depending on which group person person j is in...
+        # check to see if person j is in group A
         if(population[j,2] == 0.01){
+          
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
           if(runif(1, 0, 1) < prob.D.to.A.encounter){
             
+            # a random number to choose between the three different types of encounters
+            chooseEncounterType <- runif(1, 0, 1)
             
+            # person i asks for power from person j
+            if(chooseEncounterType <= prob.D.to.A.ask){
+              
+              
+              # person i tries to take power from person j
+            } else {
+              
+              powerTake <- abs(rnorm(1, 0, D.to.A.take.sd))
+              
+              intermediate.take.matrix[j, 1] <- 
+                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+            }
           }
+          
+          # check to see if person j is in group B
         } else if(population[j,2] == 0.02){
+          
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
           if(runif(1, 0, 1) < prob.D.to.B.encounter){
             
+            # a random number to choose between the three different types of encounters
+            chooseEncounterType <- runif(1, 0, 1)
             
+            # person i asks for power from person j
+            if(chooseEncounterType <= prob.D.to.B.ask){
+              
+             
+              # person i tries to take power from person j
+            } else {
+              
+              powerTake <- abs(rnorm(1, 0, D.to.B.take.sd))
+              
+              intermediate.take.matrix[j, 1] <- 
+                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+            }
           }
+          
+          # check to see if person j is in group C
         } else if(population[j,2] == 0.03){
+          
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
           if(runif(1, 0, 1) < prob.D.to.C.encounter){
             
+            # a random number to choose between the three different types of encounters
+            chooseEncounterType <- runif(1, 0, 1)
             
+            # person i asks for power from person j
+            if(chooseEncounterType <= prob.D.to.C.ask){
+              
+              
+              # person i tries to take power from person j
+            } else {
+              
+              powerTake <- abs(rnorm(1, 0, D.to.C.take.sd))
+              
+              intermediate.take.matrix[j, 1] <- 
+                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+            }
           }
+          
+          # check to see if person j is in group D
         } else if(population[j,2] == 0.04){
+          
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
           if(runif(1, 0, 1) < prob.D.to.D.encounter){
             
+            # a random number to choose between the three different types of encounters
+            chooseEncounterType <- runif(1, 0, 1)
             
+            # person i asks for power from person j
+            if(chooseEncounterType <= prob.D.to.D.ask){
+              
+              
+              # person i tries to take power from person j
+            } else {
+              
+              powerTake <- abs(rnorm(1, 0, D.to.D.take.sd))
+              
+              intermediate.take.matrix[j, 1] <- 
+                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+            }
           }
+          
+          # check to see if person j is in group E
         } else if(population[j,2] == 0.05){
+          
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
           if(runif(1, 0, 1) < prob.D.to.E.encounter){
             
+            # a random number to choose between the three different types of encounters
+            chooseEncounterType <- runif(1, 0, 1)
             
+            # person i asks for power from person j
+            if(chooseEncounterType <= prob.D.to.E.ask){
+              
+              # person i tries to take power from person j
+            } else {
+              
+              powerTake <- abs(rnorm(1, 0, D.to.E.take.sd))
+              
+              intermediate.take.matrix[j, 1] <- 
+                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+            }
           }
         }
       }
       
+      #check to see if person i is in group E
     } else if(population[i, 2] == 0.05){
       
       # go through each other person in the population...
       for(j in 1:npopulation[-i]){
         
-        # depending on which group person person j is in...
+        # check to see if person j is in group A
         if(population[j,2] == 0.01){
+          
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
           if(runif(1, 0, 1) < prob.E.to.A.encounter){
             
+            # a random number to choose between the three different types of encounters
+            chooseEncounterType <- runif(1, 0, 1)
             
+            # person i asks for power from person j
+            if(chooseEncounterType <= prob.E.to.A.ask){
+              
+              
+              # person i tries to take power from person j
+            } else {
+              
+              powerTake <- abs(rnorm(1, 0, E.to.A.take.sd))
+              
+              intermediate.take.matrix[j, 1] <- 
+                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+            }
           }
+          
+          # check to see if person j is in group B
         } else if(population[j,2] == 0.02){
+          
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
           if(runif(1, 0, 1) < prob.E.to.B.encounter){
             
+            # a random number to choose between the three different types of encounters
+            chooseEncounterType <- runif(1, 0, 1)
             
+            # person i asks for power from person j
+            if(chooseEncounterType <= prob.E.to.B.ask){
+              
+              
+              # person i tries to take power from person j
+            } else {
+              
+              powerTake <- abs(rnorm(1, 0, E.to.B.take.sd))
+              
+              intermediate.take.matrix[j, 1] <- 
+                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+            }
           }
+          
+          # check to see if person j is in group C
         } else if(population[j,2] == 0.03){
+          
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
           if(runif(1, 0, 1) < prob.E.to.C.encounter){
             
+            # a random number to choose between the three different types of encounters
+            chooseEncounterType <- runif(1, 0, 1)
             
+            # person i asks for power from person j
+            if(chooseEncounterType <= prob.E.to.C.ask){
+              
+              
+              # person i tries to take power from person j
+            } else {
+              
+              powerTake <- abs(rnorm(1, 0, E.to.C.take.sd))
+              
+              intermediate.take.matrix[j, 1] <- 
+                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+            }
           }
+          
+          # check to see if person j is in group D
         } else if(population[j,2] == 0.04){
+          
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
           if(runif(1, 0, 1) < prob.E.to.D.encounter){
             
+            # a random number to choose between the three different types of encounters
+            chooseEncounterType <- runif(1, 0, 1)
             
+            # person i asks for power from person j
+            if(chooseEncounterType <= prob.E.to.D.ask){
+              
+              
+              # person i tries to take power from person j
+            } else {
+              
+              powerTake <- abs(rnorm(1, 0, E.to.D.take.sd))
+              
+              intermediate.take.matrix[j, 1] <- 
+                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+            }
           }
+          
+          # check to see if person j is in group E
         } else if(population[j,2] == 0.05){
+          
           # decide if person i will initiate contact with person j...
           # if the random number is greater than 0, the encounter is initiated
           if(runif(1, 0, 1) < prob.E.to.E.encounter){
             
+            # a random number to choose between the three different types of encounters
+            chooseEncounterType <- runif(1, 0, 1)
             
+            # person i asks for power from person j
+            if(chooseEncounterType <= prob.E.to.E.ask){
+              
+              
+              # person i tries to take power from person j
+            } else {
+              
+              powerTake <- abs(rnorm(1, 0, E.to.E.take.sd))
+              
+              intermediate.take.matrix[j, 1] <- 
+                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+            }
           }
         }
       }
     }
   }
 }
+
+
+
