@@ -833,6 +833,3 @@ exchange.power <- function(population){
     }
   }
 }
-
-
-
