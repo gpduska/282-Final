@@ -185,8 +185,13 @@ population
 # This function simulates one round of every person exhangeing power with every other person
 exchange.power <- function(population){
   
-  intermediate.ask.matrix <- matrix(rep(list(c(NA)), n.population * 5), byrow=F, nrow = n.population)
-  intermediate.take.matrix <- matrix(rep(list(c(NA)), n.population), byrow=F, nrow = n.population)
+  index.initiated <- c()
+  index.initiator <- c()
+  exchange.type <- c()
+  exchange.amount <- c()
+  group.initiator <- c()
+  
+  intermediate.exchange.data <- data.frame(index.initiated, index.initiator, exchange.type, exchange.amount, group.initiator)
   
   # for each person in the population...
   for(i in 1:n.population){
@@ -210,10 +215,13 @@ exchange.power <- function(population){
             # person i asks for power from person j
             if(chooseEncounterType <= prob.A.to.A.ask){
               
-              powerAsk <- rnorm(1, 0, A.to.A.ask.sd)
+              powerAsk <- abs(rnorm(1, 0, A.to.A.ask.sd))
               
-              intermediate.ask.matrix[j, 1] <- 
-                append(intermediate.take.matrix[j, 1], list(i, powerAsk), after = length(intermediate.take.matrix[j, 1]))
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiated, j, after = length(index.initiated))
+              exchange.type <- append(index.initiated, j, after = length(index.initiated))
+              exchange.amount <- append(index.initiated, j, after = length(index.initiated))
+              group.initiator <- append(index.initiated, j, after = length(index.initiated))
               
               # person i tries to take power from person j
             } else {
