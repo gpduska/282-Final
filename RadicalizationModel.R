@@ -196,6 +196,37 @@ E.to.C.ask.sd <- 1
 E.to.D.ask.sd <- 1
 E.to.E.ask.sd <- 1
 
+# the proprtion of their own power that each group member is willing to give to all members of each other group  
+prop.A.to.A.give <- 0.4
+prop.A.to.B.give <- 0.2
+prop.A.to.C.give <- 0.2
+prop.A.to.D.give <- 0.15
+prop.A.to.E.give <- 0.05
+
+prop.B.to.A.give <- 0.4
+prop.B.to.B.give <- 0.2
+prop.B.to.C.give <- 0.2
+prop.B.to.D.give <- 0.15
+prop.B.to.E.give <- 0.05
+
+prop.C.to.A.give <- 0.4
+prop.C.to.B.give <- 0.2
+prop.C.to.C.give <- 0.2
+prop.C.to.D.give <- 0.15
+prop.C.to.E.give <- 0.05
+
+prop.D.to.A.give <- 0.4
+prop.D.to.B.give <- 0.2
+prop.D.to.C.give <- 0.2
+prop.D.to.D.give <- 0.15
+prop.D.to.E.give <- 0.05
+
+prop.E.to.A.give <- 0.4
+prop.E.to.B.give <- 0.2
+prop.E.to.C.give <- 0.2
+prop.E.to.D.give <- 0.15
+prop.E.to.E.give <- 0.05
+
 # This function instantiates the origional matrix
 initial.population <- function(){
   
@@ -1184,16 +1215,53 @@ exchange.response <- function(intermediate.exchange.data){
       # each person attempting to take power from person i gives as much power they were attempting to take to person i
       for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "take"))){
         
+        power.take <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "take"))[j,4]
+        index.loser <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "take"))[j,2]
+        
+        population[index.loser, 3] <- population[index.loser, 3] - power.take
+        population[i, 3] <- population[i, 3] + power.take
+        
       }
     } else {
       
+      for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "take"))){
+        
+        power.take <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "take"))[j,4]
+        index.winner <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "take"))[j,2]
+        
+        population[index.winner, 3] <- population[index.winner, 3] + power.take
+        population[i, 3] <- population[i, 3] - power.take
+      }
     }
    }
   
   # goes through the "asks"
   for(i in 1:n.population){
     
+    total.ask.group.A <- sum((intermediate.exchange.data %>% 
+                                filter(index.initiated == i) %>% 
+                                filter(exchange.type == "ask") %>% 
+                                filter(group.initiator == 0.01))$exchange.amount)
+    total.ask.group.B <- sum((intermediate.exchange.data %>% 
+                                filter(index.initiated == i) %>% 
+                                filter(exchange.type == "ask") %>% 
+                                filter(group.initiator == 0.02))$exchange.amount)
+    total.ask.group.C <- sum((intermediate.exchange.data %>% 
+                                filter(index.initiated == i) %>% 
+                                filter(exchange.type == "ask") %>% 
+                                filter(group.initiator == 0.03))$exchange.amount)
+    total.ask.group.D <- sum((intermediate.exchange.data %>% 
+                                filter(index.initiated == i) %>% 
+                                filter(exchange.type == "ask") %>% 
+                                filter(group.initiator == 0.04))$exchange.amount)
+    total.ask.group.E <- sum((intermediate.exchange.data %>% 
+                                filter(index.initiated == i) %>% 
+                                filter(exchange.type == "ask") %>% 
+                                filter(group.initiator == 0.05))$exchange.amount)
+    
   }
 }
 
-intermediate.exchange.data %>% filter(index.initiated == 67) %>% filter(exchange.type == "take"))[1]
+intermediate.exchange.data %>% filter(index.initiated == 63) %>% filter(exchange.type == "ask")
+
+
