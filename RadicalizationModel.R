@@ -44,6 +44,7 @@
 
 # Every person should have a powerScore goal. The greedy goal would be to maximize your own power. My idea is to have a neural net for each person that 
 # is figuring out how to distribute power in such a way that brings them closer to their goal. 
+library(dplyr)
 
 n.population <- 300  #size of population
 
@@ -72,35 +73,35 @@ groupE.power.total <- groupE.power.member * n.groupE
 system.total.power <- groupA.power.total + groupB.power.total + groupC.power.total + groupD.power.total + groupE.power.total
 
 # the number that a random number between 0 and 1 has to be less than in order for an encounter to be initiated
-prob.A.to.A.encounter <- 0.001
-prob.A.to.B.encounter <- 0.001
-prob.A.to.C.encounter <- 0.001
-prob.A.to.D.encounter <- 0.001
-prob.A.to.E.encounter <- 0.001
+prob.A.to.A.encounter <- 0.01
+prob.A.to.B.encounter <- 0.01
+prob.A.to.C.encounter <- 0.01
+prob.A.to.D.encounter <- 0.01
+prob.A.to.E.encounter <- 0.01
 
-prob.B.to.A.encounter <- 0.001
-prob.B.to.B.encounter <- 0.001
-prob.B.to.C.encounter <- 0.001
-prob.B.to.D.encounter <- 0.001
-prob.B.to.E.encounter <- 0.001
+prob.B.to.A.encounter <- 0.01
+prob.B.to.B.encounter <- 0.01
+prob.B.to.C.encounter <- 0.01
+prob.B.to.D.encounter <- 0.01
+prob.B.to.E.encounter <- 0.01
 
-prob.C.to.A.encounter <- 0.001
-prob.C.to.B.encounter <- 0.001
-prob.C.to.C.encounter <- 0.001
-prob.C.to.D.encounter <- 0.001
-prob.C.to.E.encounter <- 0.001
+prob.C.to.A.encounter <- 0.01
+prob.C.to.B.encounter <- 0.01
+prob.C.to.C.encounter <- 0.01
+prob.C.to.D.encounter <- 0.01
+prob.C.to.E.encounter <- 0.01
 
-prob.D.to.A.encounter <- 0.001
-prob.D.to.B.encounter <- 0.001
-prob.D.to.C.encounter <- 0.001
-prob.D.to.D.encounter <- 0.001
-prob.D.to.E.encounter <- 0.001
+prob.D.to.A.encounter <- 0.01
+prob.D.to.B.encounter <- 0.01
+prob.D.to.C.encounter <- 0.01
+prob.D.to.D.encounter <- 0.01
+prob.D.to.E.encounter <- 0.01
 
-prob.E.to.A.encounter <- 0.001
-prob.E.to.B.encounter <- 0.001
-prob.E.to.C.encounter <- 0.001
-prob.E.to.D.encounter <- 0.001
-prob.E.to.E.encounter <- 0.001
+prob.E.to.A.encounter <- 0.01
+prob.E.to.B.encounter <- 0.01
+prob.E.to.C.encounter <- 0.01
+prob.E.to.D.encounter <- 0.01
+prob.E.to.E.encounter <- 0.01
 
 # the number that a random number between 0 and 1 has to be less than in order for an ask of power to happen
 prob.A.to.A.ask <- 0.5
@@ -1172,3 +1173,27 @@ exchange.power <- function(population){
 population <- initial.population()
 intermediate.exchange.data <- exchange.power(population)
 
+exchange.response <- function(intermediate.exchange.data){
+  
+  # goes through the "takes"
+  for(i in 1:n.population){
+    total.attempted.take <- sum((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "take"))$exchangeamount)
+    
+    if(total.attempted.take < population[i, 3]){
+      
+      # each person attempting to take power from person i gives as much power they were attempting to take to person i
+      for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "take"))){
+        
+      }
+    } else {
+      
+    }
+   }
+  
+  # goes through the "asks"
+  for(i in 1:n.population){
+    
+  }
+}
+
+intermediate.exchange.data %>% filter(index.initiated == 67) %>% filter(exchange.type == "take"))[1]
