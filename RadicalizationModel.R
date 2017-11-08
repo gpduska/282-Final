@@ -45,9 +45,7 @@
 # Every person should have a powerScore goal. The greedy goal would be to maximize your own power. My idea is to have a neural net for each person that 
 # is figuring out how to distribute power in such a way that brings them closer to their goal. 
 
-Person(name, group, powerScore, prob.of.A.encounter, prob.ask.from.A, prob.give.to.A, prob., prob.of.B.encounter, prob.of.C.encounter,)
-
-n.population <- 3000  #size of population
+n.population <- 300  #size of population
 
 # these groups are sort of arbitrarily defiened depending on the system that the model is describing
 n.groupA <- n.population * 0.01
@@ -74,66 +72,66 @@ groupE.power.total <- groupE.power.member * n.groupE
 system.total.power <- groupA.power.total + groupB.power.total + groupC.power.total + groupD.power.total + groupE.power.total
 
 # the number that a random number between 0 and 1 has to be less than in order for an encounter to be initiated
-prob.A.to.A.encounter <- 0.1
-prob.A.to.B.encounter <- 0.1
-prob.A.to.C.encounter <- 0.1
-prob.A.to.D.encounter <- 0.1
-prob.A.to.E.encounter <- 0.1
+prob.A.to.A.encounter <- 0.001
+prob.A.to.B.encounter <- 0.001
+prob.A.to.C.encounter <- 0.001
+prob.A.to.D.encounter <- 0.001
+prob.A.to.E.encounter <- 0.001
 
-prob.B.to.A.encounter <- 0.1
-prob.B.to.B.encounter <- 0.1
-prob.B.to.C.encounter <- 0.1
-prob.B.to.D.encounter <- 0.1
-prob.B.to.E.encounter <- 0.1
+prob.B.to.A.encounter <- 0.001
+prob.B.to.B.encounter <- 0.001
+prob.B.to.C.encounter <- 0.001
+prob.B.to.D.encounter <- 0.001
+prob.B.to.E.encounter <- 0.001
 
-prob.C.to.A.encounter <- 0.1
-prob.C.to.B.encounter <- 0.1
-prob.C.to.C.encounter <- 0.1
-prob.C.to.D.encounter <- 0.1
-prob.C.to.E.encounter <- 0.1
+prob.C.to.A.encounter <- 0.001
+prob.C.to.B.encounter <- 0.001
+prob.C.to.C.encounter <- 0.001
+prob.C.to.D.encounter <- 0.001
+prob.C.to.E.encounter <- 0.001
 
-prob.D.to.A.encounter <- 0.1
-prob.D.to.B.encounter <- 0.1
-prob.D.to.C.encounter <- 0.1
-prob.D.to.D.encounter <- 0.1
-prob.D.to.E.encounter <- 0.1
+prob.D.to.A.encounter <- 0.001
+prob.D.to.B.encounter <- 0.001
+prob.D.to.C.encounter <- 0.001
+prob.D.to.D.encounter <- 0.001
+prob.D.to.E.encounter <- 0.001
 
-prob.E.to.A.encounter <- 0.1
-prob.E.to.B.encounter <- 0.1
-prob.E.to.C.encounter <- 0.1
-prob.E.to.D.encounter <- 0.1
-prob.E.to.E.encounter <- 0.1
+prob.E.to.A.encounter <- 0.001
+prob.E.to.B.encounter <- 0.001
+prob.E.to.C.encounter <- 0.001
+prob.E.to.D.encounter <- 0.001
+prob.E.to.E.encounter <- 0.001
 
 # the number that a random number between 0 and 1 has to be less than in order for an ask of power to happen
-prob.A.to.A.ask <- 0
-prob.A.to.B.ask <- 0
-prob.A.to.C.ask <- 0
-prob.A.to.D.ask <- 0
-prob.A.to.E.ask <- 0
+prob.A.to.A.ask <- 0.5
+prob.A.to.B.ask <- 0.5
+prob.A.to.C.ask <- 0.5
+prob.A.to.D.ask <- 0.5
+prob.A.to.E.ask <- 0.5
 
-prob.B.to.A.ask <- 0
-prob.B.to.B.ask <- 0
-prob.B.to.C.ask <- 0
-prob.B.to.D.ask <- 0
-prob.B.to.E.ask <- 0
+prob.B.to.A.ask <- 0.5
+prob.B.to.B.ask <- 0.5
+prob.B.to.C.ask <- 0.5
+prob.B.to.D.ask <- 0.5
+prob.B.to.E.ask <- 0.5
 
-prob.C.to.A.ask <- 0
-prob.C.to.B.ask <- 0
-prob.C.to.C.ask <- 0
-prob.C.to.D.ask <- 0
-prob.C.to.E.ask <- 0
+prob.C.to.A.ask <- 0.5
+prob.C.to.B.ask <- 0.5
+prob.C.to.C.ask <- 0.5
+prob.C.to.D.ask <- 0.5
+prob.C.to.E.ask <- 0.5
 
-prob.D.to.A.ask <- 0
-prob.D.to.B.ask <- 0
-prob.D.to.C.ask <- 0
-prob.D.to.D.ask <- 0
-prob.D.to.E.ask <- 0
+prob.D.to.A.ask <- 0.5
+prob.D.to.B.ask <- 0.5
+prob.D.to.C.ask <- 0.5
+prob.D.to.D.ask <- 0.5
+prob.D.to.E.ask <- 0.5
 
-prob.E.to.A.ask <- 0
-prob.E.to.B.ask <- 0
-prob.E.to.C.ask <- 0
-prob.E.to.D.ask <- 0
-prob.E.to.E.ask <- 0
+prob.E.to.A.ask <- 0.5
+prob.E.to.B.ask <- 0.5
+prob.E.to.C.ask <- 0.5
+prob.E.to.D.ask <- 0.5
+prob.E.to.E.ask <- 0.5
 
 # the standard deviation of the normal curves that are used to decide how much a person takes from another based on group
 A.to.A.take.sd <- 1
@@ -166,41 +164,71 @@ E.to.C.take.sd <- 1
 E.to.D.take.sd <- 1
 E.to.E.take.sd <- 1
 
+# the standard deviation of the normal curves that are used to decide how much a person asks from another based on group
+A.to.A.ask.sd <- 1
+A.to.B.ask.sd <- 1
+A.to.C.ask.sd <- 1
+A.to.D.ask.sd <- 1
+A.to.E.ask.sd <- 1
+
+B.to.A.ask.sd <- 1
+B.to.B.ask.sd <- 1
+B.to.C.ask.sd <- 1
+B.to.D.ask.sd <- 1
+B.to.E.ask.sd <- 1
+
+C.to.A.ask.sd <- 1
+C.to.B.ask.sd <- 1
+C.to.C.ask.sd <- 1
+C.to.D.ask.sd <- 1
+C.to.E.ask.sd <- 1
+
+D.to.A.ask.sd <- 1
+D.to.B.ask.sd <- 1
+D.to.C.ask.sd <- 1
+D.to.D.ask.sd <- 1
+D.to.E.ask.sd <- 1
+
+E.to.A.ask.sd <- 1
+E.to.B.ask.sd <- 1
+E.to.C.ask.sd <- 1
+E.to.D.ask.sd <- 1
+E.to.E.ask.sd <- 1
+
 # This function instantiates the origional matrix
 initial.population <- function(){
   
   name.vector <- 1:n.population
   
-  group.vector <- c(rep(0.1, n.groupA), rep(0.2, n.groupB), rep(0.3, n.groupC), rep(0.4, n.groupD), rep(0.5, n.groupE))
+  group.vector <- c(rep(0.01, n.groupA), rep(0.02, n.groupB), rep(0.03, n.groupC), rep(0.04, n.groupD), rep(0.05, n.groupE))
   
   power.vector <- c(rep(groupA.power.member, n.groupA), rep(groupB.power.member, n.groupB), rep(groupC.power.member, n.groupC),
                     rep(groupD.power.member, n.groupD), rep(groupE.power.member, n.groupE))
   
   return(matrix(c(name.vector, group.vector, power.vector), byrow=F, nrow = n.population))
 }
-population <- initial.population()
-population
 
 
 # This function simulates one round of every person exhangeing power with every other person
 exchange.power <- function(population){
   
+  pop.vector <- 1:n.population
+  
   index.initiated <- c()
   index.initiator <- c()
   exchange.type <- c()
   exchange.amount <- c()
+  group.initiated <- c()
   group.initiator <- c()
   
-  intermediate.exchange.data <- data.frame(index.initiated, index.initiator, exchange.type, exchange.amount, group.initiator)
-  
   # for each person in the population...
-  for(i in 1:n.population){
+  for(i in pop.vector){
     
     # check to see if person i is in group A
     if(population[i, 2] == 0.01){
       
       # go through each other person in the population...
-      for(j in 1:npopulation[-i]){
+      for(j in pop.vector[-i]){
         
         # check to see if person j is in group A
         if(population[j,2] == 0.01){
@@ -218,18 +246,23 @@ exchange.power <- function(population){
               powerAsk <- abs(rnorm(1, 0, A.to.A.ask.sd))
               
               index.initiated <- append(index.initiated, j, after = length(index.initiated))
-              index.initiator <- append(index.initiated, j, after = length(index.initiated))
-              exchange.type <- append(index.initiated, j, after = length(index.initiated))
-              exchange.amount <- append(index.initiated, j, after = length(index.initiated))
-              group.initiator <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "ask", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerAsk, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
               
               # person i tries to take power from person j
             } else {
               
               powerTake <- abs(rnorm(1, 0, A.to.A.take.sd))
               
-              intermediate.take.matrix[j, 1] <- 
-                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "take", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerTake, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
             }
           }
           
@@ -245,15 +278,27 @@ exchange.power <- function(population){
             
             # person i asks for power from person j
             if(chooseEncounterType <= prob.A.to.B.ask){
-            
+              
+              powerAsk <- abs(rnorm(1, 0, A.to.B.ask.sd))
+              
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "ask", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerAsk, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
             
               # person i tries to take power from person j
             } else {
               
               powerTake <- abs(rnorm(1, 0, A.to.B.take.sd))
               
-              intermediate.take.matrix[j, 1] <- 
-                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "take", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerTake, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
             }
           }
           
@@ -269,14 +314,26 @@ exchange.power <- function(population){
             # person i asks for power from person j
             if(chooseEncounterType <= prob.A.to.C.ask){
               
+              powerAsk <- abs(rnorm(1, 0, A.to.C.ask.sd))
+              
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "ask", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerAsk, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
               
               # person i tries to take power from person j
             } else {
               
               powerTake <- abs(rnorm(1, 0, A.to.C.take.sd))
               
-              intermediate.take.matrix[j, 1] <- 
-                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "take", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerTake, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
             }
           }
           
@@ -292,14 +349,26 @@ exchange.power <- function(population){
             # person i asks for power from person j
             if(chooseEncounterType <= prob.A.to.D.ask){
               
+              powerAsk <- abs(rnorm(1, 0, A.to.D.ask.sd))
+              
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "ask", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerAsk, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
               
               # person i tries to take power from person j
             } else {
               
               powerTake <- abs(rnorm(1, 0, A.to.D.take.sd))
               
-              intermediate.take.matrix[j, 1] <- 
-                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "take", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerTake, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
             }
           }
           
@@ -315,14 +384,26 @@ exchange.power <- function(population){
             # person i asks for power from person j
             if(chooseEncounterType <= prob.A.to.E.ask){
               
+              powerAsk <- abs(rnorm(1, 0, A.to.E.ask.sd))
+              
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "ask", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerAsk, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
              
               # person i tries to take power from person j
             } else {
               
-              powerTake <- abs(rnorm(1, A.to.E.take.mean, A.to.E.take.sd))
+              powerTake <- abs(rnorm(1, 0, A.to.E.take.sd))
               
-              intermediate.take.matrix[j, 1] <- 
-                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "take", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerTake, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
             }
           }
         }
@@ -332,7 +413,7 @@ exchange.power <- function(population){
     } else if(population[i, 2] == 0.02){
       
       # go through each other person in the population...
-      for(j in 1:npopulation[-i]){
+      for(j in pop.vector[-i]){
         
         # check to see if person j is in group A
         if(population[j,2] == 0.01){
@@ -347,14 +428,26 @@ exchange.power <- function(population){
             # person i asks for power from person j
             if(chooseEncounterType <= prob.B.to.A.ask){
               
+              powerAsk <- abs(rnorm(1, 0, B.to.A.ask.sd))
+              
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "ask", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerAsk, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
               
               # person i tries to take power from person j
             } else {
               
               powerTake <- abs(rnorm(1, 0, B.to.A.take.sd))
               
-              intermediate.take.matrix[j, 1] <- 
-                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "take", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerTake, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
             }
           }
           
@@ -371,14 +464,26 @@ exchange.power <- function(population){
             # person i asks for power from person j
             if(chooseEncounterType <= prob.B.to.B.ask){
               
+              powerAsk <- abs(rnorm(1, 0, B.to.B.ask.sd))
+              
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "ask", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerAsk, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
               
               # person i tries to take power from person j
             } else {
               
               powerTake <- abs(rnorm(1, 0, B.to.B.take.sd))
               
-              intermediate.take.matrix[j, 1] <- 
-                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "take", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerTake, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
             }
           }
           
@@ -395,14 +500,26 @@ exchange.power <- function(population){
             # person i asks for power from person j
             if(chooseEncounterType <= prob.B.to.C.ask){
               
+              powerAsk <- abs(rnorm(1, 0, B.to.C.ask.sd))
+              
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "ask", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerAsk, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
              
               # person i tries to take power from person j
             } else {
               
               powerTake <- abs(rnorm(1, 0, B.to.C.take.sd))
               
-              intermediate.take.matrix[j, 1] <- 
-                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "take", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerTake, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
             }
           }
           
@@ -419,14 +536,26 @@ exchange.power <- function(population){
             # person i asks for power from person j
             if(chooseEncounterType <= prob.B.to.D.ask){
               
+              powerAsk <- abs(rnorm(1, 0, B.to.D.ask.sd))
+              
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "ask", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerAsk, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
              
               # person i tries to take power from person j
             } else {
               
               powerTake <- abs(rnorm(1, 0, B.to.D.take.sd))
               
-              intermediate.take.matrix[j, 1] <- 
-                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "take", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerTake, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
             }
           }
           
@@ -443,14 +572,26 @@ exchange.power <- function(population){
             # person i asks for power from person j
             if(chooseEncounterType <= prob.B.to.E.ask){
               
+              powerAsk <- abs(rnorm(1, 0, B.to.E.ask.sd))
+              
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "ask", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerAsk, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
               
               # person i tries to take power from person j
             } else {
               
               powerTake <- abs(rnorm(1, 0, B.to.E.take.sd))
               
-              intermediate.take.matrix[j, 1] <- 
-                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "take", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerTake, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
             }
           }
         }
@@ -460,7 +601,7 @@ exchange.power <- function(population){
     } else if(population[i, 2] == 0.03){
       
       # go through each other person in the population...
-      for(j in 1:npopulation[-i]){
+      for(j in pop.vector[-i]){
         
         # check to see if person is j in group A
         if(population[j,2] == 0.01){
@@ -475,14 +616,26 @@ exchange.power <- function(population){
             # person i asks for power from person j
             if(chooseEncounterType <= prob.C.to.A.ask){
               
+              powerAsk <- abs(rnorm(1, 0, C.to.A.ask.sd))
+              
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "ask", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerAsk, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
               
               # person i tries to take power from person j
             } else {
               
               powerTake <- abs(rnorm(1, 0, C.to.A.take.sd))
               
-              intermediate.take.matrix[j, 1] <- 
-                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "take", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerTake, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
             }
           }
           
@@ -499,14 +652,26 @@ exchange.power <- function(population){
             # person i asks for power from person j
             if(chooseEncounterType <= prob.C.to.B.ask){
               
+              powerAsk <- abs(rnorm(1, 0, C.to.B.ask.sd))
+              
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "ask", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerAsk, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
               
               # person i tries to take power from person j
             } else {
               
               powerTake <- abs(rnorm(1, 0, C.to.B.take.sd))
               
-              intermediate.take.matrix[j, 1] <- 
-                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "take", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerTake, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
             }
           }
           
@@ -523,14 +688,26 @@ exchange.power <- function(population){
             # person i asks for power from person j
             if(chooseEncounterType <= prob.C.to.C.ask){
               
+              powerAsk <- abs(rnorm(1, 0, C.to.C.ask.sd))
+              
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "ask", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerAsk, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
               
               # person i tries to take power from person j
             } else {
               
               powerTake <- abs(rnorm(1, 0, C.to.C.take.sd))
               
-              intermediate.take.matrix[j, 1] <- 
-                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "take", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerTake, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
             }
           }
           
@@ -547,14 +724,26 @@ exchange.power <- function(population){
             # person i asks for power from person j
             if(chooseEncounterType <= prob.C.to.D.ask){
               
+              powerAsk <- abs(rnorm(1, 0, C.to.D.ask.sd))
+              
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "ask", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerAsk, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
              
               # person i tries to take power from person j
             } else {
               
               powerTake <- abs(rnorm(1, 0, C.to.D.take.sd))
               
-              intermediate.take.matrix[j, 1] <- 
-                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "take", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerTake, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
             }
           }
           
@@ -571,14 +760,26 @@ exchange.power <- function(population){
             # person i asks for power from person j
             if(chooseEncounterType <= prob.C.to.E.ask){
               
+              powerAsk <- abs(rnorm(1, 0, C.to.E.ask.sd))
+              
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "ask", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerAsk, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
               
               # person i tries to take power from person j
             } else {
               
               powerTake <- abs(rnorm(1, 0, C.to.E.take.sd))
               
-              intermediate.take.matrix[j, 1] <- 
-                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "take", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerTake, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
             }
           }
         }
@@ -588,7 +789,7 @@ exchange.power <- function(population){
     } else if(population[i, 2] == 0.04){
       
       # go through each other person in the population...
-      for(j in 1:npopulation[-i]){
+      for(j in pop.vector[-i]){
         
         # check to see if person j is in group A
         if(population[j,2] == 0.01){
@@ -603,14 +804,26 @@ exchange.power <- function(population){
             # person i asks for power from person j
             if(chooseEncounterType <= prob.D.to.A.ask){
               
+              powerAsk <- abs(rnorm(1, 0, D.to.A.ask.sd))
+              
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "ask", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerAsk, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
               
               # person i tries to take power from person j
             } else {
               
               powerTake <- abs(rnorm(1, 0, D.to.A.take.sd))
               
-              intermediate.take.matrix[j, 1] <- 
-                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "take", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerTake, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
             }
           }
           
@@ -627,14 +840,26 @@ exchange.power <- function(population){
             # person i asks for power from person j
             if(chooseEncounterType <= prob.D.to.B.ask){
               
+              powerAsk <- abs(rnorm(1, 0, D.to.B.ask.sd))
+              
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "ask", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerAsk, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
              
               # person i tries to take power from person j
             } else {
               
               powerTake <- abs(rnorm(1, 0, D.to.B.take.sd))
               
-              intermediate.take.matrix[j, 1] <- 
-                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "take", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerTake, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
             }
           }
           
@@ -651,14 +876,26 @@ exchange.power <- function(population){
             # person i asks for power from person j
             if(chooseEncounterType <= prob.D.to.C.ask){
               
+              powerAsk <- abs(rnorm(1, 0, D.to.C.ask.sd))
+              
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "ask", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerAsk, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
               
               # person i tries to take power from person j
             } else {
               
               powerTake <- abs(rnorm(1, 0, D.to.C.take.sd))
               
-              intermediate.take.matrix[j, 1] <- 
-                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "take", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerTake, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
             }
           }
           
@@ -675,14 +912,26 @@ exchange.power <- function(population){
             # person i asks for power from person j
             if(chooseEncounterType <= prob.D.to.D.ask){
               
+              powerAsk <- abs(rnorm(1, 0, D.to.D.ask.sd))
+              
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "ask", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerAsk, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
               
               # person i tries to take power from person j
             } else {
               
               powerTake <- abs(rnorm(1, 0, D.to.D.take.sd))
               
-              intermediate.take.matrix[j, 1] <- 
-                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "take", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerTake, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
             }
           }
           
@@ -699,13 +948,26 @@ exchange.power <- function(population){
             # person i asks for power from person j
             if(chooseEncounterType <= prob.D.to.E.ask){
               
+              powerAsk <- abs(rnorm(1, 0, D.to.E.ask.sd))
+              
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "ask", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerAsk, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
+              
               # person i tries to take power from person j
             } else {
               
               powerTake <- abs(rnorm(1, 0, D.to.E.take.sd))
               
-              intermediate.take.matrix[j, 1] <- 
-                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "take", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerTake, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
             }
           }
         }
@@ -715,7 +977,7 @@ exchange.power <- function(population){
     } else if(population[i, 2] == 0.05){
       
       # go through each other person in the population...
-      for(j in 1:npopulation[-i]){
+      for(j in pop.vector[-i]){
         
         # check to see if person j is in group A
         if(population[j,2] == 0.01){
@@ -730,14 +992,26 @@ exchange.power <- function(population){
             # person i asks for power from person j
             if(chooseEncounterType <= prob.E.to.A.ask){
               
+              powerAsk <- abs(rnorm(1, 0, E.to.A.ask.sd))
+              
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "ask", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerAsk, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
               
               # person i tries to take power from person j
             } else {
               
               powerTake <- abs(rnorm(1, 0, E.to.A.take.sd))
               
-              intermediate.take.matrix[j, 1] <- 
-                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "take", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerTake, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
             }
           }
           
@@ -754,14 +1028,26 @@ exchange.power <- function(population){
             # person i asks for power from person j
             if(chooseEncounterType <= prob.E.to.B.ask){
               
+              powerAsk <- abs(rnorm(1, 0, E.to.B.ask.sd))
+              
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "ask", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerAsk, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
               
               # person i tries to take power from person j
             } else {
               
               powerTake <- abs(rnorm(1, 0, E.to.B.take.sd))
               
-              intermediate.take.matrix[j, 1] <- 
-                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "take", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerTake, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
             }
           }
           
@@ -778,14 +1064,26 @@ exchange.power <- function(population){
             # person i asks for power from person j
             if(chooseEncounterType <= prob.E.to.C.ask){
               
+              powerAsk <- abs(rnorm(1, 0, E.to.C.ask.sd))
+              
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "ask", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerAsk, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
               
               # person i tries to take power from person j
             } else {
               
               powerTake <- abs(rnorm(1, 0, E.to.C.take.sd))
               
-              intermediate.take.matrix[j, 1] <- 
-                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "take", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerTake, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
             }
           }
           
@@ -802,14 +1100,26 @@ exchange.power <- function(population){
             # person i asks for power from person j
             if(chooseEncounterType <= prob.E.to.D.ask){
               
+              powerAsk <- abs(rnorm(1, 0, E.to.D.ask.sd))
+              
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "ask", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerAsk, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
               
               # person i tries to take power from person j
             } else {
               
               powerTake <- abs(rnorm(1, 0, E.to.D.take.sd))
               
-              intermediate.take.matrix[j, 1] <- 
-                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "take", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerTake, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
             }
           }
           
@@ -826,18 +1136,39 @@ exchange.power <- function(population){
             # person i asks for power from person j
             if(chooseEncounterType <= prob.E.to.E.ask){
               
+              powerAsk <- abs(rnorm(1, 0, E.to.E.ask.sd))
+              
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "ask", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerAsk, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
               
               # person i tries to take power from person j
             } else {
               
               powerTake <- abs(rnorm(1, 0, E.to.E.take.sd))
               
-              intermediate.take.matrix[j, 1] <- 
-                append(intermediate.take.matrix[j, 1], list(i, population[i, 3], powerTake), after = length(intermediate.take.matrix[j, 1]))
+              index.initiated <- append(index.initiated, j, after = length(index.initiated))
+              index.initiator <- append(index.initiator, i, after = length(index.initiator))
+              exchange.type <- append(exchange.type, "take", after = length(exchange.type))
+              exchange.amount <- append(exchange.amount, powerTake, after = length(exchange.amount))
+              group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+              group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
             }
           }
         }
       }
     }
   }
+  
+  # This creates a data frame that will be used on the second and third steps of teh power exchange when people resond to people taking and asking
+  # for their power. 
+  return(data.frame(index.initiated, index.initiator, exchange.type, exchange.amount, group.initiated, group.initiator))
+  
 }
+
+population <- initial.population()
+intermediate.exchange.data <- exchange.power(population)
+
