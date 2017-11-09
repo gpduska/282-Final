@@ -1596,6 +1596,7 @@ exchange.response <- function(intermediate.exchange.data){
                           * (population[i,3] * prop.C.to.E.give / total.ask.group.A))
             index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[j,2]
             
+            print(power.ask)
             population[index.asker, 3] <- population[index.asker, 3] + power.ask
             population[i,3] <- population[i,3] - power.ask
           }
