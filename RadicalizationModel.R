@@ -73,35 +73,35 @@ groupE.power.total <- groupE.power.member * n.groupE
 system.total.power <- groupA.power.total + groupB.power.total + groupC.power.total + groupD.power.total + groupE.power.total
 
 # the number that a random number between 0 and 1 has to be less than in order for an encounter to be initiated
-prob.A.to.A.encounter <- 0.01
-prob.A.to.B.encounter <- 0.01
-prob.A.to.C.encounter <- 0.01
-prob.A.to.D.encounter <- 0.01
-prob.A.to.E.encounter <- 0.01
+prob.A.to.A.encounter <- 0.005
+prob.A.to.B.encounter <- 0.005
+prob.A.to.C.encounter <- 0.005
+prob.A.to.D.encounter <- 0.005
+prob.A.to.E.encounter <- 0.005
 
-prob.B.to.A.encounter <- 0.01
-prob.B.to.B.encounter <- 0.01
-prob.B.to.C.encounter <- 0.01
-prob.B.to.D.encounter <- 0.01
-prob.B.to.E.encounter <- 0.01
+prob.B.to.A.encounter <- 0.005
+prob.B.to.B.encounter <- 0.005
+prob.B.to.C.encounter <- 0.005
+prob.B.to.D.encounter <- 0.005
+prob.B.to.E.encounter <- 0.005
 
-prob.C.to.A.encounter <- 0.01
-prob.C.to.B.encounter <- 0.01
-prob.C.to.C.encounter <- 0.01
-prob.C.to.D.encounter <- 0.01
-prob.C.to.E.encounter <- 0.01
+prob.C.to.A.encounter <- 0.005
+prob.C.to.B.encounter <- 0.005
+prob.C.to.C.encounter <- 0.005
+prob.C.to.D.encounter <- 0.005
+prob.C.to.E.encounter <- 0.005
 
-prob.D.to.A.encounter <- 0.01
-prob.D.to.B.encounter <- 0.01
-prob.D.to.C.encounter <- 0.01
-prob.D.to.D.encounter <- 0.01
-prob.D.to.E.encounter <- 0.01
+prob.D.to.A.encounter <- 0.005
+prob.D.to.B.encounter <- 0.005
+prob.D.to.C.encounter <- 0.005
+prob.D.to.D.encounter <- 0.005
+prob.D.to.E.encounter <- 0.005
 
-prob.E.to.A.encounter <- 0.01
-prob.E.to.B.encounter <- 0.01
-prob.E.to.C.encounter <- 0.01
-prob.E.to.D.encounter <- 0.01
-prob.E.to.E.encounter <- 0.01
+prob.E.to.A.encounter <- 0.005
+prob.E.to.B.encounter <- 0.005
+prob.E.to.C.encounter <- 0.005
+prob.E.to.D.encounter <- 0.005
+prob.E.to.E.encounter <- 0.005
 
 # the number that a random number between 0 and 1 has to be less than in order for an ask of power to happen
 prob.A.to.A.ask <- 0.5
@@ -1201,30 +1201,29 @@ exchange.power <- function(population){
   
 }
 
-population <- initial.population()
-intermediate.exchange.data <- exchange.power(population)
 
-exchange.response <- function(intermediate.exchange.data){
+exchange.response <- function(intermediate.exchange.data, population){
   
   # response for the "takes"
   for(i in 1:n.population){
-    total.attempted.take <- sum((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "take"))$exchangeamount)
+    print(i)
+    total.attempted.take <- sum((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "take"))$exchange.amount)
     
-    if(total.attempted.take < population[i, 3]){
+    if(0 < total.attempted.take < population[i, 3]){
       
       # each person attempting to take power from person i gives as much power they were attempting to take to person i
-      for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "take"))){
+      for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "take"))[,1])){
         
         power.take <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "take"))[j,4]
         index.loser <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "take"))[j,2]
         
         population[index.loser, 3] <- population[index.loser, 3] - power.take
         population[i, 3] <- population[i, 3] + power.take
-        
+        print(i)
       }
     } else {
       
-      for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "take"))){
+      for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "take"))[,1])){
         
         power.take <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "take"))[j,4]
         index.winner <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "take"))[j,2]
@@ -1233,7 +1232,7 @@ exchange.response <- function(intermediate.exchange.data){
         population[i, 3] <- population[i, 3] - power.take
       }
     }
-   }
+  }
   
   # response for the "asks"
   for(i in 1:n.population){
@@ -1264,10 +1263,10 @@ exchange.response <- function(intermediate.exchange.data){
                                 filter(group.initiator == 0.05))$exchange.amount)
     
     if(population[i,2] == .01){
-      
-      if(total.ask.group.A <= population[i,3] * prop.A.to.A.give){
+      print(population[1,3])
+      if(total.ask.group.A <= (population[1,3] * prop.A.to.A.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[,1])){
           
           power.ask <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[j,4]
           index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[j,2]
@@ -1275,9 +1274,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.B <= population[i,3] * prop.A.to.B.give){
+      } else if(total.ask.group.B <= (population[1,3] * prop.A.to.B.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[,1])){
           
           power.ask <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[j,4]
           index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[j,2]
@@ -1285,9 +1284,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.C <= population[i,3] * prop.A.to.C.give){
+      } else if(total.ask.group.C <= (population[1,3] * prop.A.to.C.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[,1])){
           
           power.ask <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[j,4]
           index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[j,2]
@@ -1295,9 +1294,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.D <= population[i,3] * prop.A.to.D.give){
+      } else if(total.ask.group.D <= (population[1,3] * prop.A.to.D.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[,1])){
           
           power.ask <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[j,4]
           index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[j,2]
@@ -1305,9 +1304,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.E <= population[i,3] * prop.A.to.E.give){
+      } else if(total.ask.group.E <= (population[1,3] * prop.A.to.E.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[,1])){
           
           power.ask <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[j,4]
           index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[j,2]
@@ -1317,9 +1316,9 @@ exchange.response <- function(intermediate.exchange.data){
         }
       }
       
-      if(total.ask.group.A > population[i,3] * prop.A.to.A.give){
+      if(total.ask.group.A > (population[1,3] * prop.A.to.A.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[,1])){
           
           power.ask <- ((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[j,4]
                         * (population[i,3] * prop.A.to.A.give / total.ask.group.A))
@@ -1328,9 +1327,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.B > population[i,3] * prop.A.to.B.give){
+      } else if(total.ask.group.B > (population[1,3] * prop.A.to.B.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[,1])){
           
           power.ask <- ((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[j,4]
                         * (population[i,3] * prop.A.to.B.give / total.ask.group.A))
@@ -1339,9 +1338,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.C > population[i,3] * prop.A.to.C.give){
+      } else if(total.ask.group.C > (population[1,3] * prop.A.to.C.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[,1])){
           
           power.ask <- ((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[j,4]
                         * (population[i,3] * prop.A.to.C.give / total.ask.group.A))
@@ -1350,9 +1349,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.D > population[i,3] * prop.A.to.D.give){
+      } else if(total.ask.group.D > (population[1,3] * prop.A.to.D.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[,1])){
           
           power.ask <- ((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[j,4]
                         * (population[i,3] * prop.A.to.D.give / total.ask.group.A))
@@ -1361,9 +1360,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.E > population[i,3] * prop.A.to.E.give){
+      } else if(total.ask.group.E > (population[1,3] * prop.A.to.E.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[,1])){
           
           power.ask <- ((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[j,4]
                         * (population[i,3] * prop.A.to.E.give / total.ask.group.A))
@@ -1376,9 +1375,9 @@ exchange.response <- function(intermediate.exchange.data){
       
     } else if(population[i,2] == .02){
       
-      if(total.ask.group.A <= population[i,3] * prop.B.to.A.give){
+      if(total.ask.group.A <= (population[1,3] * prop.B.to.A.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[,1])){
           
           power.ask <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[j,4]
           index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[j,2]
@@ -1386,9 +1385,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.B <= population[i,3] * prop.B.to.B.give){
+      } else if(total.ask.group.B <= (population[1,3] * prop.B.to.B.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[,1])){
           
           power.ask <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[j,4]
           index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[j,2]
@@ -1396,9 +1395,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.C <= population[i,3] * prop.B.to.C.give){
+      } else if(total.ask.group.C <= (population[1,3] * prop.B.to.C.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[,1])){
           
           power.ask <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[j,4]
           index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[j,2]
@@ -1406,9 +1405,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.D <= population[i,3] * prop.B.to.D.give){
+      } else if(total.ask.group.D <= (population[1,3] * prop.B.to.D.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[,1])){
           
           power.ask <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[j,4]
           index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[j,2]
@@ -1416,9 +1415,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.E <= population[i,3] * prop.B.to.E.give){
+      } else if(total.ask.group.E <= (population[1,3] * prop.B.to.E.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[,1])){
           
           power.ask <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[j,4]
           index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[j,2]
@@ -1429,9 +1428,9 @@ exchange.response <- function(intermediate.exchange.data){
       }
       
       
-      if(total.ask.group.A > population[i,3] * prop.B.to.A.give){
+      if(total.ask.group.A > (population[1,3] * prop.B.to.A.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[,1])){
           
           power.ask <- ((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[j,4]
                         * (population[i,3] * prop.B.to.A.give / total.ask.group.A))
@@ -1440,9 +1439,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.B > population[i,3] * prop.B.to.B.give){
+      } else if(total.ask.group.B > (population[1,3] * prop.B.to.B.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[,1])){
           
           power.ask <- ((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[j,4]
                         * (population[i,3] * prop.B.to.B.give / total.ask.group.A))
@@ -1451,9 +1450,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.C > population[i,3] * prop.B.to.C.give){
+      } else if(total.ask.group.C > (population[1,3] * prop.B.to.C.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[,1])){
           
           power.ask <- ((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[j,4]
                         * (population[i,3] * prop.B.to.C.give / total.ask.group.A))
@@ -1462,9 +1461,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.D > population[i,3] * prop.B.to.D.give){
+      } else if(total.ask.group.D > (population[1,3] * prop.B.to.D.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[,1])){
           
           power.ask <- ((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[j,4]
                         * (population[i,3] * prop.B.to.D.give / total.ask.group.A))
@@ -1473,9 +1472,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.E > population[i,3] * prop.B.to.E.give){
+      } else if(total.ask.group.E > (population[1,3] * prop.B.to.E.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[,1])){
           
           power.ask <- ((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[j,4]
                         * (population[i,3] * prop.B.to.E.give / total.ask.group.A))
@@ -1487,9 +1486,9 @@ exchange.response <- function(intermediate.exchange.data){
       }
     } else if(population[i,2] == .03){
       
-      if(total.ask.group.A <= population[i,3] * prop.C.to.A.give){
+      if(total.ask.group.A <= (population[1,3] * prop.C.to.A.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[,1])){
           
           power.ask <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[j,4]
           index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[j,2]
@@ -1497,9 +1496,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.B <= population[i,3] * prop.C.to.B.give){
+      } else if(total.ask.group.B <= (population[1,3] * prop.C.to.B.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[,1])){
           
           power.ask <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[j,4]
           index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[j,2]
@@ -1507,9 +1506,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.C <= population[i,3] * prop.C.to.C.give){
+      } else if(total.ask.group.C <= (population[1,3] * prop.C.to.C.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[,1])){
           
           power.ask <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[j,4]
           index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[j,2]
@@ -1517,9 +1516,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.D <= population[i,3] * prop.C.to.D.give){
+      } else if(total.ask.group.D <= (population[1,3] * prop.C.to.D.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[,1])){
           
           power.ask <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[j,4]
           index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[j,2]
@@ -1527,9 +1526,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.E <= population[i,3] * prop.C.to.E.give){
+      } else if(total.ask.group.E <= (population[1,3] * prop.C.to.E.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[,1])){
           
           power.ask <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[j,4]
           index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[j,2]
@@ -1539,9 +1538,9 @@ exchange.response <- function(intermediate.exchange.data){
         }
       }
       
-      if(total.ask.group.A > population[i,3] * prop.C.to.A.give){
+      if(total.ask.group.A > (population[1,3] * prop.C.to.A.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[,1])){
           
           power.ask <- ((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[j,4]
                         * (population[i,3] * prop.C.to.A.give / total.ask.group.A))
@@ -1550,9 +1549,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.B > population[i,3] * prop.C.to.B.give){
+      } else if(total.ask.group.B > (population[1,3] * prop.C.to.B.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[,1])){
           
           power.ask <- ((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[j,4]
                         * (population[i,3] * prop.C.to.B.give / total.ask.group.A))
@@ -1561,9 +1560,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.C > population[i,3] * prop.C.to.C.give){
+      } else if(total.ask.group.C > (population[1,3] * prop.C.to.C.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[,1])){
           
           power.ask <- ((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[j,4]
                         * (population[i,3] * prop.C.to.C.give / total.ask.group.A))
@@ -1572,9 +1571,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.D > population[i,3] * prop.C.to.D.give){
+      } else if(total.ask.group.D > (population[1,3] * prop.C.to.D.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[,1])){
           
           power.ask <- ((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[j,4]
                         * (population[i,3] * prop.C.to.D.give / total.ask.group.A))
@@ -1583,9 +1582,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.E > population[i,3] * prop.C.to.E.give){
+      } else if(total.ask.group.E > (population[1,3] * prop.C.to.E.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[,1])){
           
           power.ask <- ((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[j,4]
                         * (population[i,3] * prop.C.to.E.give / total.ask.group.A))
@@ -1597,9 +1596,9 @@ exchange.response <- function(intermediate.exchange.data){
       }
     } else if(population[i,2] == .04){
       
-      if(total.ask.group.A <= population[i,3] * prop.D.to.A.give){
+      if(total.ask.group.A <= (population[1,3] * prop.D.to.A.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[,1])){
           
           power.ask <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[j,4]
           index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[j,2]
@@ -1607,9 +1606,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.B <= population[i,3] * prop.D.to.B.give){
+      } else if(total.ask.group.B <= (population[1,3] * prop.D.to.B.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[,1])){
           
           power.ask <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[j,4]
           index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[j,2]
@@ -1617,9 +1616,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.C <= population[i,3] * prop.D.to.C.give){
+      } else if(total.ask.group.C <= (population[1,3] * prop.D.to.C.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[,1])){
           
           power.ask <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[j,4]
           index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[j,2]
@@ -1627,9 +1626,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.D <= population[i,3] * prop.D.to.D.give){
+      } else if(total.ask.group.D <= (population[1,3] * prop.D.to.D.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[,1])){
           
           power.ask <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[j,4]
           index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[j,2]
@@ -1637,9 +1636,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.E <= population[i,3] * prop.D.to.E.give){
+      } else if(total.ask.group.E <= (population[1,3] * prop.D.to.E.give)){
 
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[,1])){
           
           power.ask <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[j,4]
           index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[j,2]
@@ -1649,9 +1648,9 @@ exchange.response <- function(intermediate.exchange.data){
         }
       }
       
-      if(total.ask.group.A > population[i,3] * prop.D.to.A.give){
+      if(total.ask.group.A > (population[1,3] * prop.D.to.A.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[,1])){
           
           power.ask <- ((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[j,4]
                         * (population[i,3] * prop.D.to.A.give / total.ask.group.A))
@@ -1660,9 +1659,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.B > population[i,3] * prop.D.to.B.give){
+      } else if(total.ask.group.B > (population[1,3] * prop.D.to.B.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[,1])){
           
           power.ask <- ((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[j,4]
                         * (population[i,3] * prop.D.to.B.give / total.ask.group.A))
@@ -1671,9 +1670,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.C > population[i,3] * prop.D.to.C.give){
+      } else if(total.ask.group.C > (population[1,3] * prop.D.to.C.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[,1])){
           
           power.ask <- ((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[j,4]
                         * (population[i,3] * prop.D.to.C.give / total.ask.group.A))
@@ -1682,9 +1681,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.D > population[i,3] * prop.D.to.D.give){
+      } else if(total.ask.group.D > (population[1,3] * prop.D.to.D.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[,1])){
           
           power.ask <- ((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[j,4]
                         * (population[i,3] * prop.D.to.D.give / total.ask.group.A))
@@ -1693,9 +1692,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.E > population[i,3] * prop.D.to.E.give){
+      } else if(total.ask.group.E > (population[1,3] * prop.D.to.E.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[,1])){
           
           power.ask <- ((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[j,4]
                         * (population[i,3] * prop.D.to.E.give / total.ask.group.A))
@@ -1707,9 +1706,9 @@ exchange.response <- function(intermediate.exchange.data){
       }
     } else if(population[i,2] == .05){
       
-      if(total.ask.group.A <= population[i,3] * prop.E.to.A.give){
+      if(total.ask.group.A <= (population[1,3] * prop.E.to.A.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[,1])){
           
           power.ask <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[j,4]
           index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[j,2]
@@ -1717,9 +1716,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.B <= population[i,3] * prop.E.to.B.give){
+      } else if(total.ask.group.B <= (population[1,3] * prop.E.to.B.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[,1])){
           
           power.ask <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[j,4]
           index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[j,2]
@@ -1727,9 +1726,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.C <= population[i,3] * prop.E.to.C.give){
+      } else if(total.ask.group.C <= (population[1,3] * prop.E.to.C.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[,1])){
           
           power.ask <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[j,4]
           index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[j,2]
@@ -1737,9 +1736,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.D <= population[i,3] * prop.E.to.D.give){
+      } else if(total.ask.group.D <= (population[1,3] * prop.E.to.D.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[,1])){
           
           power.ask <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[j,4]
           index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[j,2]
@@ -1747,9 +1746,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.E <= population[i,3] * prop.E.to.E.give){
+      } else if(total.ask.group.E <= (population[1,3] * prop.E.to.E.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[,1])){
           
           power.ask <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[j,4]
           index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[j,2]
@@ -1759,9 +1758,9 @@ exchange.response <- function(intermediate.exchange.data){
         }
       }
       
-      if(total.ask.group.A > population[i,3] * prop.E.to.A.give){
+      if(total.ask.group.A > (population[1,3] * prop.E.to.A.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[,1])){
           
           power.ask <- ((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[j,4]
                         * (population[i,3] * prop.E.to.A.give / total.ask.group.A))
@@ -1770,9 +1769,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.B > population[i,3] * prop.E.to.B.give){
+      } else if(total.ask.group.B > (population[1,3] * prop.E.to.B.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[,1])){
           
           power.ask <- ((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[j,4]
                         * (population[i,3] * prop.E.to.B.give / total.ask.group.A))
@@ -1781,9 +1780,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.C > population[i,3] * prop.E.to.C.give){
+      } else if(total.ask.group.C > (population[1,3] * prop.E.to.C.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[,1])){
           
           power.ask <- ((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[j,4]
                         * (population[i,3] * prop.E.to.C.give / total.ask.group.A))
@@ -1792,9 +1791,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.D > population[i,3] * prop.E.to.D.give){
+      } else if(total.ask.group.D > (population[1,3] * prop.E.to.D.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[,1])){
           
           power.ask <- ((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[j,4]
                         * (population[i,3] * prop.E.to.D.give / total.ask.group.A))
@@ -1803,9 +1802,9 @@ exchange.response <- function(intermediate.exchange.data){
           population[index.asker, 3] <- population[index.asker, 3] + power.ask
           population[i, 3] <- population[i, 3] - power.ask
         }
-      } else if(total.ask.group.E > population[i,3] * prop.E.to.E.give){
+      } else if(total.ask.group.E > (population[1,3] * prop.E.to.E.give)){
         
-        for(j in 1:length(intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))){
+        for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[,1])){
           
           power.ask <- ((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[j,4]
                         * (population[i,3] * prop.E.to.E.give / total.ask.group.A))
@@ -1819,6 +1818,15 @@ exchange.response <- function(intermediate.exchange.data){
   }
 }
 
-(intermediate.exchange.data %>% filter(index.initiated == 63) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[1,4]
 
+exchange.response(intermediate.exchange.data, population)
 
+population <- initial.population()
+intermediate.exchange.data <- exchange.power(population)
+
+population[1,3] * prop.A.to.A.give
+population[2, 3]
+
+(intermediate.exchange.data %>% filter(index.initiated == 5) %>% filter(exchange.type == "take"))
+length((intermediate.exchange.data %>% filter(index.initiated == 1) %>% filter(exchange.type == "take"))[,1])
+sum((intermediate.exchange.data %>% filter(index.initiated == 1) %>% filter(exchange.type == "take"))$exchange.amount)
