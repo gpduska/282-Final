@@ -1829,6 +1829,8 @@ exchange.response <- function(intermediate.exchange.data){
       }
     }
   }
+  
+  return(population)
 }
 
 
@@ -1836,14 +1838,5 @@ exchange.response <- function(intermediate.exchange.data){
 
 population <- initial.population()
 intermediate.exchange.data <- exchange.power(population)
-exchange.response(intermediate.exchange.data)
-population
+population <- exchange.response(intermediate.exchange.data)
 
-length((intermediate.exchange.data %>% filter(index.initiated == 172) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[,1])
-
-(intermediate.exchange.data %>% filter(index.initiated == 4) %>% filter(exchange.type == "ask"))
-length((intermediate.exchange.data %>% filter(index.initiated == 1) %>% filter(exchange.type == "take"))[,1])
-sum((intermediate.exchange.data %>% filter(index.initiated == 1) %>% filter(exchange.type == "take"))$exchange.amount)
-
-((intermediate.exchange.data %>% filter(index.initiated == 4) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[1,4]
-  * (population[4,3] * prop.B.to.E.give / total.ask.group.A))
