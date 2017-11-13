@@ -2308,9 +2308,64 @@ exchange.response.v2 <- function(intermediate.exchange.data){
   return(population)
 }
 
+# this selection process takes all of the members of each group who are more than one standard deviation below the group average power level and replaces them with a person of 
+# average group stats, keeping the same power level. 
+group.based.selection <- function(sd){
+  
+  group.A.average.power <- 0
+  group.B.average.power <- 0
+  group.C.average.power <- 0
+  group.D.average.power <- 0
+  group.E.average.power <- 0
+  
+  for(i in 1:n.population){
+    if(population[i,2] == 0.01){
+      group.A.average.power <- group.A.average.power + population[i,3]
+    } else if(population[i,2] == 0.02){
+      group.B.average.power <- group.B.average.power + population[i,3]
+    } else if(population[i,2] == 0.03){
+      group.C.average.power <- group.C.average.power + population[i,3]
+    } else if(population[i,2] == 0.04){
+      group.D.average.power <- group.D.average.power + population[i,3]
+    } else{
+      group.E.average.power <- group.E.average.power + population[i,3]
+    }
+  }
+  
+  group.A.average.power <- group.A.average.power / n.groupA
+  group.B.average.power <- group.B.average.power / n.groupB
+  group.C.average.power <- group.C.average.power / n.groupC
+  group.D.average.power <- group.D.average.power / n.groupD
+  group.E.average.power <- group.E.average.power / n.groupE
+  
+  for(i in 1:n.population){
+    
+    
+  }
+}
+
+# this mutation process mutates everyone behavior slightly
+mutation.process <- function(sd){
+  
+  for(i in 1:n.population){
+    population[i,] <- c(population[i,1], population[i,2], population[i,3], population[i,4] + rnorm(1, 0, sd), population[i,5] + rnorm(1, 0, sd), population[i,6] + rnorm(1, 0, sd),
+                        population[i,7] + rnorm(1, 0, sd), population[i,8] + rnorm(1, 0, sd), population[i,9] + rnorm(1, 0, sd), population[i,10] + rnorm(1, 0, sd),
+                        population[i,11] + rnorm(1, 0, sd), population[i,12] + rnorm(1, 0, sd), population[i,13] + rnorm(1, 0, sd), population[i,14] + rnorm(1, 0, sd),
+                        population[i,15] + rnorm(1, 0, sd), population[i,16] + rnorm(1, 0, sd), population[i,17] + rnorm(1, 0, sd), population[i,18] + rnorm(1, 0, sd), 
+                        population[i,19] + rnorm(1, 0, sd), population[i,20] + rnorm(1, 0, sd), population[i,21] + rnorm(1, 0, sd), population[i,22] + rnorm(1, 0, sd),
+                        population[i,23] + rnorm(1, 0, sd), population[i,24] + rnorm(1, 0, sd), population[i,25] + rnorm(1, 0, sd), population[i,26] + rnorm(1, 0, sd),
+                        population[i,27] + rnorm(1, 0, sd), population[i,28] + rnorm(1, 0, sd))
+  }
+}
+
 
 population <- initial.population.v2()
 population
 intermediate.exchange.data <- exchange.power.v2(population)
 population <- exchange.response.v2(intermediate.exchange.data)
 population
+
+matrix <- matrix(c(1, 2, 3, 4, 5, 6), byrow = T, nrow = 2)
+matrix
+matrix[2,] <- c(matrix[2,1] + 1, matrix[2,2] + 1, matrix[2,3] + 1)
+matrix
