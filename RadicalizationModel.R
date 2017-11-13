@@ -228,7 +228,7 @@ prop.E.to.D.give <- 0.15
 prop.E.to.E.give <- 0.05
 
 # This function instantiates the origional matrix
-initial.population <- function(){
+initial.population.v1 <- function(){
   
   name.vector <- 1:n.population
   
@@ -237,43 +237,13 @@ initial.population <- function(){
   power.vector <- c(rep(groupA.power.member, n.groupA), rep(groupB.power.member, n.groupB), rep(groupC.power.member, n.groupC),
                     rep(groupD.power.member, n.groupD), rep(groupE.power.member, n.groupE))
   
-  to.A.encounter.vector <- NA
-  to.B.encounter.vector <- NA
-  to.C.encounter.vector <- NA
-  to.D.encounter.vector <- NA
-  to.E.encounter.vector <- NA
-  
-  to.A.ask.vector <- NA
-  to.B.ask.vector <- NA
-  to.C.ask.vector <- NA
-  to.D.ask.vector <- NA
-  to.E.ask.vector <- NA
-  
-  to.A.ask.sd.vector <- NA
-  to.B.ask.sd.vector <- NA
-  to.C.ask.sd.vector <- NA
-  to.D.ask.sd.vector <- NA
-  to.E.ask.sd.vector <- NA
-  
-  to.A.take.sd.vector <- NA
-  to.B.take.sd.vector <- NA
-  to.C.take.sd.vector <- NA
-  to.D.take.sd.vector <- NA
-  to.E.take.sd.vector <- NA
-  
-  prop.to.A.give.vector <- NA
-  prop.to.B.give.vector <- NA
-  prop.to.C.give.vector <- NA
-  prop.to.D.give.vector <- NA
-  prop.to.E.give.vector <- NA
-  
   
   return(matrix(c(name.vector, group.vector, power.vector), byrow=F, nrow = n.population))
 }
 
 
 # This function simulates one round of every person exhangeing power with every other person
-exchange.power <- function(population){
+exchange.power.v1 <- function(population){
   
   pop.vector <- 1:n.population
   
@@ -1232,7 +1202,7 @@ exchange.power <- function(population){
   
 }
 
-exchange.response <- function(intermediate.exchange.data){
+exchange.response.v1 <- function(intermediate.exchange.data){
   
   # response for the "takes"
   for(i in 1:n.population){
@@ -1875,12 +1845,472 @@ run.n.gens <- function(n){
   return(population)
 }
 
-run.n.gens(2)
-population
 
-population <- initial.population()
-population
-intermediate.exchange.data <- exchange.power(population)
-population <- exchange.response(intermediate.exchange.data)
-population
+# This function instantiates the origional matrix
+initial.population.v2 <- function(){
+  
+  name.vector <- 1:n.population
+  
+  group.vector <- c(rep(0.01, n.groupA), rep(0.02, n.groupB), rep(0.03, n.groupC), rep(0.04, n.groupD), rep(0.05, n.groupE))
+  
+  power.vector <- c(rep(groupA.power.member, n.groupA), rep(groupB.power.member, n.groupB), rep(groupC.power.member, n.groupC),
+                    rep(groupD.power.member, n.groupD), rep(groupE.power.member, n.groupE))
+  
+  to.A.encounter.vector <- c(rep(prob.A.to.A.encounter, n.groupA), rep(prob.B.to.A.encounter, n.groupB), rep(prob.C.to.A.encounter, n.groupC),
+                             rep(prob.D.to.A.encounter, n.groupD), rep(prob.E.to.A.encounter, n.groupE))
+  to.B.encounter.vector <- c(rep(prob.A.to.B.encounter, n.groupA), rep(prob.B.to.B.encounter, n.groupB), rep(prob.C.to.B.encounter, n.groupC),
+                             rep(prob.D.to.B.encounter, n.groupD), rep(prob.E.to.B.encounter, n.groupE))
+  to.C.encounter.vector <- c(rep(prob.A.to.C.encounter, n.groupA), rep(prob.B.to.C.encounter, n.groupB), rep(prob.C.to.C.encounter, n.groupC),
+                             rep(prob.D.to.C.encounter, n.groupD), rep(prob.E.to.C.encounter, n.groupE))
+  to.D.encounter.vector <- c(rep(prob.A.to.D.encounter, n.groupA), rep(prob.B.to.D.encounter, n.groupB), rep(prob.C.to.D.encounter, n.groupC),
+                             rep(prob.D.to.D.encounter, n.groupD), rep(prob.E.to.D.encounter, n.groupE))
+  to.E.encounter.vector <- c(rep(prob.A.to.E.encounter, n.groupA), rep(prob.B.to.E.encounter, n.groupB), rep(prob.C.to.E.encounter, n.groupC),
+                             rep(prob.D.to.E.encounter, n.groupD), rep(prob.E.to.E.encounter, n.groupE))
+  
+  to.A.ask.vector <- c(rep(prob.A.to.A.ask, n.groupA), rep(prob.B.to.A.ask, n.groupB), rep(prob.C.to.A.ask, n.groupC),
+                       rep(prob.D.to.A.ask, n.groupD), rep(prob.E.to.A.ask, n.groupE))
+  to.B.ask.vector <- c(rep(prob.A.to.B.ask, n.groupA), rep(prob.B.to.B.ask, n.groupB), rep(prob.C.to.B.ask, n.groupC),
+                       rep(prob.D.to.B.ask, n.groupD), rep(prob.E.to.B.ask, n.groupE))
+  to.C.ask.vector <- c(rep(prob.A.to.C.ask, n.groupA), rep(prob.B.to.C.ask, n.groupB), rep(prob.C.to.C.ask, n.groupC),
+                       rep(prob.D.to.C.ask, n.groupD), rep(prob.E.to.C.ask, n.groupE))
+  to.D.ask.vector <- c(rep(prob.A.to.D.ask, n.groupA), rep(prob.B.to.D.ask, n.groupB), rep(prob.C.to.D.ask, n.groupC),
+                       rep(prob.D.to.D.ask, n.groupD), rep(prob.E.to.D.ask, n.groupE))
+  to.E.ask.vector <- c(rep(prob.A.to.E.ask, n.groupA), rep(prob.B.to.E.ask, n.groupB), rep(prob.C.to.E.ask, n.groupC),
+                       rep(prob.D.to.E.ask, n.groupD), rep(prob.E.to.E.ask, n.groupE))
+  
+  to.A.ask.sd.vector <- c(rep(A.to.A.ask.sd, n.groupA), rep(B.to.A.ask.sd, n.groupB), rep(C.to.A.ask.sd, n.groupC),
+                          rep(D.to.A.ask.sd, n.groupD), rep(E.to.A.ask.sd, n.groupE))
+  to.B.ask.sd.vector <- c(rep(A.to.B.ask.sd, n.groupA), rep(B.to.B.ask.sd, n.groupB), rep(C.to.B.ask.sd, n.groupC),
+                          rep(D.to.B.ask.sd, n.groupD), rep(E.to.B.ask.sd, n.groupE))
+  to.C.ask.sd.vector <- c(rep(A.to.C.ask.sd, n.groupA), rep(B.to.C.ask.sd, n.groupB), rep(C.to.C.ask.sd, n.groupC),
+                          rep(D.to.C.ask.sd, n.groupD), rep(E.to.C.ask.sd, n.groupE))
+  to.D.ask.sd.vector <- c(rep(A.to.D.ask.sd, n.groupA), rep(B.to.D.ask.sd, n.groupB), rep(C.to.D.ask.sd, n.groupC),
+                          rep(D.to.D.ask.sd, n.groupD), rep(E.to.D.ask.sd, n.groupE))
+  to.E.ask.sd.vector <- c(rep(A.to.E.ask.sd, n.groupA), rep(B.to.E.ask.sd, n.groupB), rep(C.to.E.ask.sd, n.groupC),
+                          rep(D.to.E.ask.sd, n.groupD), rep(E.to.E.ask.sd, n.groupE))
+  
+  to.A.take.sd.vector <- c(rep(A.to.A.take.sd, n.groupA), rep(B.to.A.take.sd, n.groupB), rep(C.to.A.take.sd, n.groupC),
+                           rep(D.to.A.take.sd, n.groupD), rep(E.to.A.take.sd, n.groupE))
+  to.B.take.sd.vector <- c(rep(A.to.B.take.sd, n.groupA), rep(B.to.B.take.sd, n.groupB), rep(C.to.B.take.sd, n.groupC),
+                           rep(D.to.B.take.sd, n.groupD), rep(E.to.B.take.sd, n.groupE))
+  to.C.take.sd.vector <- c(rep(A.to.C.take.sd, n.groupA), rep(B.to.C.take.sd, n.groupB), rep(C.to.C.take.sd, n.groupC),
+                           rep(D.to.C.take.sd, n.groupD), rep(E.to.C.take.sd, n.groupE))
+  to.D.take.sd.vector <- c(rep(A.to.D.take.sd, n.groupA), rep(B.to.D.take.sd, n.groupB), rep(C.to.D.take.sd, n.groupC),
+                           rep(D.to.D.take.sd, n.groupD), rep(E.to.D.take.sd, n.groupE))
+  to.E.take.sd.vector <- c(rep(A.to.E.take.sd, n.groupA), rep(B.to.E.take.sd, n.groupB), rep(C.to.E.take.sd, n.groupC),
+                           rep(D.to.E.take.sd, n.groupD), rep(E.to.E.take.sd, n.groupE))
+  
+  prop.to.A.give.vector <- c(rep(prop.A.to.A.give, n.groupA), rep(prop.B.to.A.give, n.groupB), rep(prop.C.to.A.give, n.groupC),
+                             rep(prop.D.to.A.give, n.groupD), rep(prop.E.to.A.give, n.groupE))
+  prop.to.B.give.vector <- c(rep(prop.A.to.B.give, n.groupA), rep(prop.B.to.B.give, n.groupB), rep(prop.C.to.B.give, n.groupC),
+                             rep(prop.D.to.B.give, n.groupD), rep(prop.E.to.B.give, n.groupE))
+  prop.to.C.give.vector <- c(rep(prop.A.to.C.give, n.groupA), rep(prop.B.to.C.give, n.groupB), rep(prop.C.to.C.give, n.groupC),
+                             rep(prop.D.to.C.give, n.groupD), rep(prop.E.to.C.give, n.groupE))
+  prop.to.D.give.vector <- c(rep(prop.A.to.D.give, n.groupA), rep(prop.B.to.D.give, n.groupB), rep(prop.C.to.D.give, n.groupC),
+                             rep(prop.D.to.D.give, n.groupD), rep(prop.E.to.D.give, n.groupE))
+  prop.to.E.give.vector <- c(rep(prop.A.to.E.give, n.groupA), rep(prop.B.to.E.give, n.groupB), rep(prop.C.to.E.give, n.groupC),
+                             rep(prop.D.to.E.give, n.groupD), rep(prop.E.to.E.give, n.groupE))
+  
+  
+  return(matrix(c(name.vector, group.vector, power.vector, to.A.encounter.vector, to.B.encounter.vector, to.C.encounter.vector, to.D.encounter.vector,
+                  to.E.encounter.vector, to.A.ask.vector, to.B.ask.vector, to.C.ask.vector, to.D.ask.vector, to.E.ask.vector, to.A.ask.sd.vector,
+                  to.B.ask.sd.vector, to.C.ask.sd.vector, to.D.ask.sd.vector, to.E.ask.sd.vector, to.A.take.sd.vector, to.B.take.sd.vector,
+                  to.C.take.sd.vector, to.D.take.sd.vector, to.E.take.sd.vector, prop.to.A.give.vector, prop.to.B.give.vector, prop.to.C.give.vector,
+                  prop.to.D.give.vector, prop.to.E.give.vector), byrow=F, nrow = n.population))
+}
 
+# This function simulates one round of every person exhangeing power with every other person
+exchange.power.v2 <- function(population){
+  
+  pop.vector <- 1:n.population
+  
+  index.initiated <- c()
+  index.initiator <- c()
+  exchange.type <- c()
+  exchange.amount <- c()
+  group.initiated <- c()
+  group.initiator <- c()
+  
+  # for each person in the population...
+  for(i in pop.vector){
+    
+    # go through each other person in the population...
+    for(j in pop.vector[-i]){
+      
+      # check to see if person j is in group A
+      if(population[j,2] == 0.01){
+        
+        # decide if person i will initiate contact with person j...
+        # if the random number is greater than 0, the encounter is initiated
+        if(runif(1, 0, 1) < population[i,4]){
+          
+          # a random number to choose between the three different types of encounters
+          chooseEncounterType <- runif(1, 0, 1)
+          
+          # person i asks for power from person j
+          if(chooseEncounterType <= population[i,9]){
+            
+            powerAsk <- abs(rnorm(1, 0, population[i,14]))
+            
+            index.initiated <- append(index.initiated, j, after = length(index.initiated))
+            index.initiator <- append(index.initiator, i, after = length(index.initiator))
+            exchange.type <- append(exchange.type, "ask", after = length(exchange.type))
+            exchange.amount <- append(exchange.amount, powerAsk, after = length(exchange.amount))
+            group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+            group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
+            
+            # person i tries to take power from person j
+          } else {
+            
+            powerTake <- abs(rnorm(1, 0, population[i,19]))
+            
+            index.initiated <- append(index.initiated, j, after = length(index.initiated))
+            index.initiator <- append(index.initiator, i, after = length(index.initiator))
+            exchange.type <- append(exchange.type, "take", after = length(exchange.type))
+            exchange.amount <- append(exchange.amount, powerTake, after = length(exchange.amount))
+            group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+            group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
+          }
+        }
+        
+        # check to see if person j is in group B
+      } else if(population[j,2] == 0.02){
+        
+        # decide if person i will initiate contact with person j...
+        # if the random number is greater than 0, the encounter is initiated
+        if(runif(1, 0, 1) < population[i,5]){
+          
+          # a random number to choose between the three different types of encounters
+          chooseEncounterType <- runif(1, 0, 1)
+          
+          # person i asks for power from person j
+          if(chooseEncounterType <= population[i,10]){
+            
+            powerAsk <- abs(rnorm(1, 0, population[i,15]))
+            
+            index.initiated <- append(index.initiated, j, after = length(index.initiated))
+            index.initiator <- append(index.initiator, i, after = length(index.initiator))
+            exchange.type <- append(exchange.type, "ask", after = length(exchange.type))
+            exchange.amount <- append(exchange.amount, powerAsk, after = length(exchange.amount))
+            group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+            group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
+            
+            # person i tries to take power from person j
+          } else {
+            
+            powerTake <- abs(rnorm(1, 0, population[i,20]))
+            
+            index.initiated <- append(index.initiated, j, after = length(index.initiated))
+            index.initiator <- append(index.initiator, i, after = length(index.initiator))
+            exchange.type <- append(exchange.type, "take", after = length(exchange.type))
+            exchange.amount <- append(exchange.amount, powerTake, after = length(exchange.amount))
+            group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+            group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
+          }
+        }
+        
+        # check to see if person j is in group C
+      } else if(population[j,2] == 0.03){
+        # decide if person i will initiate contact with person j...
+        # if the random number is greater than 0, the encounter is initiated
+        if(runif(1, 0, 1) < population[i,6]){
+          
+          # a random number to choose between the three different types of encounters
+          chooseEncounterType <- runif(1, 0, 1)
+          
+          # person i asks for power from person j
+          if(chooseEncounterType <= population[i,11]){
+            
+            powerAsk <- abs(rnorm(1, 0, population[i,16]))
+            
+            index.initiated <- append(index.initiated, j, after = length(index.initiated))
+            index.initiator <- append(index.initiator, i, after = length(index.initiator))
+            exchange.type <- append(exchange.type, "ask", after = length(exchange.type))
+            exchange.amount <- append(exchange.amount, powerAsk, after = length(exchange.amount))
+            group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+            group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
+            
+            # person i tries to take power from person j
+          } else {
+            
+            powerTake <- abs(rnorm(1, 0, population[i,21]))
+            
+            index.initiated <- append(index.initiated, j, after = length(index.initiated))
+            index.initiator <- append(index.initiator, i, after = length(index.initiator))
+            exchange.type <- append(exchange.type, "take", after = length(exchange.type))
+            exchange.amount <- append(exchange.amount, powerTake, after = length(exchange.amount))
+            group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+            group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
+          }
+        }
+        
+        # check to see if person j is in group D
+      } else if(population[j,2] == 0.04){
+        # decide if person i will initiate contact with person j...
+        # if the random number is greater than 0, the encounter is initiated
+        if(runif(1, 0, 1) < population[i,7]){
+          
+          # a random number to choose between the three different types of encounters
+          chooseEncounterType <- runif(1, 0, 1)
+          
+          # person i asks for power from person j
+          if(chooseEncounterType <= population[i,12]){
+            
+            powerAsk <- abs(rnorm(1, 0, population[i,17]))
+            
+            index.initiated <- append(index.initiated, j, after = length(index.initiated))
+            index.initiator <- append(index.initiator, i, after = length(index.initiator))
+            exchange.type <- append(exchange.type, "ask", after = length(exchange.type))
+            exchange.amount <- append(exchange.amount, powerAsk, after = length(exchange.amount))
+            group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+            group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
+            
+            # person i tries to take power from person j
+          } else {
+            
+            powerTake <- abs(rnorm(1, 0, population[i,22]))
+            
+            index.initiated <- append(index.initiated, j, after = length(index.initiated))
+            index.initiator <- append(index.initiator, i, after = length(index.initiator))
+            exchange.type <- append(exchange.type, "take", after = length(exchange.type))
+            exchange.amount <- append(exchange.amount, powerTake, after = length(exchange.amount))
+            group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+            group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
+          }
+        }
+        
+        # check to see if person j is in group E
+      } else if(population[j,2] == 0.05){
+        # decide if person i will initiate contact with person j...
+        # if the random number is greater than 0, the encounter is initiated
+        if(runif(1, 0, 1) < population[i,8]){
+          
+          # a random number to choose between the three different types of encounters
+          chooseEncounterType <- runif(1, 0, 1)
+          
+          # person i asks for power from person j
+          if(chooseEncounterType <= population[i,13]){
+            
+            powerAsk <- abs(rnorm(1, 0, population[i,18]))
+            
+            index.initiated <- append(index.initiated, j, after = length(index.initiated))
+            index.initiator <- append(index.initiator, i, after = length(index.initiator))
+            exchange.type <- append(exchange.type, "ask", after = length(exchange.type))
+            exchange.amount <- append(exchange.amount, powerAsk, after = length(exchange.amount))
+            group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+            group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
+            
+            # person i tries to take power from person j
+          } else {
+            
+            powerTake <- abs(rnorm(1, 0, population[i,23]))
+            
+            index.initiated <- append(index.initiated, j, after = length(index.initiated))
+            index.initiator <- append(index.initiator, i, after = length(index.initiator))
+            exchange.type <- append(exchange.type, "take", after = length(exchange.type))
+            exchange.amount <- append(exchange.amount, powerTake, after = length(exchange.amount))
+            group.initiated <- append(group.initiated, population[j, 2], after = length(group.initiated))
+            group.initiator <- append(group.initiator, population[i, 2], after = length(group.initiator))
+          }
+        }
+      }
+    }
+  }
+  # This creates a data frame that will be used on the second and third steps of teh power exchange when people resond to people taking and asking
+  # for their power. 
+  return(data.frame(index.initiated, index.initiator, exchange.type, exchange.amount, group.initiated, group.initiator))
+}
+
+
+exchange.response.v2 <- function(intermediate.exchange.data){
+  
+  # response for the "takes"
+  for(i in 1:n.population){
+    
+    total.attempted.take <- sum((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "take"))$exchange.amount)
+    
+    if((0 < total.attempted.take) & (total.attempted.take < population[i,3])){
+      
+      # each person attempting to take power from person i gives as much power they were attempting to take to person i
+      for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "take"))[,1])){
+        
+        power.take <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "take"))[j,4]
+        index.loser <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "take"))[j,2]
+        
+        population[index.loser, 3] <- population[index.loser, 3] - power.take
+        population[i,3] <- population[i,3] + power.take
+      }
+    } else if((total.attempted.take > population[i,3]) & (total.attempted.take > 0)) {
+      
+      for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "take"))[,1])){
+        
+        power.take <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "take"))[j,4]
+        index.winner <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "take"))[j,2]
+        
+        population[index.winner, 3] <- population[index.winner, 3] + power.take
+        
+        population[i,3] <- population[i,3] - power.take
+      }
+    }
+  }
+  
+  # response for the "asks"
+  for(i in 1:n.population){
+    
+    # only give out power if your power is greater than 0!
+    if(population[i,3] > 0){
+      
+      
+      total.ask.group.A <- sum((intermediate.exchange.data %>% 
+                                  filter(index.initiated == i) %>% 
+                                  filter(exchange.type == "ask") %>% 
+                                  filter(group.initiator == 0.01))$exchange.amount)
+      
+      total.ask.group.B <- sum((intermediate.exchange.data %>% 
+                                  filter(index.initiated == i) %>% 
+                                  filter(exchange.type == "ask") %>% 
+                                  filter(group.initiator == 0.02))$exchange.amount)
+      
+      total.ask.group.C <- sum((intermediate.exchange.data %>% 
+                                  filter(index.initiated == i) %>% 
+                                  filter(exchange.type == "ask") %>% 
+                                  filter(group.initiator == 0.03))$exchange.amount)
+      
+      total.ask.group.D <- sum((intermediate.exchange.data %>% 
+                                  filter(index.initiated == i) %>% 
+                                  filter(exchange.type == "ask") %>% 
+                                  filter(group.initiator == 0.04))$exchange.amount)
+      
+      total.ask.group.E <- sum((intermediate.exchange.data %>% 
+                                  filter(index.initiated == i) %>% 
+                                  filter(exchange.type == "ask") %>% 
+                                  filter(group.initiator == 0.05))$exchange.amount)
+      
+        
+        if((total.ask.group.A <= (population[i,3] * population[i,24])) & (total.ask.group.A != 0)){
+          
+          for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[,1])){
+            
+            power.ask <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[j,4]
+            index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[j,2]
+            
+            population[index.asker, 3] <- population[index.asker, 3] + power.ask
+            population[i,3] <- population[i,3] - power.ask
+            
+          }
+        } else if(total.ask.group.A > (population[i,3] * population[i,24])){
+          
+          for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[,1])){
+            
+            power.ask <- ((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[j,4]
+                          * (population[i,3] * population[i,24] / total.ask.group.A))
+            index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.01))[j,2]
+            
+            population[index.asker, 3] <- population[index.asker, 3] + power.ask
+            population[i,3] <- population[i,3] - power.ask
+            
+          }
+        } else if((total.ask.group.B <= (population[i,3] * population[i,25])) & (total.ask.group.B != 0)){
+          
+          for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[,1])){
+            
+            power.ask <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[j,4]
+            index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[j,2]
+            
+            population[index.asker, 3] <- population[index.asker, 3] + power.ask
+            population[i,3] <- population[i,3] - power.ask
+            
+          }
+        } else if(total.ask.group.B > (population[i,3] * population[i,25])){
+          
+          for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[,1])){
+            
+            power.ask <- ((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[j,4]
+                          * (population[i,3] * population[i,25] / total.ask.group.B))
+            index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.02))[j,2]
+            
+            population[index.asker, 3] <- population[index.asker, 3] + power.ask
+            population[i,3] <- population[i,3] - power.ask
+            
+          }
+        } else if((total.ask.group.C <= (population[i,3] * population[i,26])) & (total.ask.group.C != 0)){
+          
+          for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[,1])){
+            
+            power.ask <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[j,4]
+            index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[j,2]
+            
+            population[index.asker, 3] <- population[index.asker, 3] + power.ask
+            population[i,3] <- population[i,3] - power.ask
+            
+          }
+        } else if(total.ask.group.C > (population[i,3] * population[i,26])){
+          
+          for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[,1])){
+            
+            power.ask <- ((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[j,4]
+                          * (population[i,3] * population[i,26] / total.ask.group.C))
+            index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.03))[j,2]
+            
+            population[index.asker, 3] <- population[index.asker, 3] + power.ask
+            population[i,3] <- population[i,3] - power.ask
+            
+          }
+        } else if((total.ask.group.D <= (population[i,3] * population[i,27])) & (total.ask.group.D != 0)){
+          
+          for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[,1])){
+            
+            power.ask <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[j,4]
+            index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[j,2]
+            
+            population[index.asker, 3] <- population[index.asker, 3] + power.ask
+            population[i,3] <- population[i,3] - power.ask
+            
+          }
+        } else if(total.ask.group.D > (population[i,3] * population[i,27])){
+          
+          for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[,1])){
+            
+            power.ask <- ((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[j,4]
+                          * (population[i,3] * population[i,27] / total.ask.group.D))
+            index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.04))[j,2]
+            
+            population[index.asker, 3] <- population[index.asker, 3] + power.ask
+            population[i,3] <- population[i,3] - power.ask
+            
+          }
+        } else if((total.ask.group.E <= (population[i,3] * population[i,28])) & (total.ask.group.E != 0)){
+          
+          for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[,1])){
+            
+            power.ask <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[j,4]
+            index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[j,2]
+            
+            population[index.asker, 3] <- population[index.asker, 3] + power.ask
+            population[i,3] <- population[i,3] - power.ask
+            
+          }
+        } else if(total.ask.group.E > (population[i,3] * population[i,28])){
+          
+          for(j in 1:length((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[,1])){
+            
+            power.ask <- ((intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[j,4]
+                          * (population[i,3] * population[i,28] / total.ask.group.E))
+            index.asker <- (intermediate.exchange.data %>% filter(index.initiated == i) %>% filter(exchange.type == "ask") %>% filter(group.initiator == 0.05))[j,2]
+            
+            population[index.asker, 3] <- population[index.asker, 3] + power.ask
+            population[i,3] <- population[i,3] - power.ask
+            
+          }
+        }
+      }
+  }
+  return(population)
+}
+
+
+population <- initial.population.v2()
+population
+intermediate.exchange.data <- exchange.power.v2(population)
+population <- exchange.response.v2(intermediate.exchange.data)
+population
