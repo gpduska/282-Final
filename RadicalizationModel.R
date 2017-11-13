@@ -237,6 +237,37 @@ initial.population <- function(){
   power.vector <- c(rep(groupA.power.member, n.groupA), rep(groupB.power.member, n.groupB), rep(groupC.power.member, n.groupC),
                     rep(groupD.power.member, n.groupD), rep(groupE.power.member, n.groupE))
   
+  to.A.encounter.vector <- NA
+  to.B.encounter.vector <- NA
+  to.C.encounter.vector <- NA
+  to.D.encounter.vector <- NA
+  to.E.encounter.vector <- NA
+  
+  to.A.ask.vector <- NA
+  to.B.ask.vector <- NA
+  to.C.ask.vector <- NA
+  to.D.ask.vector <- NA
+  to.E.ask.vector <- NA
+  
+  to.A.ask.sd.vector <- NA
+  to.B.ask.sd.vector <- NA
+  to.C.ask.sd.vector <- NA
+  to.D.ask.sd.vector <- NA
+  to.E.ask.sd.vector <- NA
+  
+  to.A.take.sd.vector <- NA
+  to.B.take.sd.vector <- NA
+  to.C.take.sd.vector <- NA
+  to.D.take.sd.vector <- NA
+  to.E.take.sd.vector <- NA
+  
+  prop.to.A.give.vector <- NA
+  prop.to.B.give.vector <- NA
+  prop.to.C.give.vector <- NA
+  prop.to.D.give.vector <- NA
+  prop.to.E.give.vector <- NA
+  
+  
   return(matrix(c(name.vector, group.vector, power.vector), byrow=F, nrow = n.population))
 }
 
@@ -1833,10 +1864,23 @@ exchange.response <- function(intermediate.exchange.data){
   return(population)
 }
 
+# this function runs the power exchange, selection, and mutation process n number of times
+run.n.gens <- function(n){
+  
+  for(i in 1:n){
+    population <- initial.population()
+    intermediate.exchange.data <- exchange.power(population)
+    population <- exchange.response(intermediate.exchange.data)
+  }
+  return(population)
+}
 
-
+run.n.gens(2)
+population
 
 population <- initial.population()
+population
 intermediate.exchange.data <- exchange.power(population)
 population <- exchange.response(intermediate.exchange.data)
+population
 
