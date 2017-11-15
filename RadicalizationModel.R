@@ -227,6 +227,23 @@ prop.E.to.C.give <- 0.2
 prop.E.to.D.give <- 0.15
 prop.E.to.E.give <- 0.05
 
+# this is how much less than the group average power score a person within a particular group has be in order to have their perameters changed to mimic the most powerful person in the group
+group.A.sd.selection <- 2
+group.B.sd.selection <- 1.5
+group.C.sd.selection <- 1.5
+group.D.sd.selection <- 1
+group.E.sd.selection <- 0.5
+
+# this is how much more than the group averag power score a person within a particular group has be in order to have their perameters not mutated
+group.A.sd.mutation <- 2
+group.B.sd.mutation <- 1.5
+group.C.sd.mutation <- 1.5
+group.D.sd.mutation <- 1
+group.E.sd.mutation <- 0.5
+
+# this is the standard deviation of how much the individu peramters are mutated by
+mutation.sd <- 0.01
+
 # This function instantiates the origional matrix
 initial.population.v1 <- function(){
   
@@ -2299,7 +2316,7 @@ exchange.response.v2 <- function(intermediate.exchange.data){
 
 # this selection process takes all of the members of each group who are more than one standard deviation below the group average power level and replaces them with the stats of the most 
 # powerful person in their group, keeping the same power level. 
-genetic.algorithm <- function(sd){
+genetic.algorithm <- function(population){
   
   group.A.most.powerful.index <- 0
   group.B.most.powerful.index <- 0
@@ -2442,66 +2459,67 @@ genetic.algorithm <- function(sd){
     if(population[i,2] == 0.01){
       
       if(population[i,3] < group.A.average.power + group.A.sd.mutation){
-        population[i,] <- c(population[i,1], population[i,2], population[i,3], population[i,4] + rnorm(1, 0, sd), population[i,5] + rnorm(1, 0, sd), population[i,6] + rnorm(1, 0, sd),
-                            population[i,7] + rnorm(1, 0, sd), population[i,8] + rnorm(1, 0, sd), population[i,9] + rnorm(1, 0, sd), population[i,10] + rnorm(1, 0, sd),
-                            population[i,11] + rnorm(1, 0, sd), population[i,12] + rnorm(1, 0, sd), population[i,13] + rnorm(1, 0, sd), population[i,14] + rnorm(1, 0, sd),
-                            population[i,15] + rnorm(1, 0, sd), population[i,16] + rnorm(1, 0, sd), population[i,17] + rnorm(1, 0, sd), population[i,18] + rnorm(1, 0, sd), 
-                            population[i,19] + rnorm(1, 0, sd), population[i,20] + rnorm(1, 0, sd), population[i,21] + rnorm(1, 0, sd), population[i,22] + rnorm(1, 0, sd),
-                            population[i,23] + rnorm(1, 0, sd), population[i,24] + rnorm(1, 0, sd), population[i,25] + rnorm(1, 0, sd), population[i,26] + rnorm(1, 0, sd),
-                            population[i,27] + rnorm(1, 0, sd), population[i,28] + rnorm(1, 0, sd))
+        population[i,] <- c(population[i,1], population[i,2], population[i,3], population[i,4] + rnorm(1, 0, mutation.sd), population[i,5] + rnorm(1, 0, mutation.sd), population[i,6] + rnorm(1, 0, mutation.sd),
+                            population[i,7] + rnorm(1, 0, mutation.sd), population[i,8] + rnorm(1, 0, mutation.sd), population[i,9] + rnorm(1, 0, mutation.sd), population[i,10] + rnorm(1, 0, mutation.sd),
+                            population[i,11] + rnorm(1, 0, mutation.sd), population[i,12] + rnorm(1, 0, mutation.sd), population[i,13] + rnorm(1, 0, mutation.sd), population[i,14] + rnorm(1, 0, mutation.sd),
+                            population[i,15] + rnorm(1, 0, mutation.sd), population[i,16] + rnorm(1, 0, mutation.sd), population[i,17] + rnorm(1, 0, mutation.sd), population[i,18] + rnorm(1, 0, mutation.sd), 
+                            population[i,19] + rnorm(1, 0, mutation.sd), population[i,20] + rnorm(1, 0, mutation.sd), population[i,21] + rnorm(1, 0, mutation.sd), population[i,22] + rnorm(1, 0, mutation.sd),
+                            population[i,23] + rnorm(1, 0, mutation.sd), population[i,24] + rnorm(1, 0, mutation.sd), population[i,25] + rnorm(1, 0, mutation.sd), population[i,26] + rnorm(1, 0, mutation.sd),
+                            population[i,27] + rnorm(1, 0, mutation.sd), population[i,28] + rnorm(1, 0, mutation.sd))
       }
     } else if(population[i,2] == 0.02){
       
       if(population[i,3] < group.B.average.power + group.B.sd.mutation){
-        population[i,] <- c(population[i,1], population[i,2], population[i,3], population[i,4] + rnorm(1, 0, sd), population[i,5] + rnorm(1, 0, sd), population[i,6] + rnorm(1, 0, sd),
-                            population[i,7] + rnorm(1, 0, sd), population[i,8] + rnorm(1, 0, sd), population[i,9] + rnorm(1, 0, sd), population[i,10] + rnorm(1, 0, sd),
-                            population[i,11] + rnorm(1, 0, sd), population[i,12] + rnorm(1, 0, sd), population[i,13] + rnorm(1, 0, sd), population[i,14] + rnorm(1, 0, sd),
-                            population[i,15] + rnorm(1, 0, sd), population[i,16] + rnorm(1, 0, sd), population[i,17] + rnorm(1, 0, sd), population[i,18] + rnorm(1, 0, sd), 
-                            population[i,19] + rnorm(1, 0, sd), population[i,20] + rnorm(1, 0, sd), population[i,21] + rnorm(1, 0, sd), population[i,22] + rnorm(1, 0, sd),
-                            population[i,23] + rnorm(1, 0, sd), population[i,24] + rnorm(1, 0, sd), population[i,25] + rnorm(1, 0, sd), population[i,26] + rnorm(1, 0, sd),
-                            population[i,27] + rnorm(1, 0, sd), population[i,28] + rnorm(1, 0, sd))
+        population[i,] <- c(population[i,1], population[i,2], population[i,3], population[i,4] + rnorm(1, 0, mutation.sd), population[i,5] + rnorm(1, 0, mutation.sd), population[i,6] + rnorm(1, 0, mutation.sd),
+                            population[i,7] + rnorm(1, 0, mutation.sd), population[i,8] + rnorm(1, 0, mutation.sd), population[i,9] + rnorm(1, 0, mutation.sd), population[i,10] + rnorm(1, 0, mutation.sd),
+                            population[i,11] + rnorm(1, 0, mutation.sd), population[i,12] + rnorm(1, 0, mutation.sd), population[i,13] + rnorm(1, 0, mutation.sd), population[i,14] + rnorm(1, 0, mutation.sd),
+                            population[i,15] + rnorm(1, 0, mutation.sd), population[i,16] + rnorm(1, 0, mutation.sd), population[i,17] + rnorm(1, 0, mutation.sd), population[i,18] + rnorm(1, 0, mutation.sd), 
+                            population[i,19] + rnorm(1, 0, mutation.sd), population[i,20] + rnorm(1, 0, mutation.sd), population[i,21] + rnorm(1, 0, mutation.sd), population[i,22] + rnorm(1, 0, mutation.sd),
+                            population[i,23] + rnorm(1, 0, mutation.sd), population[i,24] + rnorm(1, 0, mutation.sd), population[i,25] + rnorm(1, 0, mutation.sd), population[i,26] + rnorm(1, 0, mutation.sd),
+                            population[i,27] + rnorm(1, 0, mutation.sd), population[i,28] + rnorm(1, 0, mutation.sd))
       }
     } else if(population[i,2] == 0.03){
       
       if(population[i,3] < group.C.average.power + group.C.sd.mutation){
-        population[i,] <- c(population[i,1], population[i,2], population[i,3], population[i,4] + rnorm(1, 0, sd), population[i,5] + rnorm(1, 0, sd), population[i,6] + rnorm(1, 0, sd),
-                            population[i,7] + rnorm(1, 0, sd), population[i,8] + rnorm(1, 0, sd), population[i,9] + rnorm(1, 0, sd), population[i,10] + rnorm(1, 0, sd),
-                            population[i,11] + rnorm(1, 0, sd), population[i,12] + rnorm(1, 0, sd), population[i,13] + rnorm(1, 0, sd), population[i,14] + rnorm(1, 0, sd),
-                            population[i,15] + rnorm(1, 0, sd), population[i,16] + rnorm(1, 0, sd), population[i,17] + rnorm(1, 0, sd), population[i,18] + rnorm(1, 0, sd), 
-                            population[i,19] + rnorm(1, 0, sd), population[i,20] + rnorm(1, 0, sd), population[i,21] + rnorm(1, 0, sd), population[i,22] + rnorm(1, 0, sd),
-                            population[i,23] + rnorm(1, 0, sd), population[i,24] + rnorm(1, 0, sd), population[i,25] + rnorm(1, 0, sd), population[i,26] + rnorm(1, 0, sd),
-                            population[i,27] + rnorm(1, 0, sd), population[i,28] + rnorm(1, 0, sd))
+        population[i,] <- c(population[i,1], population[i,2], population[i,3], population[i,4] + rnorm(1, 0, mutation.sd), population[i,5] + rnorm(1, 0, mutation.sd), population[i,6] + rnorm(1, 0, mutation.sd),
+                            population[i,7] + rnorm(1, 0, mutation.sd), population[i,8] + rnorm(1, 0, mutation.sd), population[i,9] + rnorm(1, 0, mutation.sd), population[i,10] + rnorm(1, 0, mutation.sd),
+                            population[i,11] + rnorm(1, 0, mutation.sd), population[i,12] + rnorm(1, 0, mutation.sd), population[i,13] + rnorm(1, 0, mutation.sd), population[i,14] + rnorm(1, 0, mutation.sd),
+                            population[i,15] + rnorm(1, 0, mutation.sd), population[i,16] + rnorm(1, 0, mutation.sd), population[i,17] + rnorm(1, 0, mutation.sd), population[i,18] + rnorm(1, 0, mutation.sd), 
+                            population[i,19] + rnorm(1, 0, mutation.sd), population[i,20] + rnorm(1, 0, mutation.sd), population[i,21] + rnorm(1, 0, mutation.sd), population[i,22] + rnorm(1, 0, mutation.sd),
+                            population[i,23] + rnorm(1, 0, mutation.sd), population[i,24] + rnorm(1, 0, mutation.sd), population[i,25] + rnorm(1, 0, mutation.sd), population[i,26] + rnorm(1, 0, mutation.sd),
+                            population[i,27] + rnorm(1, 0, mutation.sd), population[i,28] + rnorm(1, 0, mutation.sd))
       }
     } else if(population[i,2] == 0.04){
       
       if(population[i,3] < group.D.average.power + group.D.sd.mutation){
-        population[i,] <- c(population[i,1], population[i,2], population[i,3], population[i,4] + rnorm(1, 0, sd), population[i,5] + rnorm(1, 0, sd), population[i,6] + rnorm(1, 0, sd),
-                            population[i,7] + rnorm(1, 0, sd), population[i,8] + rnorm(1, 0, sd), population[i,9] + rnorm(1, 0, sd), population[i,10] + rnorm(1, 0, sd),
-                            population[i,11] + rnorm(1, 0, sd), population[i,12] + rnorm(1, 0, sd), population[i,13] + rnorm(1, 0, sd), population[i,14] + rnorm(1, 0, sd),
-                            population[i,15] + rnorm(1, 0, sd), population[i,16] + rnorm(1, 0, sd), population[i,17] + rnorm(1, 0, sd), population[i,18] + rnorm(1, 0, sd), 
-                            population[i,19] + rnorm(1, 0, sd), population[i,20] + rnorm(1, 0, sd), population[i,21] + rnorm(1, 0, sd), population[i,22] + rnorm(1, 0, sd),
-                            population[i,23] + rnorm(1, 0, sd), population[i,24] + rnorm(1, 0, sd), population[i,25] + rnorm(1, 0, sd), population[i,26] + rnorm(1, 0, sd),
-                            population[i,27] + rnorm(1, 0, sd), population[i,28] + rnorm(1, 0, sd))
+        population[i,] <- c(population[i,1], population[i,2], population[i,3], population[i,4] + rnorm(1, 0, mutation.sd), population[i,5] + rnorm(1, 0, mutation.sd), population[i,6] + rnorm(1, 0, mutation.sd),
+                            population[i,7] + rnorm(1, 0, mutation.sd), population[i,8] + rnorm(1, 0, mutation.sd), population[i,9] + rnorm(1, 0, mutation.sd), population[i,10] + rnorm(1, 0, mutation.sd),
+                            population[i,11] + rnorm(1, 0, mutation.sd), population[i,12] + rnorm(1, 0, mutation.sd), population[i,13] + rnorm(1, 0, mutation.sd), population[i,14] + rnorm(1, 0, mutation.sd),
+                            population[i,15] + rnorm(1, 0, mutation.sd), population[i,16] + rnorm(1, 0, mutation.sd), population[i,17] + rnorm(1, 0, mutation.sd), population[i,18] + rnorm(1, 0, mutation.sd), 
+                            population[i,19] + rnorm(1, 0, mutation.sd), population[i,20] + rnorm(1, 0, mutation.sd), population[i,21] + rnorm(1, 0, mutation.sd), population[i,22] + rnorm(1, 0, mutation.sd),
+                            population[i,23] + rnorm(1, 0, mutation.sd), population[i,24] + rnorm(1, 0, mutation.sd), population[i,25] + rnorm(1, 0, mutation.sd), population[i,26] + rnorm(1, 0, mutation.sd),
+                            population[i,27] + rnorm(1, 0, mutation.sd), population[i,28] + rnorm(1, 0, mutation.sd))
       }
     } else if(population[i,2] == 0.05){
       
       if(population[i,3] < group.E.average.power + group.E.sd.mutation){
-        population[i,] <- c(population[i,1], population[i,2], population[i,3], population[i,4] + rnorm(1, 0, sd), population[i,5] + rnorm(1, 0, sd), population[i,6] + rnorm(1, 0, sd),
-                            population[i,7] + rnorm(1, 0, sd), population[i,8] + rnorm(1, 0, sd), population[i,9] + rnorm(1, 0, sd), population[i,10] + rnorm(1, 0, sd),
-                            population[i,11] + rnorm(1, 0, sd), population[i,12] + rnorm(1, 0, sd), population[i,13] + rnorm(1, 0, sd), population[i,14] + rnorm(1, 0, sd),
-                            population[i,15] + rnorm(1, 0, sd), population[i,16] + rnorm(1, 0, sd), population[i,17] + rnorm(1, 0, sd), population[i,18] + rnorm(1, 0, sd), 
-                            population[i,19] + rnorm(1, 0, sd), population[i,20] + rnorm(1, 0, sd), population[i,21] + rnorm(1, 0, sd), population[i,22] + rnorm(1, 0, sd),
-                            population[i,23] + rnorm(1, 0, sd), population[i,24] + rnorm(1, 0, sd), population[i,25] + rnorm(1, 0, sd), population[i,26] + rnorm(1, 0, sd),
-                            population[i,27] + rnorm(1, 0, sd), population[i,28] + rnorm(1, 0, sd))
+        population[i,] <- c(population[i,1], population[i,2], population[i,3], population[i,4] + rnorm(1, 0, mutation.sd), population[i,5] + rnorm(1, 0, mutation.sd), population[i,6] + rnorm(1, 0, mutation.sd),
+                            population[i,7] + rnorm(1, 0, mutation.sd), population[i,8] + rnorm(1, 0, mutation.sd), population[i,9] + rnorm(1, 0, mutation.sd), population[i,10] + rnorm(1, 0, mutation.sd),
+                            population[i,11] + rnorm(1, 0, mutation.sd), population[i,12] + rnorm(1, 0, mutation.sd), population[i,13] + rnorm(1, 0, mutation.sd), population[i,14] + rnorm(1, 0, mutation.sd),
+                            population[i,15] + rnorm(1, 0, mutation.sd), population[i,16] + rnorm(1, 0, mutation.sd), population[i,17] + rnorm(1, 0, mutation.sd), population[i,18] + rnorm(1, 0, mutation.sd), 
+                            population[i,19] + rnorm(1, 0, mutation.sd), population[i,20] + rnorm(1, 0, mutation.sd), population[i,21] + rnorm(1, 0, mutation.sd), population[i,22] + rnorm(1, 0, mutation.sd),
+                            population[i,23] + rnorm(1, 0, mutation.sd), population[i,24] + rnorm(1, 0, mutation.sd), population[i,25] + rnorm(1, 0, mutation.sd), population[i,26] + rnorm(1, 0, mutation.sd),
+                            population[i,27] + rnorm(1, 0, mutation.sd), population[i,28] + rnorm(1, 0, mutation.sd))
       }
     }
   }
+  
+  return(population)
 }
 
 
 # this function runs the power exchange, selection, and mutation process n number of times
-run.n.gens <- function(n){
-  population <- initial.population.v2()
+run.n.gens <- function(n, population){
   
   for(i in 1:n){
     intermediate.exchange.data <- exchange.power.v2(population)
@@ -2512,11 +2530,6 @@ run.n.gens <- function(n){
   return(population)
 }
 
-
-
 population <- initial.population.v2()
+population <- run.n.gens(2, population)
 population
-intermediate.exchange.data <- exchange.power.v2(population)
-population <- exchange.response.v2(intermediate.exchange.data)
-population
-
