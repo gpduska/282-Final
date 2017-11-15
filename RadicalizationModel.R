@@ -2531,5 +2531,9 @@ run.n.gens <- function(n, population){
 }
 
 population <- initial.population.v2()
-population <- run.n.gens(2, population)
+population <- run.n.gens(1, population)
 population
+
+intermediate.exchange.data <- exchange.power.v2(population)
+population <- exchange.response.v2(intermediate.exchange.data)
+population <- genetic.algorithm(population)
