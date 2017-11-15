@@ -2308,56 +2308,206 @@ exchange.response.v2 <- function(intermediate.exchange.data){
   return(population)
 }
 
-# this selection process takes all of the members of each group who are more than one standard deviation below the group average power level and replaces them with a person of 
-# average group stats, keeping the same power level. 
-group.based.selection <- function(sd){
+# this selection process takes all of the members of each group who are more than one standard deviation below the group average power level and replaces them with the stats of the most 
+# powerful person in their group, keeping the same power level. 
+genetic.algorithm <- function(sd){
   
-  group.A.average.power <- 0
-  group.B.average.power <- 0
-  group.C.average.power <- 0
-  group.D.average.power <- 0
-  group.E.average.power <- 0
+  group.A.most.powerful.index <- 0
+  group.B.most.powerful.index <- 0
+  group.C.most.powerful.index <- 0
+  group.D.most.powerful.index <- 0
+  group.E.most.powerful.index <- 0
+  
+  group.A.total.power <- 0
+  group.B.total.power <- 0
+  group.C.total.power <- 0
+  group.D.total.power <- 0
+  group.E.total.power <- 0
   
   for(i in 1:n.population){
     if(population[i,2] == 0.01){
-      group.A.average.power <- group.A.average.power + population[i,3]
+      group.A.total.power <- group.A.total.power + population[i,3]
+      
+      if(group.A.most.powerful.index == 0){
+        group.A.most.powerful.index <- i
+      } else if(population[i,3] > population[group.A.most.powerful.index,3]){
+        group.A.most.powerful.index <- i
+      }
     } else if(population[i,2] == 0.02){
-      group.B.average.power <- group.B.average.power + population[i,3]
+      group.B.total.power <- group.B.total.power + population[i,3]
+      
+      if(group.B.most.powerful.index == 0){
+        group.B.most.powerful.index <- i
+      } else if(population[i,3] > population[group.B.most.powerful.index,3]){
+        group.B.most.powerful.index <- i
+      }
     } else if(population[i,2] == 0.03){
-      group.C.average.power <- group.C.average.power + population[i,3]
+      group.C.total.power <- group.C.total.power + population[i,3]
+      
+      if(group.C.most.powerful.index == 0){
+        group.C.most.powerful.index <- i
+      } else if(population[i,3] > population[group.C.most.powerful.index,3]){
+        group.C.most.powerful.index <- i
+      }
     } else if(population[i,2] == 0.04){
-      group.D.average.power <- group.D.average.power + population[i,3]
+      group.D.total.power <- group.D.total.power + population[i,3]
+      
+      if(group.D.most.powerful.index == 0){
+        group.D.most.powerful.index <- i
+      } else if(population[i,3] > population[group.D.most.powerful.index,3]){
+        group.D.most.powerful.index <- i
+      }
     } else{
-      group.E.average.power <- group.E.average.power + population[i,3]
+      group.E.total.power <- group.E.total.power + population[i,3]
+      
+      if(group.E.most.powerful.index == 0){
+        group.E.most.powerful.index <- i
+      } else if(population[i,3] > population[group.E.most.powerful.index,3]){
+        group.E.most.powerful.index <- i
+      }
     }
   }
   
-  group.A.average.power <- group.A.average.power / n.groupA
-  group.B.average.power <- group.B.average.power / n.groupB
-  group.C.average.power <- group.C.average.power / n.groupC
-  group.D.average.power <- group.D.average.power / n.groupD
-  group.E.average.power <- group.E.average.power / n.groupE
+  group.A.average.power <- group.A.total.power / n.groupA
+  group.B.average.power <- group.B.total.power / n.groupB
+  group.C.average.power <- group.C.total.power / n.groupC
+  group.D.average.power <- group.D.total.power / n.groupD
+  group.E.average.power <- group.E.total.power / n.groupE
   
+  # this for loop takes all of the members of each group who are more than group.*.sd.selection below the group average power level and replaces them with the stats of the most 
+  # powerful person in their group, keeping the same power level.
+  for(i in 1:n.population){
+    
+    if(population[i,2] == 0.01){
+      
+      if(population[i,3] < group.A.average.power - group.A.sd.selection) {
+        population[i,] <- c(population[i,1], population[i,2], population[i,3], population[group.A.most.powerful.index,4], population[group.A.most.powerful.index,5],
+                            population[group.A.most.powerful.index,6], population[group.A.most.powerful.index,7], population[group.A.most.powerful.index,8],
+                            population[group.A.most.powerful.index,9], population[group.A.most.powerful.index,10], population[group.A.most.powerful.index,11],
+                            population[group.A.most.powerful.index,12], population[group.A.most.powerful.index,13], population[group.A.most.powerful.index,14],
+                            population[group.A.most.powerful.index,15], population[group.A.most.powerful.index,16], population[group.A.most.powerful.index,17],
+                            population[group.A.most.powerful.index,18], population[group.A.most.powerful.index,19], population[group.A.most.powerful.index,20],
+                            population[group.A.most.powerful.index,21], population[group.A.most.powerful.index,22], population[group.A.most.powerful.index,23],
+                            population[group.A.most.powerful.index,24], population[group.A.most.powerful.index,25], population[group.A.most.powerful.index,26],
+                            population[group.A.most.powerful.index,27], population[group.A.most.powerful.index,18])
+      }
+    } else if(population[i,2] == 0.02){
+      
+      if(population[i,3] < group.B.average.power - group.B.sd.selection) {
+        population[i,] <- c(population[i,1], population[i,2], population[i,3], population[group.B.most.powerful.index,4], population[group.B.most.powerful.index,5],
+                            population[group.B.most.powerful.index,6], population[group.B.most.powerful.index,7], population[group.B.most.powerful.index,8],
+                            population[group.B.most.powerful.index,9], population[group.B.most.powerful.index,10], population[group.B.most.powerful.index,11],
+                            population[group.B.most.powerful.index,12], population[group.B.most.powerful.index,13], population[group.B.most.powerful.index,14],
+                            population[group.B.most.powerful.index,15], population[group.B.most.powerful.index,16], population[group.B.most.powerful.index,17],
+                            population[group.B.most.powerful.index,18], population[group.B.most.powerful.index,19], population[group.B.most.powerful.index,20],
+                            population[group.B.most.powerful.index,21], population[group.B.most.powerful.index,22], population[group.B.most.powerful.index,23],
+                            population[group.B.most.powerful.index,24], population[group.B.most.powerful.index,25], population[group.B.most.powerful.index,26],
+                            population[group.B.most.powerful.index,27], population[group.B.most.powerful.index,18])
+      }
+    } else if(population[i,2] == 0.03){
+      
+      if(population[i,3] < group.C.average.power - group.C.sd.selection) {
+        population[i,] <- c(population[i,1], population[i,2], population[i,3], population[group.C.most.powerful.index,4], population[group.C.most.powerful.index,5],
+                            population[group.C.most.powerful.index,6], population[group.C.most.powerful.index,7], population[group.C.most.powerful.index,8],
+                            population[group.C.most.powerful.index,9], population[group.C.most.powerful.index,10], population[group.C.most.powerful.index,11],
+                            population[group.C.most.powerful.index,12], population[group.C.most.powerful.index,13], population[group.C.most.powerful.index,14],
+                            population[group.C.most.powerful.index,15], population[group.C.most.powerful.index,16], population[group.C.most.powerful.index,17],
+                            population[group.C.most.powerful.index,18], population[group.C.most.powerful.index,19], population[group.C.most.powerful.index,20],
+                            population[group.C.most.powerful.index,21], population[group.C.most.powerful.index,22], population[group.C.most.powerful.index,23],
+                            population[group.C.most.powerful.index,24], population[group.C.most.powerful.index,25], population[group.C.most.powerful.index,26],
+                            population[group.C.most.powerful.index,27], population[group.C.most.powerful.index,18])
+      }
+    } else if(population[i,2] == 0.04){
+      
+      if(population[i,3] < group.D.average.power - group.D.sd.selection) {
+        population[i,] <- c(population[i,1], population[i,2], population[i,3], population[group.D.most.powerful.index,4], population[group.D.most.powerful.index,5],
+                            population[group.D.most.powerful.index,6], population[group.D.most.powerful.index,7], population[group.D.most.powerful.index,8],
+                            population[group.D.most.powerful.index,9], population[group.D.most.powerful.index,10], population[group.D.most.powerful.index,11],
+                            population[group.D.most.powerful.index,12], population[group.D.most.powerful.index,13], population[group.D.most.powerful.index,14],
+                            population[group.D.most.powerful.index,15], population[group.D.most.powerful.index,16], population[group.D.most.powerful.index,17],
+                            population[group.D.most.powerful.index,18], population[group.D.most.powerful.index,19], population[group.D.most.powerful.index,20],
+                            population[group.D.most.powerful.index,21], population[group.D.most.powerful.index,22], population[group.D.most.powerful.index,23],
+                            population[group.D.most.powerful.index,24], population[group.D.most.powerful.index,25], population[group.D.most.powerful.index,26],
+                            population[group.D.most.powerful.index,27], population[group.D.most.powerful.index,18])
+      }
+    } else if(population[i,2] == 0.05){
+      
+      if(population[i,3] < group.E.average.power - group.E.sd.selection) {
+        population[i,] <- c(population[i,1], population[i,2], population[i,3], population[group.E.most.powerful.index,4], population[group.E.most.powerful.index,5],
+                            population[group.E.most.powerful.index,6], population[group.E.most.powerful.index,7], population[group.E.most.powerful.index,8],
+                            population[group.E.most.powerful.index,9], population[group.E.most.powerful.index,10], population[group.E.most.powerful.index,11],
+                            population[group.E.most.powerful.index,12], population[group.E.most.powerful.index,13], population[group.E.most.powerful.index,14],
+                            population[group.E.most.powerful.index,15], population[group.E.most.powerful.index,16], population[group.E.most.powerful.index,17],
+                            population[group.E.most.powerful.index,18], population[group.E.most.powerful.index,19], population[group.E.most.powerful.index,20],
+                            population[group.E.most.powerful.index,21], population[group.E.most.powerful.index,22], population[group.E.most.powerful.index,23],
+                            population[group.E.most.powerful.index,24], population[group.E.most.powerful.index,25], population[group.E.most.powerful.index,26],
+                            population[group.E.most.powerful.index,27], population[group.E.most.powerful.index,18])
+      }
+    }
+  }
+  
+  # this for loop takes all of the members of each group who are less than the group average power level plus the group.*.sd.mutation and mutates their behavior slightly
   for(i in 1:n.population){
     
     
+    if(population[i,2] == 0.01){
+      
+      if(population[i,3] < group.A.average.power + group.A.sd.mutation){
+        population[i,] <- c(population[i,1], population[i,2], population[i,3], population[i,4] + rnorm(1, 0, sd), population[i,5] + rnorm(1, 0, sd), population[i,6] + rnorm(1, 0, sd),
+                            population[i,7] + rnorm(1, 0, sd), population[i,8] + rnorm(1, 0, sd), population[i,9] + rnorm(1, 0, sd), population[i,10] + rnorm(1, 0, sd),
+                            population[i,11] + rnorm(1, 0, sd), population[i,12] + rnorm(1, 0, sd), population[i,13] + rnorm(1, 0, sd), population[i,14] + rnorm(1, 0, sd),
+                            population[i,15] + rnorm(1, 0, sd), population[i,16] + rnorm(1, 0, sd), population[i,17] + rnorm(1, 0, sd), population[i,18] + rnorm(1, 0, sd), 
+                            population[i,19] + rnorm(1, 0, sd), population[i,20] + rnorm(1, 0, sd), population[i,21] + rnorm(1, 0, sd), population[i,22] + rnorm(1, 0, sd),
+                            population[i,23] + rnorm(1, 0, sd), population[i,24] + rnorm(1, 0, sd), population[i,25] + rnorm(1, 0, sd), population[i,26] + rnorm(1, 0, sd),
+                            population[i,27] + rnorm(1, 0, sd), population[i,28] + rnorm(1, 0, sd))
+      }
+    } else if(population[i,2] == 0.02){
+      
+      if(population[i,3] < group.B.average.power + group.B.sd.mutation){
+        population[i,] <- c(population[i,1], population[i,2], population[i,3], population[i,4] + rnorm(1, 0, sd), population[i,5] + rnorm(1, 0, sd), population[i,6] + rnorm(1, 0, sd),
+                            population[i,7] + rnorm(1, 0, sd), population[i,8] + rnorm(1, 0, sd), population[i,9] + rnorm(1, 0, sd), population[i,10] + rnorm(1, 0, sd),
+                            population[i,11] + rnorm(1, 0, sd), population[i,12] + rnorm(1, 0, sd), population[i,13] + rnorm(1, 0, sd), population[i,14] + rnorm(1, 0, sd),
+                            population[i,15] + rnorm(1, 0, sd), population[i,16] + rnorm(1, 0, sd), population[i,17] + rnorm(1, 0, sd), population[i,18] + rnorm(1, 0, sd), 
+                            population[i,19] + rnorm(1, 0, sd), population[i,20] + rnorm(1, 0, sd), population[i,21] + rnorm(1, 0, sd), population[i,22] + rnorm(1, 0, sd),
+                            population[i,23] + rnorm(1, 0, sd), population[i,24] + rnorm(1, 0, sd), population[i,25] + rnorm(1, 0, sd), population[i,26] + rnorm(1, 0, sd),
+                            population[i,27] + rnorm(1, 0, sd), population[i,28] + rnorm(1, 0, sd))
+      }
+    } else if(population[i,2] == 0.03){
+      
+      if(population[i,3] < group.C.average.power + group.C.sd.mutation){
+        population[i,] <- c(population[i,1], population[i,2], population[i,3], population[i,4] + rnorm(1, 0, sd), population[i,5] + rnorm(1, 0, sd), population[i,6] + rnorm(1, 0, sd),
+                            population[i,7] + rnorm(1, 0, sd), population[i,8] + rnorm(1, 0, sd), population[i,9] + rnorm(1, 0, sd), population[i,10] + rnorm(1, 0, sd),
+                            population[i,11] + rnorm(1, 0, sd), population[i,12] + rnorm(1, 0, sd), population[i,13] + rnorm(1, 0, sd), population[i,14] + rnorm(1, 0, sd),
+                            population[i,15] + rnorm(1, 0, sd), population[i,16] + rnorm(1, 0, sd), population[i,17] + rnorm(1, 0, sd), population[i,18] + rnorm(1, 0, sd), 
+                            population[i,19] + rnorm(1, 0, sd), population[i,20] + rnorm(1, 0, sd), population[i,21] + rnorm(1, 0, sd), population[i,22] + rnorm(1, 0, sd),
+                            population[i,23] + rnorm(1, 0, sd), population[i,24] + rnorm(1, 0, sd), population[i,25] + rnorm(1, 0, sd), population[i,26] + rnorm(1, 0, sd),
+                            population[i,27] + rnorm(1, 0, sd), population[i,28] + rnorm(1, 0, sd))
+      }
+    } else if(population[i,2] == 0.04){
+      
+      if(population[i,3] < group.D.average.power + group.D.sd.mutation){
+        population[i,] <- c(population[i,1], population[i,2], population[i,3], population[i,4] + rnorm(1, 0, sd), population[i,5] + rnorm(1, 0, sd), population[i,6] + rnorm(1, 0, sd),
+                            population[i,7] + rnorm(1, 0, sd), population[i,8] + rnorm(1, 0, sd), population[i,9] + rnorm(1, 0, sd), population[i,10] + rnorm(1, 0, sd),
+                            population[i,11] + rnorm(1, 0, sd), population[i,12] + rnorm(1, 0, sd), population[i,13] + rnorm(1, 0, sd), population[i,14] + rnorm(1, 0, sd),
+                            population[i,15] + rnorm(1, 0, sd), population[i,16] + rnorm(1, 0, sd), population[i,17] + rnorm(1, 0, sd), population[i,18] + rnorm(1, 0, sd), 
+                            population[i,19] + rnorm(1, 0, sd), population[i,20] + rnorm(1, 0, sd), population[i,21] + rnorm(1, 0, sd), population[i,22] + rnorm(1, 0, sd),
+                            population[i,23] + rnorm(1, 0, sd), population[i,24] + rnorm(1, 0, sd), population[i,25] + rnorm(1, 0, sd), population[i,26] + rnorm(1, 0, sd),
+                            population[i,27] + rnorm(1, 0, sd), population[i,28] + rnorm(1, 0, sd))
+      }
+    } else if(population[i,2] == 0.05){
+      
+      if(population[i,3] < group.E.average.power + group.E.sd.mutation){
+        population[i,] <- c(population[i,1], population[i,2], population[i,3], population[i,4] + rnorm(1, 0, sd), population[i,5] + rnorm(1, 0, sd), population[i,6] + rnorm(1, 0, sd),
+                            population[i,7] + rnorm(1, 0, sd), population[i,8] + rnorm(1, 0, sd), population[i,9] + rnorm(1, 0, sd), population[i,10] + rnorm(1, 0, sd),
+                            population[i,11] + rnorm(1, 0, sd), population[i,12] + rnorm(1, 0, sd), population[i,13] + rnorm(1, 0, sd), population[i,14] + rnorm(1, 0, sd),
+                            population[i,15] + rnorm(1, 0, sd), population[i,16] + rnorm(1, 0, sd), population[i,17] + rnorm(1, 0, sd), population[i,18] + rnorm(1, 0, sd), 
+                            population[i,19] + rnorm(1, 0, sd), population[i,20] + rnorm(1, 0, sd), population[i,21] + rnorm(1, 0, sd), population[i,22] + rnorm(1, 0, sd),
+                            population[i,23] + rnorm(1, 0, sd), population[i,24] + rnorm(1, 0, sd), population[i,25] + rnorm(1, 0, sd), population[i,26] + rnorm(1, 0, sd),
+                            population[i,27] + rnorm(1, 0, sd), population[i,28] + rnorm(1, 0, sd))
+      }
+    }
   }
 }
-
-# this mutation process mutates everyone behavior slightly
-mutation.process <- function(sd){
-  
-  for(i in 1:n.population){
-    population[i,] <- c(population[i,1], population[i,2], population[i,3], population[i,4] + rnorm(1, 0, sd), population[i,5] + rnorm(1, 0, sd), population[i,6] + rnorm(1, 0, sd),
-                        population[i,7] + rnorm(1, 0, sd), population[i,8] + rnorm(1, 0, sd), population[i,9] + rnorm(1, 0, sd), population[i,10] + rnorm(1, 0, sd),
-                        population[i,11] + rnorm(1, 0, sd), population[i,12] + rnorm(1, 0, sd), population[i,13] + rnorm(1, 0, sd), population[i,14] + rnorm(1, 0, sd),
-                        population[i,15] + rnorm(1, 0, sd), population[i,16] + rnorm(1, 0, sd), population[i,17] + rnorm(1, 0, sd), population[i,18] + rnorm(1, 0, sd), 
-                        population[i,19] + rnorm(1, 0, sd), population[i,20] + rnorm(1, 0, sd), population[i,21] + rnorm(1, 0, sd), population[i,22] + rnorm(1, 0, sd),
-                        population[i,23] + rnorm(1, 0, sd), population[i,24] + rnorm(1, 0, sd), population[i,25] + rnorm(1, 0, sd), population[i,26] + rnorm(1, 0, sd),
-                        population[i,27] + rnorm(1, 0, sd), population[i,28] + rnorm(1, 0, sd))
-  }
-}
-
 
 population <- initial.population.v2()
 population
