@@ -1834,17 +1834,6 @@ exchange.response.v1 <- function(intermediate.exchange.data){
   return(population)
 }
 
-# this function runs the power exchange, selection, and mutation process n number of times
-run.n.gens <- function(n){
-  
-  for(i in 1:n){
-    population <- initial.population()
-    intermediate.exchange.data <- exchange.power(population)
-    population <- exchange.response(intermediate.exchange.data)
-  }
-  return(population)
-}
-
 
 # This function instantiates the origional matrix
 initial.population.v2 <- function(){
@@ -2509,13 +2498,25 @@ genetic.algorithm <- function(sd){
   }
 }
 
+
+# this function runs the power exchange, selection, and mutation process n number of times
+run.n.gens <- function(n){
+  population <- initial.population.v2()
+  
+  for(i in 1:n){
+    intermediate.exchange.data <- exchange.power.v2(population)
+    population <- exchange.response.v2(intermediate.exchange.data)
+    population <- genetic.algorithm(population)
+  }
+  
+  return(population)
+}
+
+
+
 population <- initial.population.v2()
 population
 intermediate.exchange.data <- exchange.power.v2(population)
 population <- exchange.response.v2(intermediate.exchange.data)
 population
 
-matrix <- matrix(c(1, 2, 3, 4, 5, 6), byrow = T, nrow = 2)
-matrix
-matrix[2,] <- c(matrix[2,1] + 1, matrix[2,2] + 1, matrix[2,3] + 1)
-matrix
