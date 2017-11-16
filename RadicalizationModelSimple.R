@@ -1,6 +1,7 @@
 # this is a simplified version of the radicalization model
 
 library(dplyr)
+library(ggplot2)
 
 n.population <- 30  #size of population
 
@@ -42,7 +43,7 @@ exchange.power.simple <- function(population){
       
       if(runif(1, 0, 1) < population[i,j]){
         
-        power.take <- abs(rnorm(1, 0, population[i, (n.population + j)]))
+        power.take <- abs(rnorm(1, 0, abs(population[i, (n.population + j)])))
         
         index.initiated <- append(index.initiated, j, after = length(index.initiated))
         index.initiator <- append(index.initiator, i, after = length(index.initiator))
@@ -116,7 +117,61 @@ genetic.algorithm.simple <- function(population){
   return(population)
 }
 
-run.n.gens.simple <- function(n){
+genetic.algorithm.simple.copy.up <- function(population){
+  
+  
+  power.scores <- population[,power.score.index]
+  index.vector <- 1:n.population
+  index.by.ascending.power <- c()
+  
+  for(i in 1:n.population){
+    
+    index.by.ascending.power <- append(index.by.ascending.power, index.vector[which.min(power.scores)], after = length(index.by.ascending.power))
+    index.vector <- index.vector[-(which.min(power.scores))]
+    power.scores <- power.scores[-(which.min(power.scores))]
+    
+  }
+  
+  for(i in index.by.ascending.power[-n.population]){
+    
+    index.to.copy <- index.by.ascending.power[which(index.by.ascending.power == i) + 1]
+    
+    population[i,] <- c(population[index.to.copy, 1] + rnorm(1, 0, mutation.sd), population[index.to.copy, 2] + rnorm(1, 0, mutation.sd), 
+                        population[index.to.copy, 3] + rnorm(1, 0, mutation.sd), population[index.to.copy, 4] + rnorm(1, 0, mutation.sd), 
+                        population[index.to.copy, 5] + rnorm(1, 0, mutation.sd), population[index.to.copy, 6] + rnorm(1, 0, mutation.sd),
+                        population[index.to.copy, 7] + rnorm(1, 0, mutation.sd), population[index.to.copy, 8] + rnorm(1, 0, mutation.sd),
+                        population[index.to.copy, 9] + rnorm(1, 0, mutation.sd), population[index.to.copy, 10] + rnorm(1, 0, mutation.sd),
+                        population[index.to.copy, 11] + rnorm(1, 0, mutation.sd), population[index.to.copy, 12] + rnorm(1, 0, mutation.sd),
+                        population[index.to.copy, 13] + rnorm(1, 0, mutation.sd), population[index.to.copy, 14] + rnorm(1, 0, mutation.sd),
+                        population[index.to.copy, 15] + rnorm(1, 0, mutation.sd), population[index.to.copy, 16] + rnorm(1, 0, mutation.sd),
+                        population[index.to.copy, 17] + rnorm(1, 0, mutation.sd), population[index.to.copy, 18] + rnorm(1, 0, mutation.sd),
+                        population[index.to.copy, 19] + rnorm(1, 0, mutation.sd), population[index.to.copy, 20] + rnorm(1, 0, mutation.sd),
+                        population[index.to.copy, 21] + rnorm(1, 0, mutation.sd), population[index.to.copy, 22] + rnorm(1, 0, mutation.sd),
+                        population[index.to.copy, 23] + rnorm(1, 0, mutation.sd), population[index.to.copy, 24] + rnorm(1, 0, mutation.sd),
+                        population[index.to.copy, 25] + rnorm(1, 0, mutation.sd), population[index.to.copy, 26] + rnorm(1, 0, mutation.sd),
+                        population[index.to.copy, 27] + rnorm(1, 0, mutation.sd), population[index.to.copy, 28] + rnorm(1, 0, mutation.sd),
+                        population[index.to.copy, 29] + rnorm(1, 0, mutation.sd), population[index.to.copy, 30] + rnorm(1, 0, mutation.sd),
+                        population[index.to.copy, 31] + rnorm(1, 0, mutation.sd), population[index.to.copy, 32] + rnorm(1, 0, mutation.sd), 
+                        population[index.to.copy, 33] + rnorm(1, 0, mutation.sd), population[index.to.copy, 34] + rnorm(1, 0, mutation.sd), 
+                        population[index.to.copy, 35] + rnorm(1, 0, mutation.sd), population[index.to.copy, 36] + rnorm(1, 0, mutation.sd),
+                        population[index.to.copy, 37] + rnorm(1, 0, mutation.sd), population[index.to.copy, 38] + rnorm(1, 0, mutation.sd),
+                        population[index.to.copy, 39] + rnorm(1, 0, mutation.sd), population[index.to.copy, 40] + rnorm(1, 0, mutation.sd),
+                        population[index.to.copy, 41] + rnorm(1, 0, mutation.sd), population[index.to.copy, 42] + rnorm(1, 0, mutation.sd),
+                        population[index.to.copy, 43] + rnorm(1, 0, mutation.sd), population[index.to.copy, 44] + rnorm(1, 0, mutation.sd),
+                        population[index.to.copy, 45] + rnorm(1, 0, mutation.sd), population[index.to.copy, 46] + rnorm(1, 0, mutation.sd),
+                        population[index.to.copy, 47] + rnorm(1, 0, mutation.sd), population[index.to.copy, 48] + rnorm(1, 0, mutation.sd),
+                        population[index.to.copy, 49] + rnorm(1, 0, mutation.sd), population[index.to.copy, 50] + rnorm(1, 0, mutation.sd),
+                        population[index.to.copy, 51] + rnorm(1, 0, mutation.sd), population[index.to.copy, 52] + rnorm(1, 0, mutation.sd),
+                        population[index.to.copy, 53] + rnorm(1, 0, mutation.sd), population[index.to.copy, 54] + rnorm(1, 0, mutation.sd),
+                        population[index.to.copy, 55] + rnorm(1, 0, mutation.sd), population[index.to.copy, 56] + rnorm(1, 0, mutation.sd),
+                        population[index.to.copy, 57] + rnorm(1, 0, mutation.sd), population[index.to.copy, 58] + rnorm(1, 0, mutation.sd),
+                        population[index.to.copy, 59] + rnorm(1, 0, mutation.sd), population[index.to.copy, 60] + rnorm(1, 0, mutation.sd),
+                        population[i, power.score.index])
+  }
+  return(population)
+}
+
+run.n.gens.simple.v1 <- function(n){
   
   for(i in 1:n){
     intermediate.exchange.data.simple <- exchange.power.simple(population)
@@ -127,18 +182,50 @@ run.n.gens.simple <- function(n){
   return(population)
 }
 
-plot.power.by.rank <- function(population){
+run.n.gens.simple.v2 <- function(n){
+  
+  for(i in 1:n){
+    intermediate.exchange.data.simple <- exchange.power.simple(population)
+    population <- exchange.response.simple(intermediate.exchange.data.simple)
+    population <- genetic.algorithm.simple.copy.up(population)
+  }
+  
+  return(population)
+}
+
+plot.power.by.rank.simple.plot <- function(population){
   
   power.scores <- population[,power.score.index]
   ascending.power.scores <- c()
   
   for(i in 1:n.population){
-     
+    
     ascending.power.scores <- append(ascending.power.scores, power.scores[which.min(power.scores)], after = length(ascending.power.scores))
     power.scores <- power.scores[-(which.min(power.scores))]
+    
   }
   
   plot(1:n.population, ascending.power.scores)
+}
+
+plot.power.by.rank.ggplot2 <- function(population){
+  
+  power.scores <- population[,power.score.index]
+  index.vector <- 1:n.population
+  ascending.power.scores <- c()
+  index.by.ascending.power <- c()
+  
+  for(i in 1:n.population){
+    
+    ascending.power.scores <- append(ascending.power.scores, power.scores[which.min(power.scores)], after = length(ascending.power.scores))
+    index.by.ascending.power <- append(index.by.ascending.power, index.vector[which.min(power.scores)], after = length(index.by.ascending.power))
+    index.vector <- index.vector[-(which.min(power.scores))]
+    power.scores <- power.scores[-(which.min(power.scores))]
+    
+  }
+  
+  d <- data.frame(x = 1:n.population, y = ascending.power.scores, names = index.by.ascending.power)
+  ggplot(d, aes(x,y)) + geom_text(aes(label=names))
 }
 
 plot.power.by.person <- function(population){
@@ -149,10 +236,12 @@ plot.power.by.person <- function(population){
 
 
 population <- initial.population.simple()
-plot.power.by.rank(population)
+plot.power.by.rank.simple.plot(population)
 
 for(i in 1:50){
-  population <- run.n.gens.simple(100)
-  plot.power.by.rank(population)
+  population <- run.n.gens.simple.v2(100)
+  plot.power.by.rank.simple.plot(population)
 }
 
+population <- run.n.gens.simple.v2(100)
+plot.power.by.rank.ggplot2(population)
