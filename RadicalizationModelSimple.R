@@ -4,7 +4,7 @@ library(dplyr)
 
 n.population <- 30  #size of population
 
-prob.success.of.take.sd <- 1 # the standard deviation of the normal curve centered at the difference between two peoples power levels
+prob.success.of.take.sd <- 3 # the standard deviation of the normal curve centered at the difference between two peoples power levels
 
 initial.chance.encounter <- 0.01
 initial.take.sd <- 0.01
@@ -150,8 +150,8 @@ plot.power.by.person <- function(population){
 
 population <- initial.population.simple()
 
-for(i in 1:50){
-  population <- run.n.gens.simple(100)
+for(i in 1:100){
+  population <- run.n.gens.simple(50)
   plot.power.by.rank(population)
 }
 
