@@ -10,7 +10,7 @@ initial.chance.encounter <- 0.01
 initial.take.sd <- 0.01
 mutation.sd <- 0.01
 
-selection.cutoff <- 2
+selection.cutoff <- 5
 mutation.cutoff <- 0.8
 
 power.score.index <- (n.population * 2) + 1
@@ -149,9 +149,10 @@ plot.power.by.person <- function(population){
 
 
 population <- initial.population.simple()
+plot.power.by.rank(population)
 
-for(i in 1:100){
-  population <- run.n.gens.simple(50)
+for(i in 1:50){
+  population <- run.n.gens.simple(100)
   plot.power.by.rank(population)
 }
 
