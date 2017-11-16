@@ -5,7 +5,7 @@ library(ggplot2)
 
 n.population <- 30  #size of population
 
-prob.success.of.take.sd <- 3 # the standard deviation of the normal curve centered at the difference between two peoples power levels
+prob.success.of.take.sd <- 7 # the standard deviation of the normal curve centered at the difference between two peoples power levels
 
 initial.chance.encounter <- 0.01
 initial.take.sd <- 0.01
@@ -135,6 +135,7 @@ genetic.algorithm.simple.copy.up <- function(population){
   for(i in index.by.ascending.power[-n.population]){
     
     index.to.copy <- index.by.ascending.power[which(index.by.ascending.power == i) + 1]
+    #index.most.powerful <- index.by.ascending.power[n.population]
     
     population[i,] <- c(population[index.to.copy, 1] + rnorm(1, 0, mutation.sd), population[index.to.copy, 2] + rnorm(1, 0, mutation.sd), 
                         population[index.to.copy, 3] + rnorm(1, 0, mutation.sd), population[index.to.copy, 4] + rnorm(1, 0, mutation.sd), 
@@ -167,6 +168,11 @@ genetic.algorithm.simple.copy.up <- function(population){
                         population[index.to.copy, 57] + rnorm(1, 0, mutation.sd), population[index.to.copy, 58] + rnorm(1, 0, mutation.sd),
                         population[index.to.copy, 59] + rnorm(1, 0, mutation.sd), population[index.to.copy, 60] + rnorm(1, 0, mutation.sd),
                         population[i, power.score.index])
+    
+    #if(population[i,power.score.index] == 0){
+    #  population[i, index.most.powerful] <- 0.5
+    #  population[i, (n.population + index.most.powerful)] <- 0.5
+    #}
   }
   return(population)
 }
@@ -238,10 +244,12 @@ plot.power.by.person <- function(population){
 population <- initial.population.simple()
 plot.power.by.rank.simple.plot(population)
 
-for(i in 1:50){
+for(i in 1:20){
   population <- run.n.gens.simple.v2(100)
   plot.power.by.rank.simple.plot(population)
 }
 
-population <- run.n.gens.simple.v2(100)
+population <- run.n.gens.simple.v2(1)
 plot.power.by.rank.ggplot2(population)
+population
+
