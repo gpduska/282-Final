@@ -7,11 +7,11 @@ n.population <- 30  #size of population
 prob.success.of.take.sd <- 1 # the standard deviation of the normal curve centered at the difference between two peoples power levels
 
 initial.chance.encounter <- 0.01
-initial.take.sd <- 0.001
+initial.take.sd <- 0.01
 mutation.sd <- 0.01
 
 selection.cutoff <- 2
-mutation.cutoff <- 0.2
+mutation.cutoff <- 0.8
 
 power.score.index <- (n.population * 2) + 1
 
@@ -55,53 +55,55 @@ exchange.power.simple <- function(population){
 
 exchange.response.simple <- function(IED.simple){
   
-  # response to people trying to take their power
-  for(i in 1:length(IED.simple[,1])){
-  
-    # if a random number from a probablility distribution with mean = (power score of person taking power) - (power score of person being taken from)
-    # and sd = prob.success.of.take.sd is greater than 0, (if the initiator is successful)
-    if(rnorm(1,(population[IED.simple[i,2], power.score.index] - population[IED.simple[i,1], power.score.index]), prob.success.of.take.sd) > 0){
+  if(nrow(IED.simple) > 0){
+    
+    # response to people trying to take their power
+    for(i in 1:length(IED.simple[,1])){
       
-      # if the person is trying to take more than the person has, the person being taken from losses all of their power (down to zero)
-      if(population[IED.simple[i,1], power.score.index] - IED.simple[i,3] < 0){
+      # if a random number from a probablility distribution with mean = (power score of person taking power) - (power score of person being taken from)
+      # and sd = prob.success.of.take.sd is greater than 0, (if the initiator is successful)
+      if(rnorm(1,((population[IED.simple[i,2], power.score.index]) - (population[IED.simple[i,1], power.score.index])), prob.success.of.take.sd) > 0){
         
-        population[IED.simple[i,1], power.score.index] <- 0
-        population[IED.simple[i,2], power.score.index] <- population[IED.simple[i,2], power.score.index] + population[IED.simple[i,1], power.score.index]
-        
+        # if the person is trying to take more than the person has, the person being taken from losses all of their power (down to zero)
+        if(population[IED.simple[i,1], power.score.index] - IED.simple[i,3] < 0){
+          
+          population[IED.simple[i,1], power.score.index] <- 0
+          population[IED.simple[i,2], power.score.index] <- population[IED.simple[i,2], power.score.index] + population[IED.simple[i,1], power.score.index]
+          
+        } else {
+          
+          population[IED.simple[i,1], power.score.index] <- population[IED.simple[i,1], power.score.index] - IED.simple[i,3]
+          population[IED.simple[i,2], power.score.index] <- population[IED.simple[i,2], power.score.index] + IED.simple[i,3]
+          
+        }
+        # if the initiator is not successful
       } else {
         
-        population[IED.simple[i,1], power.score.index] <- population[IED.simple[i,1], power.score.index] - IED.simple[i,3]
-        population[IED.simple[i,2], power.score.index] <- population[IED.simple[i,2], power.score.index] + IED.simple[i,3]
-        
-      }
-      # if the initiator is not successful
-    } else {
-      
-      # if the person tried to take more than they had, the person who failed the attempted take losses all their power
-      if(population[IED.simple[i,2], power.score.index] - IED.simple[i,3] < 0){
-        
-        population[IED.simple[i,1], power.score.index] <- population[IED.simple[i,1], power.score.index] + population[IED.simple[i,2], power.score.index]
-        population[IED.simple[i,2], power.score.index] <- 0
-        
-      } else {
-        
-        population[IED.simple[i,1], power.score.index] <- population[IED.simple[i,1], power.score.index] + IED.simple[i,3]
-        population[IED.simple[i,2], power.score.index] <- population[IED.simple[i,2], power.score.index] - IED.simple[i,3]
-        
+        # if the person tried to take more than they had, the person who failed the attempted take losses all their power
+        if(population[IED.simple[i,2], power.score.index] - IED.simple[i,3] < 0){
+          
+          population[IED.simple[i,1], power.score.index] <- population[IED.simple[i,1], power.score.index] + population[IED.simple[i,2], power.score.index]
+          population[IED.simple[i,2], power.score.index] <- 0
+          
+        } else {
+          
+          population[IED.simple[i,1], power.score.index] <- population[IED.simple[i,1], power.score.index] + IED.simple[i,3]
+          population[IED.simple[i,2], power.score.index] <- population[IED.simple[i,2], power.score.index] - IED.simple[i,3]
+          
+        }
       }
     }
   }
   return(population)
 }
-
+  
 genetic.algorithm.simple <- function(population){
   
   
   for(i in 1:n.population){
-    
     # if person i is not above the selection cutoff, the person is regenerated with random perameters between 0 and 1. Their power score stays the same
     if(population[i, power.score.index] < selection.cutoff){
-      population[i,] <- c(rep(runif(1, 0, 1), n.population * 2), population[i, power.score.index])
+      population[i,] <- c(rep(runif(1, 0, .1), n.population * 2), population[i, power.score.index])
       
       # if person i is not above the mutation cutoff, then all of the persons perameters are mutated slightly
     } else if(population[i, power.score.index] < mutation.cutoff){
@@ -115,20 +117,41 @@ genetic.algorithm.simple <- function(population){
 }
 
 run.n.gens.simple <- function(n){
-  population <- initial.population.simple()
-  print(population[,61])
+  
   for(i in 1:n){
     intermediate.exchange.data.simple <- exchange.power.simple(population)
     population <- exchange.response.simple(intermediate.exchange.data.simple)
-    print(population[,61])
     population <- genetic.algorithm.simple(population)
-    print(population[,61])
   }
   
   return(population)
 }
 
-population <- run.n.gens.simple(1)
-population[,61]
+plot.power.by.rank <- function(population){
+  
+  power.scores <- population[,power.score.index]
+  ascending.power.scores <- c()
+  
+  for(i in 1:n.population){
+     
+    ascending.power.scores <- append(ascending.power.scores, power.scores[which.min(power.scores)], after = length(ascending.power.scores))
+    power.scores <- power.scores[-(which.min(power.scores))]
+  }
+  
+  plot(1:n.population, ascending.power.scores)
+}
 
+plot.power.by.person <- function(population){
+  
+  plot(1:n.population, population[,power.score.index])
+}
+
+
+
+population <- initial.population.simple()
+
+for(i in 1:50){
+  population <- run.n.gens.simple(100)
+  plot.power.by.rank(population)
+}
 
