@@ -1,25 +1,26 @@
 # this is a simplified version of the radicalization model
+# each agent uses a separate perameter for how liely it is that they will try to take power from each other agent
 
 library(dplyr)
 library(ggplot2)
 
 n.population <- 30  #size of population
 
-prob.success.of.take.sd <- 7 # the standard deviation of the normal curve centered at the difference between two peoples power levels
+prob.success.of.take.sd <- 1 # the standard deviation of the normal curve centered at the difference between two peoples power levels
 
 initial.chance.encounter <- 0.01
-initial.take.sd <- 0.01
+initial.take.sd <- 0.05
 mutation.sd <- 0.01
 
-selection.cutoff <- 5
-mutation.cutoff <- 0.8
+selection.cutoff <- 2.4
+mutation.cutoff <- 1.7
 
 power.score.index <- (n.population * 2) + 1
 
 # This function instantiates the origional matrix
 initial.population.simple <- function(){
   
-  power.vector <- c(rep(1, n.population))
+  power.vector <- c(rep(2, n.population))
   
   chance.encoutner.vector <- rep(initial.chance.encounter, n.population * n.population)
   
@@ -65,11 +66,11 @@ exchange.response.simple <- function(IED.simple){
       # and sd = prob.success.of.take.sd is greater than 0, (if the initiator is successful)
       if(rnorm(1,((population[IED.simple[i,2], power.score.index]) - (population[IED.simple[i,1], power.score.index])), prob.success.of.take.sd) > 0){
         
-        # if the person is trying to take more than the person has, the person being taken from losses all of their power (down to zero)
-        if(population[IED.simple[i,1], power.score.index] - IED.simple[i,3] < 0){
+        # if the person is trying to take more than the person has, the person being taken from losses all of their power (down to one)
+        if(population[IED.simple[i,1], power.score.index] - IED.simple[i,3] < 1){
           
-          population[IED.simple[i,1], power.score.index] <- 0
-          population[IED.simple[i,2], power.score.index] <- population[IED.simple[i,2], power.score.index] + population[IED.simple[i,1], power.score.index]
+          population[IED.simple[i,1], power.score.index] <- 1
+          population[IED.simple[i,2], power.score.index] <- population[IED.simple[i,2], power.score.index] + population[IED.simple[i,1], power.score.index] - 1
           
         } else {
           
@@ -81,10 +82,10 @@ exchange.response.simple <- function(IED.simple){
       } else {
         
         # if the person tried to take more than they had, the person who failed the attempted take losses all their power
-        if(population[IED.simple[i,2], power.score.index] - IED.simple[i,3] < 0){
+        if(population[IED.simple[i,2], power.score.index] - IED.simple[i,3] < 1){
           
-          population[IED.simple[i,1], power.score.index] <- population[IED.simple[i,1], power.score.index] + population[IED.simple[i,2], power.score.index]
-          population[IED.simple[i,2], power.score.index] <- 0
+          population[IED.simple[i,1], power.score.index] <- population[IED.simple[i,1], power.score.index] + population[IED.simple[i,2], power.score.index] - 1
+          population[IED.simple[i,2], power.score.index] <- 1
           
         } else {
           
@@ -179,13 +180,20 @@ genetic.algorithm.simple.copy.up <- function(population){
 
 run.n.gens.simple.v1 <- function(n){
   
+  greatest.power.vector <- c()
+  median.power.vector <- c()
+  lowest.power.vector <- c()
+  
   for(i in 1:n){
     intermediate.exchange.data.simple <- exchange.power.simple(population)
     population <- exchange.response.simple(intermediate.exchange.data.simple)
     population <- genetic.algorithm.simple(population)
+    greatest.power.vector <- append(greatest.power.vector, max(population[,61]), after = length(greatest.power.vector))
+    median.power.vector <- append(median.power.vector, median(population[,61]), after = length(median.power.vector))
+    lowest.power.vector <- append(lowest.power.vector, min(population[,61]), after = length(lowest.power.vector))
   }
   
-  return(population)
+  return(list(a = population, b = greatest.power.vector, c = median.power.vector, d = lowest.power.vector))
 }
 
 run.n.gens.simple.v2 <- function(n){
@@ -240,16 +248,26 @@ plot.power.by.person <- function(population){
 }
 
 
-
 population <- initial.population.simple()
 plot.power.by.rank.simple.plot(population)
 
-for(i in 1:20){
-  population <- run.n.gens.simple.v2(100)
+for(i in 1:50){
+  population <- run.n.gens.simple.v1(100)
   plot.power.by.rank.simple.plot(population)
 }
 
+results <- run.n.gens.simple.v1(50000)
+population <- results$a
+greatest.power.vector <- results$b
+median.power.vector <- results$c
+lowest.power.vector <- results$d
+
+plot.power.by.rank.simple.plot(population)
+plot(1:50000, greatest.power.vector)
+plot(1:50000, median.power.vector)
+plot(1:50000, lowest.power.vector)
 population <- run.n.gens.simple.v2(1)
 plot.power.by.rank.ggplot2(population)
 population
+max(results$a[,61])
 
