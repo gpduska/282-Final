@@ -252,11 +252,11 @@ population <- initial.population.simple()
 plot.power.by.rank.simple.plot(population)
 
 for(i in 1:50){
-  population <- run.n.gens.simple.v1(100)
+  population <- run.n.gens.simple.v2(100)
   plot.power.by.rank.simple.plot(population)
 }
 
-results <- run.n.gens.simple.v1(50000)
+results <- run.n.gens.simple.v1(100)
 population <- results$a
 greatest.power.vector <- results$b
 median.power.vector <- results$c
@@ -271,3 +271,4 @@ plot.power.by.rank.ggplot2(population)
 population
 max(results$a[,61])
 
+print(population)
