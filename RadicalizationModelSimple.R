@@ -247,12 +247,12 @@ plot.power.by.person <- function(population){
   plot(1:n.population, population[,power.score.index])
 }
 
-
 population <- initial.population.simple()
 plot.power.by.rank.simple.plot(population)
 
-for(i in 1:50){
-  population <- run.n.gens.simple.v2(100)
+for(i in 1:3){
+  results <- run.n.gens.simple.v1(100)
+  population <- results$a
   plot.power.by.rank.simple.plot(population)
 }
 

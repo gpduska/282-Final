@@ -32,8 +32,6 @@ encounter.curve.sd <- .5
 take.curve.sd <- .2
 
 mutation.sd <- 0.01
-
-loss.cutoff <- 8
 rounds.per.gen <- 10
 
 # This function instantiates the origional matrix
@@ -43,13 +41,13 @@ initial.population.3 <- function(){
   
   power.vector.end.of.round <- c(rep(0, n.population))
   
-  initial.encounter.slope.vector <- c(rnorm(n.population, initial.encounter.slope, 0.5))
+  initial.encounter.slope.vector <- c(rnorm(n.population, initial.encounter.slope, 1))
   
-  initial.encounter.intercept.vector <- c(rnorm(n.population, initial.encounter.intercept, 0.5))
+  initial.encounter.intercept.vector <- c(rnorm(n.population, initial.encounter.intercept, 1))
   
-  initial.take.attempt.slope.vector <- c(rnorm(n.population, initial.take.attempt.slope, 0.5))
+  initial.take.attempt.slope.vector <- c(rnorm(n.population, initial.take.attempt.slope, 1))
   
-  initial.take.attempt.intercept.vector <- c(rnorm(n.population, initial.take.attempt.intercept, 0.5))
+  initial.take.attempt.intercept.vector <- c(rnorm(n.population, initial.take.attempt.intercept, 1))
   
   initial.loss.counter.vector <- c(rep(0, n.population))
   
@@ -160,6 +158,8 @@ power.reset <- function(population){
 
 genetic.algorithm.3 <- function(population){
   
+  loss.cutoff <- median(population[,7]) + 2
+  
   for(i in 1:n.population){
     
     random.person <- NA
@@ -183,9 +183,9 @@ genetic.algorithm.3 <- function(population){
                           abs(rnorm(1, 0, 1)), 0, 0)
       
     } else {
-      population[i,5] <- abs(rnorm(1, 0, 1))
-      population[i,6] <- 0
-      population[i,7] <- 0
+      population[i,] <- c(population[1,1] + rnorm(1, 0, mutation.sd), population[i,2] + rnorm(1, 0, mutation.sd),
+                          population[i,3] + rnorm(1, 0, mutation.sd), population[i,4] + rnorm(1, 0, mutation.sd),
+                          abs(rnorm(1, 0, 1)), 0, 0)
     }
   }
   return(population)
@@ -236,8 +236,7 @@ plot.power.by.rank.standard <- function(population){
 }
 
 population <- initial.population.3()
-results <- run.n.gens.3(5000, population)
-
+results <- run.n.gens.3(500, population)
 
 population <- results$a
 average.encounter.slope <- results$b
@@ -245,12 +244,17 @@ average.encounter.intercept <- results$c
 average.take.attempt.slope <- results$d
 average.take.attempt.intercept <- results$e
 
-plot(1:5000, average.encounter.slope)
-plot(1:5000, average.encounter.intercept)
-plot(1:5000, average.take.attempt.slope)
-plot(1:5000, average.take.attempt.intercept)
+plot(1:500, average.encounter.slope)
+plot(1:500, average.encounter.intercept)
+plot(1:500, average.take.attempt.slope)
+plot(1:500, average.take.attempt.intercept)
 
-mean(average.encounter.slope[-(1:500)])
-mean(average.encounter.intercept[-(1:500)])
-mean(average.take.attempt.slope[-(1:500)])
-mean(average.take.attempt.intercept[-(1:500)])
+plot(average.encounter.slope, average.encounter.intercept)
+plot(average.take.attempt.slope, average.take.attempt.intercept)
+
+mean(average.encounter.slope[-(1:180)])
+mean(average.encounter.intercept[-(1:180)])
+mean(average.take.attempt.slope[-(1:180)])
+mean(average.take.attempt.intercept[-(1:180)])
+
+print(population)
