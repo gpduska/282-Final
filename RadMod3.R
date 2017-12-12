@@ -801,11 +801,6 @@ plot(1:1000, average.take.attempt.intercept, xlab = "Selection Number", ylab = "
 plot(1:1000, median.num.losses, xlab = "Selection Number", ylab = "Num Losses", main = "Median Number of Losses After Selection Process")
 plot(1:1000, seventy.fifth.num.losses, xlab = "Selection Number", ylab = "Num Losses", main = "75th Percentile Number of Losses After Selection Process", col = "green")
 plot(1:1000, twenty.fifth.num.losses, xlab = "Selection Number", ylab = "Num Losses", main = "25th Percentile Number of Losses After Selection Process", col = "red")
-plot(1:1000, seventy.fifth.num.losses - twenty.fifth.num.losses, xlab = "Selection Number", ylab = "Num Losses", main = "25th Percentile Number of Losses After Selection Process", col = "red")
-
-seventy.fifth.num.losses[100]
-median.num.losses[100]
-twenty.fifth.num.losses[100]
 
 
 
@@ -1142,34 +1137,4 @@ plot(1:1000, num.losses.matrix[27,])
 plot(1:1000, num.losses.matrix[28,])
 plot(1:1000, num.losses.matrix[29,])
 plot(1:1000, num.losses.matrix[30,])
-
-
-plot(1:1000, median.num.losses - num.losses.matrix[8,])
-
-
-x <- 1:500
-plot(x,agent.1.encounter.slope, col="red")
-par(new = TRUE)
-plot(x,agent.1.num.losses, col="blue")
-
-plot(average.encounter.slope, average.encounter.intercept)
-plot(average.take.attempt.slope, average.take.attempt.intercept)
-
-
-qplot(1:10, average.encounter.slope) +
-  theme(legend.position = "none") +
-  #scale_color_gradient(low = "yellow", high = "red") +
-  geom_point(color = 'gold2') +
-  xlab("Selection Number") +
-  ylab("M1") +
-  ggtitle("Average M1 After Selection Process")
-
-mean(average.encounter.slope[-(1:180)])
-mean(average.encounter.intercept[-(1:180)])
-mean(average.take.attempt.slope[-(1:180)])
-mean(average.take.attempt.intercept[-(1:180)])
-
-print(population)
-
-?median()
   
